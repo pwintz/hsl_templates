@@ -24,8 +24,11 @@
 
 \documentclass[final]{beamer}
 
-\input{text/setup}
-\input{text/definitions}
+\usepackage{text/pwintz_configuration}
+\usepackage{text/pwintz_definitions}
+\input{document_setup}
+\input{document_defintions}
+
 \graphicspath{{images/}{../images/}}
 
 \newcommand{\mysubsection}[1]{\vspace{20pt plus 5pt}{\color{structure} \textbf{#1}}\par}
@@ -34,7 +37,6 @@
 
 % The graphbox package adds an "align" option to the % \includegraphics command that makes this very easy to certically align images. https://tex.stackexchange.com/a/350374/153678
 \usepackage{graphbox}
-
 
 \usepackage{paracol}
 
@@ -81,7 +83,7 @@
 
 \title{\input{text/title}} % Poster title
 
-\author{\input{text/author1_name}$^1$ (\input{text/author1_email}), \input{text/author2_name}$^1$, and \input{text/author3_name}$^2$} % Author(s)
+\author{\input{text/author1_name}$^1$ (\input{text/author1_email}), \input{text/author2_name}$^1$, and \input{text/author3_name}$^2$}
 
 \institute{
     $^1$University of California, Santa Cruz; %, Department of Applied Mathematics; 
@@ -198,7 +200,7 @@
     \lipsum[16]
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.9\linewidth,height=0.3\linewidth]{example-image-c}
+        \includegraphics[width=0.4\linewidth]{example-image-c}
     \end{figure}
 \end{block}
 
@@ -216,7 +218,6 @@
     \nocite{loh}
     \printbibliography
 \end{block}
-\vspace{-20pt}
 
 %------------------------------------------------------------------
 %	ACKNOWLEDGEMENTS
@@ -240,9 +241,6 @@
 %------------------------------------------------------------------
 
 \end{column} % End of the fourth column
-
-% \hspace{100\colspaceouter}
-\hfill
 \end{columns} % End of all the columns in the poster
 
 %% Draw an overlay with tikz to aid in getting the margins equal. 

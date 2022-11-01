@@ -178,14 +178,16 @@
 
 \makeatletter
 % Enable hyperlinks
-\usepackage{hyperref}[implicit=true]
+\usepackage[]{hyperref}
 \hypersetup{
-    colorlinks=false,
-    linkcolor=blue,
+    final,                   % Include links even if document is in 'draft' mode.
+    hidelinks,               % Prevent boxes from being drawn around links in some editors.
+    colorlinks=true, 
+    linkcolor=black,         % TOC, links to labels
     filecolor=magenta,      
-    urlcolor=blue,     
-    anchorcolor = blue,
-    citecolor = blue,    
+    urlcolor=black!30!blue,  % URLS including links in referencs  
+    anchorcolor=blue,
+    citecolor=black!30!blue, % In-line citations  
     % Set the metadata for the produced PDF.
     pdftitle={UGAS while Exploiting Uncertified Controller},
     pdfsubject={},
@@ -223,42 +225,9 @@
 % =================
 
 % Setup references for presentations
-
-\makeatletter%
-\@ifclassloaded{beamer}%
-{% if using beamer
-    % Import the natbib package and sets a bibliography and citation styles
-    \usepackage[url = false,doi = false,isbn = false,natbib]{biblatex}
-    % \usepackage[sorting=none,url=false, doi=false, isbn=false]{biblatex}
-    \addbibresource{biblio.bib} %Import the bibliography file
-    % \setcitestyle{authoryear,open={((},close={))}}
-}
-\makeatother%
-
-% \usepackage[style=authortitle]{biblatex}
-
-% Import the natbib package and sets a bibliography and citation styles
-% \usepackage[url = false,doi = false, isbn = false]{biblatex}
-% \usepackage{natbib}
-% \bibliographystyle{abbrvnat}
-% \setcitestyle{authoryear,open={((},close={))}}
-
-% \addbibresource{Uniting Feedback Controller.bib} %Imports bibliography file
-% \renewbibmacro*{cite:author}{%
-%     \printtext[bibhyperref]{%
-%         \structure{hello}
-%         % \printfield[citeauthor]{labeltitle}%
-%         % \setunit{\space}%
-%         % \printtext[parens]{\printdate}%
-%     }%
-% }
-% \renewbibmacro*{cite:title}{%
-%     \printtext[bibhyperref]{%
-%         \printfield[citetitle]{labeltitle}%
-%         \setunit{\space}%
-%         \printtext[parens]{\printdate}%
-%     }%
-% }
+\usepackage[url = false,doi = false,isbn = false,natbib,style=ieee]{biblatex}
+% Import the bibliography file
+\addbibresource{biblio.bib}
 
 % =========================
 % === EDITORIAL MARKUPS ===
@@ -298,7 +267,7 @@
 % Support tracking changes and adding "todo" comments.
 % \usepackage[todonotes={colorinlistoftodos,prependcaption,textsize=small,textcolor=white},commandnameprefix=ifneeded]{changes}
 \usepackage[commandnameprefix=ifneeded,
-            final,
+            % final,
             todonotes={colorinlistoftodos,prependcaption,
                        textsize=small,backgroundcolor=orange!10,
                        textcolor=black,linecolor=orange,bordercolor=orange}]{changes}
@@ -308,75 +277,57 @@
 % ====================================f========
 
 \makeatletter%
-\@ifclassloaded{beamer}{% 
-    \theoremstyle{definition}%
-    \ifdefined\definition\else
-        \newtheorem{definition}{Definition}
-    \fi
-    \ifdefined\problem\else
-        \newtheorem{problem}{Problem}
-    \fi
-    \newtheorem{assumption}{Assumption}% Use singular even when there are multiple assumptions in a particular block.
-    \crefname{assumption}{Assumption}{Assumptions}
-    \theoremstyle{remark}%
-    \ifdefined\remark\else
-        \newtheorem{remark}{Remark}
-    \fi
-    \ifdefined\example\else
-        \newtheorem{example}{Example}
-    \fi
-    % \newtheorem{example}{Example}%
-    \theoremstyle{plain}%
-    \ifdefined\theorem\else
-        \newtheorem{theorem}{Theorem}
-    \fi
-    \newtheorem{proposition}{Proposition}
-    \ifdefined\lemma\else
-        \newtheorem{lemma}{Lemma}
-        \crefname{lemma}{Lemma}{Lemmas}%
-    \fi
-    \ifdefined\corollary\else
-        \newtheorem{corollary}{Corollary}
-        \crefname{corollary}{corollary}{corollaries}%
-    \fi
-}
-\makeatother%
-
-\makeatletter%
 \@ifclassloaded{ieeeconf}{% if using ieeeconf
     \IEEEoverridecommandlockouts
     \overrideIEEEmargins
-
-    % Load amsthm package. The following "\relax"
-    % commands prevent an error that say
-    % "Command \proof already defined." when we load amsthm.
-    \let\proof\relax 
-    \let\endproof\relax
-    \usepackage{amsthm}
-    
-    \theoremstyle{definition}%
-    \newtheorem{definition}{Definition}
-    \newtheorem{assumption}{Assumption}
-    \crefname{assumption}{Assumption}{Assumptions}
-    \newtheorem{example}{Example}
-
-    \theoremstyle{plain}%
-    \newtheorem{theorem}{Theorem}
-    \newtheorem{proposition}{Proposition}
-    \newtheorem{lemma}{Lemma}
-
-    \theoremstyle{remark}
-    \newtheorem{remark}{Remark}
-
-    % Set the bibliography style.
-    \bibliographystyle{ieeetr}
 }{% if not using ieeeconf
     \newcommand{\authorblockN}[1]{#1}
     % The amsthm package provides {theorem}, {lemma} and {proof} environments
-    \usepackage{amsthm}
     \usepackage[toc,page]{appendix}
 }
 \makeatother%
+
+% Load amsthm package.
+\makeatletter%
+\@ifclassloaded{ieeeconf}{% if using ieeeconf
+    % The following "\relax" commands prevent an error that says, "Command \proof already defined," when we load amsthm, Load amsthm package.
+    \let\proof\relax 
+    \let\endproof\relax
+}{}
+\makeatother%
+\usepackage{amsthm}
+
+\theoremstyle{definition}%
+\ifdefined\definition\else
+    \newtheorem{definition}{Definition}
+\fi
+\ifdefined\problem\else
+    \newtheorem{problem}{Problem}
+\fi
+\newtheorem{assumption}{Assumption}% Use singular even when there are multiple assumptions in a particular block.
+\crefname{assumption}{Assumption}{Assumptions}
+\theoremstyle{remark}%
+\ifdefined\remark\else
+    \newtheorem{remark}{Remark}
+\fi
+\ifdefined\example\else
+    \newtheorem{example}{Example}
+\fi
+% \newtheorem{example}{Example}%
+\theoremstyle{plain}%
+\ifdefined\theorem\else
+    \newtheorem{theorem}{Theorem}
+\fi
+\newtheorem{proposition}{Proposition}
+\ifdefined\lemma\else
+    \newtheorem{lemma}{Lemma}
+    \crefname{lemma}{Lemma}{Lemmas}%
+\fi
+\ifdefined\corollary\else
+    \newtheorem{corollary}{Corollary}
+    \crefname{corollary}{corollary}{corollaries}%
+\fi
+
 
 \makeatletter%
 \@ifclassloaded{article}{%
