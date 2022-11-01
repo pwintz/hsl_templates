@@ -100,18 +100,17 @@
 \begin{column}{0.85\onecolwid} % The first column
 
 \begin{block}{Problem Setting}
-    \lipsum[4]
-\end{block}
-
-\begin{block}{Acknowledgements}
-    \begin{center}
-        \begin{minipage}{0.9\linewidth}
-            \includegraphics[height=0.16\linewidth,align=c]{nsf_logo}\hfill
-            \includegraphics[height=0.17\linewidth,align=c]{AFOSR_logo.png}\hfill
-            \includegraphics[height=0.11\linewidth,align=c]{DEVCOM_ARL_LOGO.png}\hfill 
-            \includegraphics[height=0.13\linewidth,align=c]{ONR_logo.png} 
-        \end{minipage}
-    \end{center}
+    \lipsum[4][1-2]
+    $$\xdot = f(x)$$
+    \lipsum[4][3]
+    \begin{enumerate}
+        \item \lipsum[4][5]
+        \item \lipsum[4][6]
+        \item \lipsum[4][7]
+        \item \lipsum[4][8]
+    \end{enumerate}
+    
+    \lipsum[4][9-10]
 \end{block}
 
 \end{column} % End of the first column
@@ -140,15 +139,25 @@
     \begin{block}{Example}
         % Take \qcolor{1}{$\kappa_1$} to be a model predictive controller that occasionally fails to compute an update.
         % \vspace{-20pt}
-    
+        \lipsum[3][1-2]
         \begin{center}
-            \includegraphics[align=c,width=0.5\linewidth]{example-image-b}
-            \vspace{1em}
-
-            \includegraphics[align=c,width=0.5\linewidth]{example-image-c}
+            \includegraphics[align=c,width=0.49\linewidth]{example-image-b}
+            % \vspace{1em}
+            \includegraphics[align=c,width=0.49\linewidth]{example-image-c}
             \vfill
-        \end{center}   
-    
+        \end{center}
+    \end{block}
+
+    \begin{block}{Acknowledgements}
+        \begin{center}
+            \begin{minipage}{0.9\linewidth}
+                % Adjust the height of each icon to make their relative size look right. The option "align=c" ensures that they are all vertically centered
+                \includegraphics[height=0.16\linewidth,align=c]{nsf_logo}\hfill
+                \includegraphics[height=0.17\linewidth,align=c]{AFOSR_logo.png}\hfill
+                \includegraphics[height=0.11\linewidth,align=c]{DEVCOM_ARL_LOGO.png}\hfill 
+                \includegraphics[height=0.13\linewidth,align=c]{ONR_logo.png} 
+            \end{minipage}
+        \end{center}
     \end{block}
 \end{column}
 \end{columns} % End of all the columns in the poster
