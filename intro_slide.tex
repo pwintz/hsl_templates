@@ -24,8 +24,12 @@
 
 \documentclass[final]{beamer}
 
-\input{text/setup}
-\input{text/definitions}
+\usepackage{text/pwintz_configuration}
+\usepackage{text/pwintz_definitions}
+\input{document_setup}
+\input{document_defintions}
+\usepackage{demo_setup} % TODO: Delete this.
+
 \graphicspath{{images/}{../images/}}
 
 \newcommand{\mysubsection}[1]{\vspace{20pt plus 5pt}{\color{structure} \textbf{#1}}\par}
@@ -72,14 +76,11 @@
 %	TITLE SECTION 
 %------------------------------------------------------------------
 
-\title{\ } % Poster title
+\title{(Use header in PPT presentation)} % Poster title
 \author{\ } % Author(s)
 \institute{\ } % Institution(s)
 
 %------------------------------------------------------------------
-
-\newcommand{\kappazero}{\qcolor0{\kappa_0}}
-\newcommand{\kappaone}{\qcolor1{\kappa_1}}
 
 \setlength{\parskip}{40.0 pt plus 5 pt}
 
@@ -95,25 +96,11 @@
 
 \begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice - the [t] option aligns each column's content to the top
 
-\newcommand{\myitem}{\item[\ ]\structure{$\blacktriangleright $}\ }
 \hspace{\sepwid}
 \begin{column}{0.85\onecolwid} % The first column
 
 \begin{block}{Problem Setting}
-    Given a nonlinear plant, a compact set $\calA$, and two controllers:
-    \medskip
-
-    \begin{itemize}
-        \item[] \qcolor0{$\kappa_0$:} a Lyapunov-certified controller 
-            that makes $\calA$ globally asymptotically stable% for $\dot z = \fp(z, \kappa_0(z))$
-        \item[] \qcolor1{$\kappa_1$:} an uncertified controller,
-    \end{itemize}
-    we designed a switching strategy such that 
-    \begin{itemize}
-        \myitem $\calA$ is globally asymptotically stable
-        \myitem $\kappaone$ is preferred over $\kappazero$
-        \myitem the switching does not chatter. 
-    \end{itemize}
+    \lipsum[4]
 \end{block}
 
 \begin{block}{Acknowledgements}
@@ -126,49 +113,41 @@
         \end{minipage}
     \end{center}
 \end{block}
-    
 
 \end{column} % End of the first column
 \hspace{\sepwid}
-\begin{column}{1.1\onecolwid} % The first column
+\begin{column}{\onecolwid} % The first column
+
     \vfill
     \begin{center}
-        \hspace{-12pt} % Make image better centered
-        \includegraphics[width=\linewidth]{feedback_diagram_switching_logic.drawio.pdf}
+        \includegraphics[width=0.5\linewidth]{example-image-a}
     \end{center}
     \vfill
 
-    % \begin{block}{Why Use an Uncertified Controller?}
-        \begin{block}{Why Use an Uncertified Controller?}
-    
-            An uncertified controller may have ``better'' properties than available certified controllers.%
-            \begin{itemize}
-                \myitem Less fuel use
-                \myitem Faster convergence 
-                \myitem Reduced computational demands.
-            \end{itemize}
-            % Useful for reinforcement learning control.
-    
-        \end{block}
+    \begin{block}{[Section Heading]}
+        \lipsum[2][1]
+        \begin{itemize}
+            \item \lipsum[2][2]
+            \item \lipsum[2][3]
+            \item \lipsum[2][4]
+        \end{itemize}
+    \end{block}
 
 \end{column} % End of the third column
 \hspace{\sepwid}
-\begin{column}{0.95\onecolwid} % The first column
+\begin{column}{\onecolwid} % The first column
     
-    \newcommand{\fsampled}{{f_{s}}}%
-    \newcommand{\zsampled}{{z_{s}}}%
-    \newcommand{\usampled}{{u_{s}}}%
-    \newcommand{\Tsample}{{T}}%
-    \newcommand{\Tactual}{{T_{c}}}%
     \begin{block}{Example}
         % Take \qcolor{1}{$\kappa_1$} to be a model predictive controller that occasionally fails to compute an update.
         % \vspace{-20pt}
     
         \begin{center}
-            \includegraphics[align=c,width=1.1\linewidth]{mpc_example_kappa0_and_kappa1}
-        \end{center}      
-        \hspace{20pt}
-        \includegraphics[align=c,width=1\linewidth]{mpc_example_switched_poster}
+            \includegraphics[align=c,width=0.5\linewidth]{example-image-b}
+            \vspace{1em}
+
+            \includegraphics[align=c,width=0.5\linewidth]{example-image-c}
+            \vfill
+        \end{center}   
     
     \end{block}
 \end{column}
