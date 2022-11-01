@@ -1,0 +1,247 @@
+\def\beamer@wurbeamer@version{0.3.0}
+\ProvidesPackage{beamerthemewur}
+\RequirePackage{beamerbasethemes}[2004/10/07]
+\RequirePackage{pgf}
+
+% We would like to have normal text etc in sans-serif, but equations in serif.
+\usefonttheme[onlymath]{serif}
+
+%-------------------------------------------------------------------------------
+%                                                               detect PDF-LaTeX
+
+%\newif\ifpdf
+%\ifx\pdfoutput\undefined\pdffalse\else\pdftrue\fi
+
+
+%-------------------------------------------------------------------------------
+%                                                                    color stuff
+
+%\definecolor{wurblue}{cmyk} {1.0,0,0,0.58}  % WUR 'petrol' blue
+%\definecolor{wurgreen}{cmyk}{0.55,0,0.77,0} % WUR green
+
+%                                               % RGB           CMYK                PMS
+\definecolor{wurblue}{rgb}{0,0.298,0.471}       %   0  76 120   1    0  0    0.58   3025
+\definecolor{backblue}{rgb}{0.5686,0.65,1}       %   0  76 120   1    0  0    0.58   3025
+\definecolor{wurgreen}{rgb}{0.502,0.729,0.392}  % 128 186 100   0.55 0  0.77 0      360
+\definecolor{slidered}{rgb}{0.9,0.1,0.2}     % 234 178   0
+
+\def\normalcolorhack{
+\usebeamercolor{normal text}
+\color{fg}
+\def\normalcolor{\color{normal text.fg}}
+}
+
+\def\setanysheetcolors{
+\setbeamercolor*{local structure}{fg=slidered}
+\setbeamercolor*{title}{fg=black}
+\setbeamercolor*{subitem}{parent=item,fg=wurgreen}
+
+\setbeamercolor*{logobar}{fg=wurblue}
+}
+
+\def\setwhitesheetcolors{
+\setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor*{alerted text}{fg=wurblue}
+\setbeamercolor*{structure}{fg=black} % Sets the color of the header line AND the titles in Theorems, Lemmas, etc.
+\setanysheetcolors
+}
+
+\def\setbluesheetcolors{
+\setbeamercolor*{normal text}{fg=black,bg=backblue}
+\setbeamercolor*{alerted text}{fg=wurgreen}
+\setbeamercolor*{structure}{fg=black}
+\setanysheetcolors
+}
+
+\def\setblacksheetcolors{
+\setbeamercolor*{normal text}{fg=white,bg=black}
+\setbeamercolor*{alerted text}{fg=yellow}
+\setbeamercolor*{structure}{fg=white}
+\setanysheetcolors
+}
+
+\newcommand{\logobarcolor}{white}
+
+% Enforce blue-on-white when making handouts.
+
+\mode<handout>{\let\setbluesheetcolors=\setwhitesheetcolors}
+
+
+%-------------------------------------------------------------------------------
+%                                                               font definitions
+
+\setbeamerfont{title}{size=\large, series=\bfseries}
+\setbeamerfont{subtitle}{series=\bfseries}
+\setbeamerfont{author}{}
+\setbeamerfont{institution}{size=\small}
+
+% my own fonts
+\setbeamerfont{logobar}{}
+
+%-------------------------------------------------------------------------------
+%                                                             basic layout stuff
+
+\newlength\barheight\setlength\barheight{\paperheight}
+\divide\barheight by 18
+
+%-------------------------------------------------------------------------------
+%                                                                     \underline
+
+\newdimen\ul@depth
+
+\def\underline#1{%
+\par\noindent
+\@tempdima=\textwidth
+\advance\@tempdima by \beamer@leftmargin
+\advance\@tempdima by \beamer@rightmargin
+\setbox0=\hbox to \@tempdima{\hspace*{\beamer@leftmargin}#1\hfill}%
+\hspace*{-\beamer@leftmargin}%
+\global\ul@depth=\dp0%
+\hbox to \@tempdima{\vbox{\box0\vskip-\ul@depth\hrule}}}%
+
+%-------------------------------------------------------------------------------
+%                                                                     picture bar
+
+% user-command to change the picture bar used:
+\def\picturebar#1{\def\@picturebar{#1}}
+\def\@picturebar{/Users/Ricardo/Projects/00-Pattern/Media/ResearchPhotos}
+\titlegraphic{\hspace*{-\Gm@lmargin}\includegraphics[width=\paperwidth]{\@picturebar}}
+
+%-------------------------------------------------------------------------------
+%                                                                     title page
+
+\setbeamertemplate{title page}
+{
+% ???
+%\vspace*{-\Gm@tmargin}
+% The main title is typeset on a thin rule, forming a box that that is 2 unit-bars high.
+\vbox to 2\barheight{%
+\vfill
+{\usebeamerfont{title}\usebeamercolor[fg]{title}\underline{\inserttitle}}}
+% The optional subtitle
+\ifx\insertsubtitle\@empty\else%
+{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
+\fi
+% an ueberfill to balance the one below
+% (see there for reason to use ueberfill instead of normal fill)
+\vskip0pt plus 1filll
+% Author
+{\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor}
+% Institution
+\vskip4pt
+{\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute}
+% Insert a ueber-fill to suppress the above-title-box \fill that comes from beamer internals.
+\vskip0pt plus 1filll
+% WUR picture bar. Defined above.
+%\inserttitlegraphic
+% Cancel the 4pt skip that beamer inserts above the footline.
+\vspace*{-4pt} 
+}
+
+
+%-------------------------------------------------------------------------------
+%                                                                    frame title
+
+\setbeamertemplate{frametitle}{%
+  \vbox to \barheight{\vfill\underline{\insertframetitle}}}
+
+%-------------------------------------------------------------------------------
+%                                                                       logo bar
+
+\newlength\logobarheight\setlength\logobarheight{\barheight}
+\newlength\logosep\setlength\logosep{0.5\logobarheight}
+
+\pgfdeclareimage[height=0.6\logobarheight]{ucsb-logo}{ucsbwave-cmyk}
+\pgfdeclareimage[height=0.6\logobarheight]{mit-logo}{mit_logo5}
+\pgfdeclareimage[height=0.5\logobarheight]{ensmp-logo}{Logo-paristech}
+
+% these are availabe to users for constructing their logo
+\def\ucsblogo{\pgfuseimage{ucsb-logo}}
+\def\mitlogo{\pgfuseimage{mit-logo}}
+\def\ensmplogo{\pgfuseimage{ensmp-logo}}
+%\def\nwologo{\hbox{\vbox to \logobarheight{\vfill\hbox{\pgfuseimage{NWO-logo}}\vfill}}}
+
+% Initially, have an empty logo bar
+\let\logobarlogo=\relax
+
+% routine to add a logo
+\def\addlogo#1{%
+  \ifx\logobarlogo\relax
+    \def\logobarlogo{#1}
+  \else
+    \g@addto@macro{\logobarlogo}{\hspace{\logosep}}
+    \g@addto@macro{\logobarlogo}{#1}
+  \fi
+  }
+  
+% routine to reset the logo bar (i.e. for using the Alterra logo instead
+\def\resetlogo{\let\logobarlogo=\relax}
+
+\def\logobartext#1{\gdef\@logobartext{#1}}
+\def\@logobartext{}
+
+\def\buildlogobar{%
+  \noindent\hbox to \paperwidth{%
+    \hspace*{\logosep}
+    \logobarlogo
+    \ifx\logobarlogo\relax\else\hspace{\logosep}\fi
+    \hfill
+    \hbox{\vbox to \logobarheight{\vfill\hbox{{\usebeamerfont{logobar}\usebeamercolor[fg]{logobar}\@logobartext}}\vfill}}%
+    \hspace*{\logosep}}}
+
+
+\def\whitesheetfootline{
+  \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\logobarheight}
+    % Draw a blue line to mark the logo bar
+    \pgfsetstrokecolor{wurblue}
+    \pgfpathmoveto{\pgfpoint{0pt}{\the\logobarheight}}
+    \pgfpathlineto{\pgfpoint{\the\paperwidth}{\the\logobarheight}}
+    \pgfusepath{stroke}
+    % Make a TeX box containing the actual logo bar contents, and place it at the lower-left
+    \pgftext[left,bottom]{\buildlogobar}
+   \end{pgfpicture}
+}
+
+\def\bluesheetfootline{
+  \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\logobarheight}
+    % Draw a white rectangle to mark the logo bar
+    \pgfsetfillcolor{\logobarcolor}
+    \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\paperwidth}{\the\logobarheight}}
+    \pgfusepath{fill}
+    % Make a TeX box containing the actual logo bar contents, and place it at the lower-left
+    \pgftext[left,bottom]{\buildlogobar}
+  \end{pgfpicture}
+}
+
+%-------------------------------------------------------------------------------
+%                                                           blue vs white sheets
+
+\def\bluesheets{
+%\setbeamertemplate{background}{\bluesheetbackground}
+\setbeamertemplate{footline}{\bluesheetfootline}
+\setbluesheetcolors
+\normalcolorhack
+\gdef\debug{[bluesheets set]]}
+}
+
+\def\whitesheets{
+%\setbeamertemplate{background}{\whitesheetbackground}
+\setbeamertemplate{footline}{\whitesheetfootline}
+\setwhitesheetcolors
+\normalcolorhack
+}
+
+%-------------------------------------------------------------------------------
+%                                                                          setup
+
+\bluesheets
+
+% Disable the navigation buttons
+\setbeamertemplate{navigation symbols}{}
+
+% Set toc style
+\setbeamertemplate{sections/subsections in toc}[sections numbered]
+\setbeamertemplate{sections/subsections in toc}[ball]
+
+% Use the Wageningen University logo by default
+\endinput

@@ -1,0 +1,75 @@
+% rgsEnvironments.sty by Ricardo G. Sanfelice
+% Created  Fri 23 Sep 2005
+%
+% This is a LaTeX package with a set of commands and macros 
+% frequently used in papers. To use it
+%    \usepackage{rgsEnvironments}
+% at the top of your document.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+%%%%%%%%%%%%%  MACROS  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+\newtheorem{helptheorem}{Theorem}[section]
+
+\newtheorem{helplemma}[helptheorem]{Lemma}     
+
+\newtheorem{helpcorollary}[helptheorem]{Corollary}     
+
+\newtheorem{helpexample}[helptheorem]{Example}     
+
+\newtheorem{helpproposition}[helptheorem]{Proposition}     
+
+\newtheorem{helpremark}[helptheorem]{Remark}     
+
+\newtheorem{helpdefinition}[helptheorem]{Definition}
+
+\newtheorem{helpassumption}[helptheorem]{Assumption}
+
+\newtheorem{helpstassumption}[helptheorem]{Standing Assumption}
+
+\newtheorem{helpapplication}[helptheorem]{Application}
+
+\newenvironment{theorem}     
+{\vskip.1cm\begin{helptheorem}\it}     
+{\end{helptheorem}\vskip.1cm}     
+
+\newenvironment{lemma}     
+{\vskip.1cm\begin{helplemma}\it}     
+{\end{helplemma}\vskip.1cm}     
+
+\newenvironment{corollary}     
+{\vskip.1cm\begin{helpcorollary}\it}     
+{\end{helpcorollary}\vskip.1cm}     
+
+\newenvironment{proposition}     
+{\vskip.1cm\begin{helpproposition}\it}     
+{\end{helpproposition}\vskip.1cm}     
+
+\newenvironment{example}     
+{\vskip.1cm\begin{helpexample}}     
+{\end{helpexample}\vskip.1cm}     
+
+\newenvironment{remark}     
+{\vskip.1cm\begin{helpremark}}     
+{ \hfill \end{helpremark}\vskip.1cm}     
+% $\blacksquare$
+
+\newenvironment{definition}
+{\vskip.1cm\begin{helpdefinition}}     
+{\end{helpdefinition}\vskip.1cm}   
+
+%\iffalse
+\newenvironment{assumption}
+{\vskip.1cm\begin{helpassumption}}     
+{\end{helpassumption}\vskip.1cm}
+%\fi
+
+\newenvironment{standingassumption}
+{\vskip.1cm\begin{helpstassumption}}     
+{\end{helpstassumption}\vskip.1cm}
+
+%\iffalse
+\newenvironment{application}
+{\vskip.1cm\begin{helpapplication}}     
+{\end{helpapplication}\vskip.1cm}
+%\fi

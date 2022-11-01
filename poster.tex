@@ -1,0 +1,443 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Jacobs Landscape Poster
+% LaTeX Template
+% Version 1.1 (14/06/14)
+%
+% Created by:
+% Computational Physics and Biophysics Group, Jacobs University
+% https://teamwork.jacobs-university.de:8443/confluence/display/CoPandBiG/LaTeX+Poster
+% 
+% Further modified by:
+% Nathaniel Johnston (nathaniel@njohnston.ca)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%------------------------------------------------------------------
+%	PACKAGES AND OTHER DOCUMENT CONFIGURATIONS
+%------------------------------------------------------------------
+
+\documentclass[final]{beamer}
+
+\input{text/setup}
+\input{text/definitions}
+\graphicspath{{images/}{../images/}}
+
+\newcommand{\mysubsection}[1]{\vspace{20pt plus 5pt}{\color{structure} \textbf{#1}}\par}
+
+\usepackage[scale=0.95]{beamerposter} % Use the beamerposter package for laying out the poster
+
+% The graphbox package adds an "align" option to the \includegraphics command that makes this very easy to certically align images. https://tex.stackexchange.com/a/350374/153678
+\usepackage{graphbox}
+
+
+\usepackage{paracol}
+
+\usetheme{confposter} % Use the confposter theme supplied with this template
+
+%-----------------------------------------------------------
+% Define the column widths and overall poster size
+% To set effective colspaceinner, onecolwid and twocolwid values, first choose how many columns you want and how much separation you want between columns
+% In this template, the separation width chosen is 0.024 of the paper width and a 4-column layout
+% onecolwid should therefore be (1-(# of columns+1)*colspaceinner)/# of columns e.g. (1-(4+1)*0.024)/4 = 0.22
+% Set twocolwid to be (2*onecolwid)+colspaceinner = 0.464
+% Set threecolwid to be (3*onecolwid)+2*colspaceinner = 0.708
+
+\usepackage{calc}% http://ctan.org/pkg/calc
+\newlength{\colspace}
+\newlength{\colspaceinner}
+\newlength{\colspaceouter}
+\newlength{\onecolwid}
+\newlength{\twocolwid}
+\newlength{\threecolwid}
+\setlength{\paperwidth}{48in} % A0 width: 46.8in
+\setlength{\paperheight}{36in} % A0 height: 33.1in
+% The normative space between columns/the edge of the paper.
+\setlength{\colspace}{0.012\paperwidth}
+ % Space between columns. This is manually adjusted to make the margins equal (there is a way to do this automatically, but I'm out of time.)
+\setlength{\colspaceouter}{1.25\colspace}
+ % Space between columns and edge of page (margins)
+\setlength{\colspaceinner}{0.666667\colspace}
+ % Width of one column=(1-5*0.012)/4
+\setlength{\onecolwid}{(\paperwidth-5\colspace)/4}
+ % Width of two columns=(2*onecolwid)+colspaceinner=(2*0.235)+0.012
+% \setlength{\twocolwid}{0.482\paperwidth}
+% \setlength{\threecolwid}{0.708\paperwidth} % Width of three columns
+\setlength{\topmargin}{-0.5in} % Reduce the top margin size
+%-----------------------------------------------------------
+
+\usepackage{graphicx}  % Required for including images
+
+\usepackage{booktabs} % Top and bottom rules for tables
+
+%------------------------------------------------------------------
+%	TITLE SECTION 
+%------------------------------------------------------------------
+
+\title{\input{text/title}} % Poster title
+
+\author{\input{text/author1_name}$^1$ (\input{text/author1_email}), \input{text/author2_name}$^1$, and \input{text/author3_name}$^2$} % Author(s)
+
+\institute{
+    $^1$University of California, Santa Cruz; %, Department of Applied Mathematics; 
+    % $^2$UC, Santa Cruz, \input{text/author2_department},
+    $^2$University of California, Santa Barbara%, \input{text/author2_department},
+    } % Institution(s)
+
+%------------------------------------------------------------------
+
+\newcommand{\kappazero}{\qcolor0{\kappa_0}}
+\newcommand{\kappaone}{\qcolor1{\kappa_1}}
+
+\setlength{\parskip}{40.0 pt plus 5 pt}
+
+% \setbeamercolor{bibliography entry author}{fg=red}
+% \setbeamercolor{bibliography entry title}{fg=blue}
+\setbeamercolor{bibliography entry note}{fg=structure!85!white}
+
+\begin{document}
+
+\addtobeamertemplate{block end}{}{\vspace*{2ex}} % White space under blocks
+\addtobeamertemplate{block alerted end}{}{\vspace*{2ex}} % White space under highlighted (alert) blocks
+
+\setlength{\belowcaptionskip}{2ex} % White space under figures
+\setlength\belowdisplayshortskip{2ex} % White space under equations
+
+\begin{frame}[t] % The whole poster is enclosed in one beamer frame
+
+\begin{columns}[t] % The whole poster consists of three major columns, the second of which is split into two columns twice - the [t] option aligns each column's content to the top
+
+\hspace{\colspaceouter} % Left Margin
+% \hfill
+
+\begin{column}{\onecolwid} % The first column
+
+%------------------------------------------------------------------
+%	OBJECTIVES
+%------------------------------------------------------------------
+
+\begin{block}{Summary}
+    We introduce a switching strategy that renders a compact set globally asymptotically stable (\UGAS) for a nonlinear continuous-time plant by switching between a Lyapunov-certified feedback controller and an uncertified controller. 
+    Our switching strategy allows for the opportunistic use of a controller that has desirable performance but lacks a Lyapunov certificate.
+    A pair of tunable threshold functions determine conditions for switching between the controllers.
+\end{block}
+
+%------------------------------------------------------------------
+%	INTRODUCTION
+%------------------------------------------------------------------
+
+\begin{block}{Preliminaries}
+    Consider a continuous-time plant 
+    \begin{equation}
+        \dot z = \fp(z,u), \quad 
+        z \in \plantstatespace, u \in  \plantinputspace.
+        \label{eq:plant}
+    \end{equation}
+    and a nonempty set $\calS \subset \plantstatespace$.
+    A controller ${\kappa : \plantstatespace \to \plantinputspace}$ is called \emph{Lyapunov-certified} for $\calS$ if $\calS$ is \UGAS for the closed-loop system 
+    \begin{equation}
+        \zdot = f(z, \kappa(z))
+        \label{eq:closed-loop with kappa}
+    \end{equation}
+    and a Lyapunov function is known that that certifies $\calS$ is \UGAS.
+    % The controller $\kappa$ is called \emph{uncertified} if either no Lyapunov function exists (because $\calA$ is not \UGAS for \cref{eq:closed-loop with kappa}) or no Lyapunov function is known.
+\end{block}
+
+\begin{block}{Problem Statement}
+    
+    Suppose we are given a continuous plant as in \cref{eq:plant}, a compact set $\calA \subset \plantstatespace$, and two continuous controllers:
+    \begin{itemize}
+        \item[] \qcolor0{$\kappa_0$:} a Lyapunov-certified controller 
+            % that renders $\calA$ to be \UGAS for $\dot z = \fp(z, \kappa_0(z))$
+        \item[] \qcolor1{$\kappa_1$:} any continuous controller (i.e., an \emph{uncertified} controller).
+    \end{itemize}
+    We want to design a switching logic for ${q\in\{0,1\}}$ (which determines whether $u = \kappazero(z)$ or $u=\kappaone(z)$ is used) such that $\calA$ is \UGAS, $\kappaone$ is preferred over $\kappazero$, and the switching does not exhibit chattering. 
+    \medskip
+
+    \begin{center}
+        \hspace{-12pt} % Make image better centered
+        \includegraphics[width=\linewidth]{feedback_diagram_switching_logic.drawio.pdf}
+    \end{center}
+    \vspace{-10pt}
+    The switching logic passes $q$ into a switch that determines whether $\kappazero$ or $\kappaone$ is applied to the plant.
+\end{block}
+\vspace{-10pt}
+
+\begin{block}{Why Use an Uncertified Controller?}
+
+An uncertified controller may have ``better'' properties compared to available certified controllers, such as
+
+\begin{itemize}
+    \item Less fuel use
+    \item Faster convergence 
+    \item Fewer computational demands 
+\end{itemize}
+% \begin{figure}
+%     \begin{tabular}{lll}
+%         $\bullet$
+%     \end{tabular}
+% \end{figure}
+
+\mysubsection{Examples}
+\begin{itemize}
+  \item Linear quadratic regulator for 
+  the linearization of a system with an unknown basin of attraction.
+  \item Model predictive control that 
+  occasionally fails to compute an update.
+  \item Black box controllers (e.g., neural network controllers).
+\end{itemize}%
+Our switching logic could be particularly useful for reinforcement learning control, which demonstrates good empirical results, but for which it is often difficult to produce Lyapunov certificates.
+\end{block}
+
+
+% \begin{center}
+%     % \includegraphics[width=0.95\linewidth]{UCSC_BaskinEng_Logo_wide}
+
+%     \begin{tabular}{lcr}
+%         \includegraphics[height=0.15\linewidth]{DEVCOM_ARL_LOGO.png} &
+%         \includegraphics[height=0.23\linewidth]{AFOSR_logo.png} \\
+%         \includegraphics[height=0.15\linewidth]{ONR_logo.png} &\includegraphics[height=0.23\linewidth]{nsf_logo}\\ 
+%     \end{tabular}
+% \end{center}
+
+% \begin{figure}
+%     \centering
+%     \includegraphics[width=0.4\linewidth]{HSLlogo.eps}
+% \end{figure}
+
+\end{column} % End of the first column
+\hspace{\colspaceinner}
+\begin{column}{\onecolwid}% Beginning of second column
+
+\begin{block}{Switching Strategy}
+    Let $V$ be the Lyapunov function for $\dot z = f_P(z, \kappazero(z))$. 
+    The rate of change of $V(z)$ under $\qcolor1{\kappa_1}$ is central to our discussion. For each $z \in \plantstatespace$, we define 
+    $$\dot V_{1}(z) := \ip{\del V(z)}{\fp(z, \qcolor1{\kappa_1}(z))}.$$
+
+    Pick any two continuous \emph{threshold} functions ${\sigmazero, \sigmaone : \nonnegativereals \to \nonnegativereals}$ such that
+    $\sigmaone$ is positive definite and $\sigmazero(s) > \sigmaone(s)$ for all $s \geq 0$.
+    % \begin{itemize}%
+    %     \item $\sigmaone$ is positive definite
+    %     \item $\sigmazero(s) > \sigmaone(s)$ for all $s \geq 0$.
+    % \end{itemize}% 
+    % These functions define \emph{thresholds} for switching.
+    % \smallskip
+
+    For \qcolor0{$q = 0$}, $\dot V_1$ is ``small enough to switch to \qcolor1{$q = 1$}'' if $$\dot V_1(z) \leq -\sigmazero(\distA{z}).$$
+    For \qcolor{1}{$q = 1$}, $\dot V_1$ is ``large enough to switch to~\qcolor0{$q = 0$}''~if $$\dot V_1(z) \geq -\sigmaone(\distA{z}).$$
+
+    % For \qcolor0{$q = 0$}, $\dot V_1$ is \dots
+    % \begin{itemize}
+    %     \item[] \dots ``small enough to switch to \qcolor1{$q = 1$}'' if $\dot V_1(z) \leq -\sigmazero(\distA{z})$.
+    %     \item[] \dots ``large enough to hold \qcolor0{$q = 0$}'' if $\dot V_1(z) \geq -\sigmazero(\distA{z}).$
+    % \end{itemize}
+    % For \qcolor{1}{$q = 1$}, $\dot V_1$ is \dots
+    % \begin{itemize}
+    %     \item[]\dots ``small enough to hold~\qcolor{1}{$q = 1$}'' if $\dot V_1(z) \leq -\sigmaone(\distA{z})$.
+    %     \item[]\dots ``large enough to switch to~\qcolor0{$q = 0$}''~if $\dot V_1(z) \geq -\sigmaone(\distA{z}).$
+    % \end{itemize}
+    \begin{figure}[ht]
+        \centering
+        \includegraphics[width=\linewidth]{switching_regions_poster.pdf}
+        % \setlength{\belowcaptionskip}{-100pt}
+    \end{figure}
+    A switch from $\qcolor0{q = 0}$ to $\qcolor1{q = 1}$ occurs immediately when $\dot V_1$ is small enough to switch (i.e., $\kappaone$ will perform well, as measured by decrease in $V(z)$).
+    A switch from $\qcolor1{q = 1}$ to $\qcolor0{q = 0}$ does \textbf{not} occur immediately when $\dot V_1$ is large enough to switch.
+    To prevent chattering via hysteresis, we introduce an auxiliary memory variable $v \in \nnreals$ that records the value of $V(z)$ at each switch and decreases along flows, converging to zero. A switch from $\qcolor1{q = 1}$ to $\qcolor0{q = 0}$ occurs if and only if $V(z) \geq v$ and $\dot V_1$ is large enough to switch.
+    In practice, a switch from $\qcolor1{q = 1}$ to $\qcolor0{q = 0}$ almost always occurs when $V(z) = v$ and $\dot V_1(z) > -\sigmaone(\distA{z})$.
+    Thus, $v$ acts as an upper bound for $V(z)$, restricting how much $V(z)$ can grow before triggering a switch to $\qcolor0{q = 0}$. 
+    Because $v$ converges to zero, $V(z)$ is squeezed to zero as well.
+% \end{block}
+%------------------------------------------------------------------
+% \begin{block}{Dynamics of the Closed-Loop System}
+
+    \mysubsection{At each switch:}
+    \begin{columns}
+        \begin{column}{0.26\linewidth}
+            \begin{itemize}
+                \item $z$ is unchanged
+                \item $v$ is set to $V(z)$ % to record $V$'s value
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.69\linewidth} 
+            \begin{itemize}
+                \item $q$ is toggled to the opposite value in $\setdef{0, 1}$
+                \item[\ ]
+            \end{itemize}
+        \end{column}
+    \end{columns}
+
+    \mysubsection{Between switches:}
+    \begin{columns}
+        \begin{column}{0.65\linewidth}
+            \begin{itemize}
+                \item $z$ evolves according to $\dot z = \fp(z, \kappa_q(z))$  
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.31\linewidth} 
+            \begin{itemize}
+                \item $q$ is constant
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \begin{itemize}
+        \item $v$ evolves according to 
+        \begin{equation*}
+            \vdot := 
+            \begin{cases}
+                {-}v,& \textif \qcolor0{q = 0 \text{ (certified)} } , \\
+                {-}\sigmaone(\distA{z}) + \vdiffcoeff(V(z) - v), & \textif \qcolor1{q = 1 \text{ (uncertified)} },
+            \end{cases}
+        \end{equation*}
+        where $\mu > 0$ is parameter.
+    \end{itemize} 
+
+    The dynamics of $v$ are designed such that:
+    \begin{itemize}
+        \item While $\qcolor1{q=1}$, if $\dot V_1$ is small enough to switch to $\qcolor0{q=0}$, then $v$ will (if given enough time) catch up to $V(z)$, causing a switch to $\qcolor0{q=0}$. 
+        
+        \item While $\qcolor1{q=1}$, if $\dot V_1$ is not small enough to switch to $\qcolor0{q=0}$, then $V(z)$ will not catch up to $v$.
+    
+        \item After every switch from $\qcolor0{q=0}$ to $\qcolor1{q=1}$, there is an interval where no switches can occur because $V(z) < v$. This prevents chattering.
+    \end{itemize}%
+    \vspace{-20pt}
+\end{block}
+
+\begin{alertblock}{Theorem}
+    Suppose that $\fp,$ $\kappa_0,$ and $\kappa_1$ are continuous and $V$ is continuously differentiable.
+    Then, the set $\calAX := \setdef{(z, v, q) \mid z\in \calA, v = 0}$ is (uniformly) globally asymptotically stable for the closed-loop system.
+\end{alertblock}
+\vspace{-20pt}
+
+\textit{Remark.} The \UGAS property of $\calAX$ is robust to small~perturbations.
+
+\end{column} % End of second column
+\hspace{\colspaceinner}
+\begin{column}{\onecolwid} % Beginning of thrid column
+
+\begin{block}{Example: Switch Due to Slow Convergence}
+    Consider the plant $\dot z = u$ 
+    with $z, u\ {\in}\ \reals$ and controllers $\kappazero(z) := -z,$ 
+    $\kappaone(z) := -z^3$. 
+    The feedback $\kappaone$ produces fast convergences far from the origin $\calA := \setdef{0}$ but slows as $z$ approaches zero, whereas the convergence is slower for $\kappazero$ far from the origin, but faster near it.
+    The switched solution uses $\kappaone$ far from the origin and 
+    $\kappazero$ near the origin, producing overall faster convergence.
+    % and pick $\sigmaone(s) := s^2$ and $\sigmazero(s) := 1.5 s^2 + 10^{-3}$ for all $s \geq 0.$
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.9\linewidth]{languish_example_comparison_poster}
+    \end{figure}
+    % A plot of $V$, $v$, $\dot V_1$ and the threshold functions show that $\dot V_1$ passes above $-\sigma_1(\distA{z})$ at $t=0.4$ but the switch to $\qcolor0{q=0}$ does not occur until $V(z) = v$ at $t=0.95$.
+    The switch occurs when $V(z) = v$ (\emph{after} $\dot V_1$ moves above~$-\sigma_1(\distA{z})$).
+
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.9\linewidth]{languish_example_poster}
+    \end{figure}
+\end{block}
+\vspace{-25pt}
+
+\newcommand{\fsampled}{{f_{s}}}%
+\newcommand{\zsampled}{{z_{s}}}%
+\newcommand{\usampled}{{u_{s}}}%
+\newcommand{\Tsample}{{T}}%
+\newcommand{\Tactual}{{T_{c}}}%
+\begin{block}{Example: Model Predictive Controller}
+    Consider a nonlinear plant 
+    $\zdot = u$
+    and two controllers:
+    \begin{itemize}
+        \item[] \qcolor{0}{$\kappa_0$}: Lyapunov-certified controller 
+        \item[] \qcolor{1}{$\kappa_1$}: Model predictive controller (MPC) with $1 \msec$ sampling period 
+    \end{itemize}
+
+    Suppose the MPC algorithm fails to compute the next input by $t=1\msec$, so it reuses the previous input. This causes $z$ to move away from $\calA$.
+
+    \begin{center}
+        \includegraphics[width=\linewidth]{mpc_example_kappa0_and_kappa1}
+    \end{center}
+    Our switching scheme uses $\kappaone$ until ${V(z) = v}$, then it switches to $\kappazero$.
+    
+    \hspace{30pt}\includegraphics[width=0.9\linewidth]{mpc_example_switched_poster}
+\end{block}
+
+\end{column} % End of the third column
+\hspace{\colspaceinner}
+\begin{column}{\onecolwid} % The fourth column
+
+\begin{block}{Example: Linear Quadratic Regulator}
+    Consider the nonlinear plant
+    \begin{equation*}
+    \zdot = A z + u + \underbrace{f(z, u) }_{\mathclap{\text{Nonlinear component}}}
+    % \zdot = A_1 z + \min(\norm{z}, 1) A_2 z + u
+    \qquad z, u \in \reals^2.
+    \end{equation*}%
+    Suppose the origin is \UGAS for a linear high-gain Lyapunov-certified controller $\qcolor0{\kappa_0}(z) := Kz$ and that $\qcolor1{\kappa_1}$ is the LQR feedback 
+    that solves 
+    \begin{align*}
+        \minimize{u} & \int_0^\infty \norm{z(t)}^2 + \norm{u(t)}^2 \dt \quad & 
+        \subjectto & \zdot = \underbrace{Az + u}_{\mathclap{\text{Linearized dynamics}}}.
+    \end{align*}
+
+    For a small choice of $\mu > 0$, $v$ decreases slowly while $\qcolor1{q=1}$, allowing $\dot V_1$ to briefly pass above $-\sigmaone(\distA{z})$ without triggering a switch.
+    \begin{center}
+        \includegraphics[width=\linewidth]{lqr_example_1_poster} 
+    \end{center}
+    When $\mu$ is larger, $v$ decreases faster, causing $V(z)$ to reach $v$ while $\dot V_1(z)$ is above the threshold $-\sigmaone(\distA{z}),$ triggering a switch to $\qcolor0{q=0}$.
+    \begin{center}
+        \includegraphics[width=\linewidth]{lqr_example_16_poster}
+    \end{center}
+    \vspace{-30pt}
+\end{block}
+
+\begin{block}{References}
+    \renewcommand*{\bibfont}{\small}
+    \nocite{wintz_global_2022}
+    \nocite{sanfelice_hybrid_2021}
+    \nocite{sanfelice_invariance_2007}
+    % \nocite{clarke_optimization_1990}
+    % \nocite{sanfelice_toolbox_2013}
+    % \nocite{aubin_tangent_2009}
+    \printbibliography
+\end{block}
+\vspace{-20pt}
+
+%------------------------------------------------------------------
+%	ACKNOWLEDGEMENTS
+%------------------------------------------------------------------
+
+\begin{block}{Acknowledgements}
+    \small{\rmfamily{This research was supported by the National Science Foundation under grant nos.\ ECS-1710621, CNS-1544396, and CNS-2039054; by the Air Force Office of Scientific Research under grant nos.\ FA9550-19-1-0053, FA9550-19-1-0169, and FA9550-20-1-0238; by the Army Research Office under grant no.\ W911NF-20-1-0253; and by the U.S. Office of Naval Research under the MURI grant no.\ N00014-16-1-2710.}} 
+    \vspace{20pt}
+    
+    \begin{minipage}{\linewidth}
+        \includegraphics[height=0.16\linewidth,align=c]{nsf_logo}\hfill
+        \includegraphics[height=0.17\linewidth,align=c]{AFOSR_logo.png}\hfill
+        \includegraphics[height=0.11\linewidth,align=c]{DEVCOM_ARL_LOGO.png}\hfill 
+        \includegraphics[height=0.13\linewidth,align=c]{ONR_logo.png} 
+    \end{minipage}
+\end{block}
+
+%------------------------------------------------------------------
+
+\end{column} % End of the fourth column
+
+% \hspace{100\colspaceouter}
+\hfill
+\end{columns} % End of all the columns in the poster
+
+%% Draw an overlay with tikz to aid in getting the margins equal. 
+% \begin{tikzpicture}[remember picture, overlay,
+%     help lines/.append style={line width=0.05pt}]
+%     \draw (current page.west) -- +(\colspaceouter, 0);
+%     \draw (current page.east) -- +(-\colspaceouter, 0);
+% \end{tikzpicture}%
+
+\end{frame} % End of the enclosing frame
+
+\end{document}

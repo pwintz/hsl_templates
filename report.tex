@@ -1,0 +1,87 @@
+%%% STEP 0
+%%%
+%%% Comment/Uncomment items below for either
+%%% confeerence or report format.
+%%%
+
+% Version 1
+%%% FOR REPORT FORMAT
+\documentclass[11pt]{article}
+
+\input{text/setup}
+\input{text/definitions}
+\graphicspath{{images/}{../images/}}
+
+%%% STEP 1
+%%%
+%%% Use the "hslTR" package. Make sure you have the
+%%% "hslTR.sty" file in your current directory.
+%%%
+%%%  HSL LAB PACKAGE -- MODIFIED HSL TR PACKAGE - --
+\usepackage{./macros/hslTR}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% VERSION CONTROL COMMAND
+%%% For Conference, Change to "true"
+%%% For Report, Change to "false"
+\newbool{conf}
+\setbool{conf}{false}
+\newcommand{\confonly}[1]{}%\red{#1}}%$\langle$confonly$\rangle$: #1}}
+\newcommand{\reportonly}[1]{#1}%{\darkgreen{#1}}
+
+%%% Example of boolean code structure:
+\ifbool{conf}{
+% Items for conference version go in here.
+}{
+% Items for report version go in here.
+ \addtolength{\oddsidemargin}{-.875in}
+	\addtolength{\evensidemargin}{-.875in}
+	\addtolength{\textwidth}{1.75in}
+	\addtolength{\topmargin}{-.875in}
+	\addtolength{\textheight}{1.75in} 
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+% For speed compilation purposes (process figures when needed)
+%\includeonly{} % comment this if you want to process the figures (or select which tex file you want to process - one per figure)
+% \let\clearpage\relax 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+
+\bibliographystyle{ieeetr}
+
+\begin{document}
+
+% IF REPORT
+%%%
+%%% STEP 2
+%%%
+%%% Include the following code after the "\begin{document}"
+%%% statement. Make sure you set the following:
+%%%
+%%% \ititle{}  : title of the paper
+%%% \iauthor{} : authors of the paper
+%%% \iyear{}   : year
+%%% \iredno{}  : report number (make sure you get a unique report
+%%%             number)
+%%%
+%%% -- - BEGIN ISG TR - --
+
+\ititle{\input{text/title}}
+\iauthor{
+  \input{text/author1_name} \\
+  {\normalsize \input{text/author1_email}} \\
+  \input{text/author2_name} \\
+  {\normalsize \input{text/author2_email}} \\
+  \input{text/author3_name} \\
+  {\normalsize \input{text/author3_email}}
+}
+\idate{\today{}} 
+\iyear{2021}
+\irefnr{10}
+\makeititle
+
+\input{text/body}
+
+\end{document}
+

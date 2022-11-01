@@ -1,0 +1,75 @@
+\documentclass[letterpaper, 10pt, conference]{ieeeconf}
+
+\input{text/setup}
+\input{text/definitions}
+\graphicspath{{images/}{../images/}}
+
+% \title{Global Asymptotic Stability from Switched Feedback of 
+% Arbitrary Controller and Lyapunov Controller\workingnote{(Draft)}}
+
+% \author{Paul K. Wintz and Ricardo G. Sanfelice}
+
+\pdfminorversion=4
+
+%%%
+%%% STEP 1
+%%%
+%%% Use the "hslTR" package. Make sure you have the
+%%% "hslTR.sty" file in your current directory.
+%%%
+%%%  HSL LAB PACKAGE -- MODIFIED HSL TR PACKAGE - --
+\usepackage{./macros/hslTR}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% VERSION CONTROL COMMAND
+%%% For Conference, Change to "true"
+%%% For Report, Change to "false"
+\newbool{conf}
+\setbool{conf}{true}
+\newcommand{\confonly}[1]{#1}
+\newcommand{\reportonly}[1]{}%{\delete{$\langle$Report only$\rangle$: #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+% For speed compilation purposes (process figures when needed)
+%\includeonly{} % comment this if you want to process the figures 
+% (or select which tex file you want to process - one per figure)
+% \let\clearpage\relax 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
+
+\begin{document}
+
+% IF CONFERENCE
+\title{\input{text/title}}
+
+\author{
+    \authorblockN{\input{text/author1_name}}
+    \and
+    \authorblockN{\input{text/author2_name}}
+    \and
+    \authorblockN{\input{text/author3_name}}
+    \thanks{
+        \protect\input{text/author1_name} is with
+        \protect\input{text/author1_department},
+        \protect\input{text/author1_address}
+        (\protect\input{text/author1_email}),
+        \protect\input{text/author2_name} is with 
+        \protect\input{text/author2_department},
+        \protect\input{text/author2_address} 
+        (\protect\input{text/author2_email.tex}),
+        \protect\input{text/author3_name} is with 
+        \protect\input{text/author3_department},
+        \protect\input{text/author3_address} 
+        (\protect\input{text/author3_email.tex}).
+    }
+    \thanks{
+        This research was supported by the National Science Foundation under grant nos.\ ECS-1710621, CNS-1544396, and CNS-2039054; by the Air Force Office of Scientific Research under grant nos.\ FA9550-19-1-0053, FA9550-19-1-0169, and FA9550-20-1-0238; by the Army Research Office under grant no.\ W911NF-20-1-0253; and by the U.S. Office of Naval Research under the MURI grant no.\ N00014-16-1-2710.
+    }
+}
+\maketitle
+
+\input{text/body}
+
+\end{document}
+

@@ -1,0 +1,528 @@
+% LTeX: enable=true
+% Create \ifdraft{}{} conditional that switches based on whether "draft" is passed to document class.
+\usepackage{ifdraft} 
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{mathrsfs} % Enables \mathscr{}
+
+% ==============
+% === Layout ===
+% ==============
+\usepackage{multicol} % Allows enumerations over two columns
+\usepackage{float}
+% \usepackage[bottom]{footmisc} % Forces footnotes to be at the very bottom of the page. https://tex.stackexchange.com/a/9427/153678
+
+% ==================
+% === Formatting ===
+% ==================
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{verbatim} 
+\usepackage{markdown}
+\usepackage{bm} % Allows bold Greek letters.
+\usepackage{xspace} % To fix spacing after macros. see https://tex.stackexchange.com/a/17731/153678
+% allows enumerate with letters, i.e. (a), (b), (c).
+%\usepackage[shortlabels]{enumitem} 
+
+% ===============
+% === SPACING ===
+% ===============
+
+% Format paragraphs. 
+\makeatletter%
+\@ifclassloaded{article}{%
+    \setlength{\parindent}{0em}
+    \setlength{\parskip}{0.8em}
+}
+
+%%%% Fix Spacing Around "\left(\right)" %%%
+\usepackage{mleftright} 
+\mleftright % redefine \left as \mleft and \right as \mright.
+
+% Set the line spacing to single-spaced in the "cases" environment. 
+% Source: https://tex.stackexchange.com/a/555622/153678
+\usepackage{etoolbox}
+\AtBeginEnvironment{cases}{\renewcommand\baselinestretch{1}\selectfont}
+
+% Command to adjust the horizontal spacing 
+%   By Ryan Johnson. 
+% 
+% Example usage:
+% \begin{equation}
+% \mbox{$\squeezespaces{0.5}
+% \begin{aligned}
+%     a^2 + b^2 = c^2
+% \end{aligned}
+% $}
+% \end{equation}
+\newcommand*\squeezespaces[1]{% <- #1 is a number between 0 and 1
+  \thickmuskip=\scalemuskip{\thickmuskip}{#1}%
+  \medmuskip=\scalemuskip{\medmuskip}{#1}%
+  \thinmuskip=\scalemuskip{\thinmuskip}{#1}%
+  \nulldelimiterspace=#1\nulldelimiterspace
+  \scriptspace=#1\scriptspace
+}
+\newcommand*\scalemuskip[2]{%
+  \muexpr #1*\numexpr\dimexpr#2pt\relax\relax/65536\relax
+}
+% === END OF SPACING ===
+
+% Support adding "todo" comments.
+\usepackage[colorinlistoftodos,prependcaption,textsize=small,textcolor=white]{todonotes}
+\setlength{\marginparwidth}{2cm} % This doesn't appear to do anything, except suppress a warning related to todonotes.
+
+%% Improved LaTeX definitions %%
+\usepackage{environ}
+\usepackage{xparse} % Enhanced command definitions.
+
+%% Misc/Uncategorized Packages %%
+\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+\usepackage{cancel} % For crossing out parts of equations.
+\usepackage{empheq} % For putting boxes around equations
+\usepackage{mathtools}
+\usepackage{pdfpages} % Allows use of \includepdf[page={page number}]{filename}
+% \usepackage{siunitx} % SI Units used as '\SI{60}{\mile\per\hour} https://tex.stackexchange.com/a/509965/153678
+
+% =========================
+% === CONDITIONAL LOGIC ===
+% =========================
+\usepackage{etoolbox} % Used for LaTeX conditionals. See: https://tex.stackexchange.com/a/5896/153678.
+\newtoggle{solutions}
+
+% Define 'switch' environment. 
+% See https://tex.stackexchange.com/a/187710/153678
+\usepackage{xifthen}
+\newcommand{\ifequals}[3]{\ifthenelse{\equal{#1}{#2}}{#3}{}}
+\newcommand{\case}[2]{#1 #2} % Dummy, so \renewcommand has something to overwrite...
+\newenvironment{switch}[1]{\renewcommand{\case}{\ifequals{#1}}}{}
+
+% ============================
+% === Figures and Graphics ===
+% ============================
+\usepackage{pdfpages} % Allows use of \includepdf[page={page number}]{filename}
+\usepackage{rotating}% For rotating figures, tables, etc. See https://tex.stackexchange.com/a/50071/153678
+\usepackage{blkarray} % allows labeling rows/columns of block matrix. 
+% Setup captions
+% \usepackage{caption,setspace} % needed to set caption line spacing. See: https://tex.stackexchange.com/a/186327/153678
+\usepackage{caption}
+% Allows removal of "Figure 1:" in caption when "\caption*{}" is used. 
+% \captionsetup{font={stretch=1.2}}
+\captionsetup{belowskip=-4pt}
+
+%%%% Support subfigures %%%%
+% The package 'subfigure' is deprecated. Now, either 'subfig' or 'subcaption'
+% is recommend.
+\usepackage{graphicx} 
+% \usepackage{caption}
+% \usepackage{subfig}
+%% Example of how to use 'subfig' package:
+% \begin{figure}
+% \centering
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.6\linewidth]{}
+% \end{subfigure}%
+% \begin{subfigure}{.5\textwidth}
+%   \centering
+%   \includegraphics[width=.6\linewidth]{}
+% \end{subfigure}
+% \end{figure}
+
+\usepackage{subcaption}
+%% Example of how to use 'subcaption' package:
+% \begin{figure*} % Star makes multi-column figure. 
+%     \centering
+%     \subcaptionbox{Subfigure (a) caption.\label{subfig a label}}
+%     {\includegraphics{image_1}}
+%     \qquad
+%     \subcaptionbox{Subfigure (b) caption.\label{subfig b label}}
+%     {\includegraphics{image_2}}
+%     \caption{Figure caption.}
+%     \label{figure label}
+% \end{figure*}
+
+% ===================
+% === CODE BLOCKS ===
+% ===================
+
+\usepackage[final]{listings}
+
+% Allows comments sections
+\usepackage{verbatim} 
+
+% \lstset{frame=tb,
+%   language=Python,
+%   aboveskip=3mm,
+%   belowskip=3mm,
+%   showstringspaces=false,
+%   columns=flexible,
+%   basicstyle={\small\ttfamily},
+%   numbers=none,
+%   numberstyle=\tiny\color{gray},
+%   keywordstyle=\color{blue},
+%   commentstyle=\color{dkgreen},
+%   stringstyle=\color{mauve},
+%   breaklines=true,
+%   breakatwhitespace=true,
+%   tabsize=3
+% }
+
+% ==============================
+% === REFERENCES AND LINKING ===
+% ==============================
+% \let\inserttitle\@title
+% \let\inserttitle\@title
+
+\makeatletter
+% Enable hyperlinks
+\usepackage{hyperref}[implicit=true]
+\hypersetup{
+    colorlinks=false,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=blue,     
+    anchorcolor = blue,
+    citecolor = blue,    
+    % Set the metadata for the produced PDF.
+    pdftitle={UGAS while Exploiting Uncertified Controller},
+    pdfsubject={},
+    pdfauthor={Paul K. Wintz, Ricardo G. Sanfelice, João P. Hespanha},
+    pdfkeywords={Hybrid Dynamical Systems, Control Systems, Switching, Lyapunov Functions, Model Predictive Control}
+}   
+\makeatother
+
+% Display Theorem/Lemma/Corollary (1) in cross references.  
+% IT'S IMPORTANT TO LOAD THIS LAST AFTER ALL THE OTHER \usepackages.
+\usepackage[noabbrev, capitalise]{cleveref} 
+% Make ranges of references use an dash between the equation numbers. 
+% See https://tex.stackexchange.com/a/18988/153678
+\newcommand{\crefrangeconjunction}{--} 
+
+% Configure Clever Reference
+% Make equations referenced as "(1)" instead of "Equation 1"
+\crefname{equation}{}{}
+\crefformat{equation}{(#2#1#3)}
+% \crefrangeformat{equation}{(#3#1#4) to~(#5#2#6)}
+\crefmultiformat{equation}{(#2#1#3)}%
+{ and~(#2#1#3)}{, (#2#1#3)}{ and~(#2#1#3)}
+
+\newcommand{\setupAssumption}[1][A]{
+    % Setup enumerations with the assumption environment to use enumerations 
+    % (A1), (A2), etc. If the optional argument is provided, 
+    % then the letter is modified.
+    \renewcommand*{\theenumi}{(#1\arabic{enumi})}% From https://tex.stackexchange.com/a/11901/153678
+    \renewcommand*{\labelenumi}{(#1\arabic{enumi})}%
+}
+
+
+% =================
+% === REFERENCES ===
+% =================
+
+% Setup references for presentations
+
+\makeatletter%
+\@ifclassloaded{beamer}%
+{% if using beamer
+    % Import the natbib package and sets a bibliography and citation styles
+    \usepackage[url = false,doi = false,isbn = false,natbib]{biblatex}
+    % \usepackage[sorting=none,url=false, doi=false, isbn=false]{biblatex}
+    \addbibresource{biblio.bib} %Import the bibliography file
+    % \setcitestyle{authoryear,open={((},close={))}}
+}
+\makeatother%
+
+% \usepackage[style=authortitle]{biblatex}
+
+% Import the natbib package and sets a bibliography and citation styles
+% \usepackage[url = false,doi = false, isbn = false]{biblatex}
+% \usepackage{natbib}
+% \bibliographystyle{abbrvnat}
+% \setcitestyle{authoryear,open={((},close={))}}
+
+% \addbibresource{Uniting Feedback Controller.bib} %Imports bibliography file
+% \renewbibmacro*{cite:author}{%
+%     \printtext[bibhyperref]{%
+%         \structure{hello}
+%         % \printfield[citeauthor]{labeltitle}%
+%         % \setunit{\space}%
+%         % \printtext[parens]{\printdate}%
+%     }%
+% }
+% \renewbibmacro*{cite:title}{%
+%     \printtext[bibhyperref]{%
+%         \printfield[citetitle]{labeltitle}%
+%         \setunit{\space}%
+%         \printtext[parens]{\printdate}%
+%     }%
+% }
+
+% =========================
+% === EDITORIAL MARKUPS ===
+% =========================
+
+\ifdraft{
+    \newenvironment{workingnotes}{\sffamily \color{violet}}{}
+}{ 
+    \newenvironment{workingnotes}
+    {\expandafter\comment}
+    {\expandafter\endcomment}
+}
+
+\ifdraft{
+    \newcommand{\workingnote}[1]{\begin{workingnotes} #1 \end{workingnotes}}
+}{ 
+    \newcommand{\workingnote}[1]{}
+}
+
+\ifdraft{
+    \newcommand {\finalonly}[1]{{\color{red}$<$Hidden$>$}}
+}{
+    \newcommand{\finalonly}[1]{#1}
+}
+
+% Progress tracking
+\ifdraft{
+    \newcommand{\done}{\ensuremath{\checkmark}} % Variant: \surd
+    \newcommand{\undone}{\ensuremath{\square}}
+    \newcommand{\doneish}{\done-ish}
+}{
+    \newcommand{\done}{}
+    \newcommand{\undone}{}
+    \newcommand{\doneish}{}
+}
+
+% Support tracking changes and adding "todo" comments.
+% \usepackage[todonotes={colorinlistoftodos,prependcaption,textsize=small,textcolor=white},commandnameprefix=ifneeded]{changes}
+\usepackage[commandnameprefix=ifneeded,
+            final,
+            todonotes={colorinlistoftodos,prependcaption,
+                       textsize=small,backgroundcolor=orange!10,
+                       textcolor=black,linecolor=orange,bordercolor=orange}]{changes}
+
+% ============================================
+% === ENVIRONMENTS (Theorems, lemmas, etc) ===
+% ====================================f========
+
+\makeatletter%
+\@ifclassloaded{beamer}{% 
+    \theoremstyle{definition}%
+    \ifdefined\definition\else
+        \newtheorem{definition}{Definition}
+    \fi
+    \ifdefined\problem\else
+        \newtheorem{problem}{Problem}
+    \fi
+    \newtheorem{assumption}{Assumption}% Use singular even when there are multiple assumptions in a particular block.
+    \crefname{assumption}{Assumption}{Assumptions}
+    \theoremstyle{remark}%
+    \ifdefined\remark\else
+        \newtheorem{remark}{Remark}
+    \fi
+    \ifdefined\example\else
+        \newtheorem{example}{Example}
+    \fi
+    % \newtheorem{example}{Example}%
+    \theoremstyle{plain}%
+    \ifdefined\theorem\else
+        \newtheorem{theorem}{Theorem}
+    \fi
+    \newtheorem{proposition}{Proposition}
+    \ifdefined\lemma\else
+        \newtheorem{lemma}{Lemma}
+        \crefname{lemma}{Lemma}{Lemmas}%
+    \fi
+    \ifdefined\corollary\else
+        \newtheorem{corollary}{Corollary}
+        \crefname{corollary}{corollary}{corollaries}%
+    \fi
+}
+\makeatother%
+
+\makeatletter%
+\@ifclassloaded{ieeeconf}{% if using ieeeconf
+    \IEEEoverridecommandlockouts
+    \overrideIEEEmargins
+
+    % Load amsthm package. The following "\relax"
+    % commands prevent an error that say
+    % "Command \proof already defined." when we load amsthm.
+    \let\proof\relax 
+    \let\endproof\relax
+    \usepackage{amsthm}
+    
+    \theoremstyle{definition}%
+    \newtheorem{definition}{Definition}
+    \newtheorem{assumption}{Assumption}
+    \crefname{assumption}{Assumption}{Assumptions}
+    \newtheorem{example}{Example}
+
+    \theoremstyle{plain}%
+    \newtheorem{theorem}{Theorem}
+    \newtheorem{proposition}{Proposition}
+    \newtheorem{lemma}{Lemma}
+
+    \theoremstyle{remark}
+    \newtheorem{remark}{Remark}
+
+    % Set the bibliography style.
+    \bibliographystyle{ieeetr}
+}{% if not using ieeeconf
+    \newcommand{\authorblockN}[1]{#1}
+    % The amsthm package provides {theorem}, {lemma} and {proof} environments
+    \usepackage{amsthm}
+    \usepackage[toc,page]{appendix}
+}
+\makeatother%
+
+\makeatletter%
+\@ifclassloaded{article}{%
+    \usepackage{amsthm}
+    \theoremstyle{definition}
+    \newtheorem{definition}{Definition}
+    \crefname{definition}{Definition}{Definitions}
+    \newtheorem{assumption}{Assumption}
+    \crefname{assumption}{Assumption}{Assumptions}
+    \theoremstyle{remark}
+    \newtheorem{remark}{Remark}
+    \newtheorem{example}{Example}
+    \theoremstyle{plain}
+    \newtheorem{theorem}{Theorem}
+    \newtheorem{proposition}{Proposition}
+    \newtheorem{lemma}{Lemma}
+    \crefname{lemma}{Lemma}{Lemmas}
+    \newtheorem{corollary}{Corollary}
+    \crefname{corollary}{corollary}{corollaries}
+    \newtheorem{conjecture}{Conjecture}
+    \crefname{conjecture}{conjecture}{conjectures}
+}
+\makeatother%
+
+% =================================
+% === BEAMER PRESENTATION STYLE ===
+% =================================
+\makeatletter%
+\@ifclassloaded{beamer}{% 
+    % Hide Roman numerals from continued frames with breaks
+    \setbeamertemplate{frametitle continuation}{}
+
+    % Define Beamer colors.
+    \definecolor{lightblue}{RGB}{60,60,200}
+    \setbeamercolor{block title}{bg=lightblue!10!white}
+    \setbeamercolor{block body}{bg=lightblue!5!white}
+    \setbeamercolor{block title alerted}{bg=blue!10!white}
+    \setbeamercolor{block body alerted}{bg=blue!3!white}
+    \setbeamerfont{block title}{size={}}
+    \setbeamertemplate{bibliography item}{\insertbiblabel}
+    % Select font
+    \usefonttheme{serif}
+    \setbeamerfont{footnote}{size=\tiny}
+    \setbeamercolor{page number in head/foot}{fg=lightblue}
+    \setbeamercolor{author in head/foot}{fg=lightblue}
+    \setbeamertemplate{navigation symbols}{}
+    \setbeamertemplate{theorems}[numbered]
+    \setbeamertemplate{frametitle}[default][center]
+    % ======== Table of Contents ========
+    % Set the TOC colors
+    \setbeamercolor{section in toc}{fg=structure}
+    \setbeamercolor{subsection in toc}{fg=structure}
+    % Define Table of Contents slide at the beginning of each section.
+    \AtBeginSection[]{%
+    \begin{frame}<beamer>
+        \frametitle{Outline}
+        % Use 'show'/'hide' to show/hide subsections, and 'shaded' to gray them out. 
+        \tableofcontents[currentsection,
+                         currentsubsection,
+                         subsectionstyle=show/show/shaded]
+    \end{frame}
+    }%
+    % 
+    % Set the size of page numbers.
+    \setbeamerfont{footline}{size=\small}
+    \setbeamertemplate{footline}{
+        \hfill%
+        \usebeamercolor[fg]{page number in head/foot}%
+        \usebeamerfont{page number in head/foot}%
+        \setbeamertemplate{page number in head/foot}[framenumber]%
+        \usebeamertemplate*{page number in head/foot}\kern1em\vskip6pt%
+    }
+}
+\makeatother%
+
+% ======================================
+% === ENVIRONMENTS FOR LECTURE NOTES ===
+% ======================================
+% The amsthm package provides {theorem}, {lemma} and {proof} environments
+% \newenvironment{problem}[1][]
+%     {\medskip\large \textbf{Problem \!(#1)}:\normalsize \itshape }
+%     {\par}
+\newenvironment{subproblem}[1][]
+    {\normalsize \textbf{Part \!(#1)}:\normalsize \itshape }
+    {\par}    
+\newenvironment{hint}{\ttfamily\textup{[}}{\textup{]}}
+
+% Don't print section numbers
+% \setcounter{secnumdepth}{0}
+
+% Spaced example
+\newenvironment{spexample}[1][]{
+\par
+\vbox\bgroup
+\begin{example}[#1]
+}{
+\end{example}\egroup
+}
+
+% Spaced exercise
+\newenvironment{spexercise}[1][]{
+\par
+\vbox\bgroup\begin{exercise}[#1]
+}{
+\end{exercise}\egroup%
+}
+
+% Spaced definition
+\newenvironment{spdefinition}[1][]{
+\par
+\vbox\bgroup
+\begin{definition}[#1]
+}{
+\end{definition}\egroup
+}
+
+% Spaced theorem
+\newenvironment{sptheorem}[1][]{
+\par
+\vbox\bgroup
+\begin{theorem}[#1]
+}{
+\end{theorem}\egroup
+}
+
+% Spaced remark
+\newenvironment{spremark}[1][]{
+\par
+\vbox\bgroup
+\begin{remark}[#1]
+}{
+\end{remark}\egroup
+}
+
+% Spaced reminder
+\newenvironment{spreminder}[1][]{
+\par
+\vbox\bgroup
+\begin{reminder}[#1]
+}{
+\end{reminder}\egroup
+}
+
+% Define document colors
+\definecolor{blue}{rgb}{0.169, 0.243, 0.714}
+\definecolor{orange}{rgb}{1, 0.652, 0}
+\definecolor{q0}{rgb}{0.169, 0.243, 0.714}
+\definecolor{q1}{rgb}{1, 0.652, 0}
+\newcommand{\qcolor}[2]{{\color{q#1}#2}}

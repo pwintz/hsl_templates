@@ -1,0 +1,1 @@
+The image baskin-logo-banner is deprecated. Use UCSC_BaskinEng_Logo_wide instead.

@@ -1,0 +1,480 @@
+\usepackage{bbm}
+\usepackage{xspace}
+
+% =====================
+% ======= TEXT ========
+% =====================
+%
+\newcommand{\textfor}{\textup{for }}%
+\newcommand{\textif}{\textup{if }}%
+\newcommand{\textotherwise}{\textup{otherwise\xspace}}%
+\newcommand{\otherwise}{\textotherwise}%
+\newcommand{\midand}{\quad \textup{and}\quad}%
+\newcommand{\midor}{\quad \textup{or}\quad}%
+% \renewcommand {\if}{&\quad \text{if }}%
+\newcommand{\st}{\ensuremath{^{st}}}%
+\newcommand{\nd}{\ensuremath{^{nd}}}
+\newcommand{\rd}{\ensuremath{^{rd}}}
+\renewcommand{\th}{\ensuremath{^{th}}} % for ith, jth, etc.
+\newcommand*{\circled}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}} % Creates a number enclosed in a circle
+\newcommand{\lhs}{left-hand side }
+\newcommand{\rhs}{right-hand side }
+\newcommand{\wrt}{with respect to }
+\newcommand{\Matlab}{\textsc{Matlab}\xspace}
+%
+% =============================
+% ======= GENERAL MATH ======== 
+% =============================
+%
+\newcommand*{\invs}{^{-1}}
+\NewDocumentCommand{\hypt}{s m m}{
+	% \hypt{a}{b} generates sqrt(a^2 + b^2). 
+	% \hypt*{a}{b} puts parentheses around a and b.
+    \IfBooleanTF #1%
+        % Star=Parentheses.
+        {\sqrt{\left(#2\right)^2 + \left(#3\right)^2}}%
+        % No star=No Parentheses.
+        {\sqrt{#2^2 + #3^2}}%
+   }
+\newcommand{\definedas}{\equiv}
+\newcommand{\identifyas}{\equiv}
+\newcommand{\iso}{\cong}
+\newcommand{\evaluate}{\bigg\rvert}
+\newcommand{\at}{\bigg\rvert}
+\newcommand*{\evaluateat}[1]{\bigg\rvert_{#1}}
+\newcommand*{\evaluatefromto}[2]{\bigg\rvert_{#1}^{#2}}
+\newcommand{\dom}{\operatorname{dom}}
+% 
+% Create a system of equations.
+% Usage:
+% \system{x + y &= 2 \\ x - y &= 0}
+\newcommand{\system}[1]{\left\{
+    \begin{aligned}
+        #1
+    \end{aligned}\right.}
+\newcommand{\neginfty}{{-\infty}}
+%
+% **** FUNCTIONS ****
+\renewcommand{\arctan}{\tan\invs}
+\newcommand{\atan}{\arctan}
+\newcommand{\atantwo}{\mathtt{atan2}}
+\renewcommand{\arcsin}{\sin\invs}
+\newcommand{\asin}{\arcsin}
+\renewcommand{\arccos}{\cos\invs}
+\newcommand{\acos}{\arccos}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\absq}[1]{\abs{#1}^2}
+%
+% **** COMPLEX **** 
+\newcommand{\real}{\,\mathfrak{Re}}
+\newcommand{\imag}{\,\mathfrak{Im}}
+\newcommand{\conj}[1]{\overline{#1}}
+%
+% ==========================
+% ======= Fractions ======== 
+% ==========================
+%
+\newcommand{\fracshort}[2]{\left.#1 \:\middle/\: #2\right.}
+\newcommand{\oneover}[1]{\frac{1}{#1}}
+\newcommand{\doneover}[1]{\dfrac{1}{#1}}
+\newcommand{\oneovershort}[1]{\fracshort{1}{#1}}
+\newcommand{\half}[1][1]{\frac{#1}{2}}
+\newcommand{\halfshort}[1][1]{\fracshort{#1}{2}}
+\newcommand{\third}[1][1]{\frac{#1}{3}}
+\newcommand{\thirdshort}[1][1]{\fracshort{#1}{3}}
+\newcommand{\quarter}[1][1]{\frac{#1}{4}}
+\newcommand{\quartershort}[1][1]{\fracshort{#1}{4}}
+\newcommand{\fifth}[1][1]{\frac{#1}{5}}
+\newcommand{\fifthshort}[1][1]{\fracshort{#1}{5}}
+\newcommand{\sixth}[1][1]{\frac{#1}{6}}
+\newcommand{\sixthshort}[1][1]{\fracshort{#1}{6}}
+\newcommand{\twelfth}[1][1]{\frac{#1}{12}}
+\newcommand{\twelfthshort}[1][1]{\fracshort{#1}{12}}
+%
+% ===========================
+% ======= SET THEORY ======== 
+% ===========================
+%
+% Set name
+\newcommand{\setname}{\mathcal} 
+% Define a set in the form {<arg 1>|<arg 2>}
+% \newcommand{\suchthat}{\mathrel{} \middle| \mathrel{} } % Alternative: \mid
+\newcommand{\suchthat}{\mathrel{}\ifnum\currentgrouptype=16 \middle\fi|\mathrel{}}
+\newcommand*{\setdef}[1]{\left\{#1 \right\}} 
+\newcommand*{\closure}[1]{\overline{#1}}
+\newcommand{\interior}{\operatorname{int}}
+\newcommand{\union}{\cup}
+\newcommand{\Union}{\bigcup}
+\newcommand{\inter}{\cap}
+\newcommand{\Inter}{\bigcap}
+\newcommand{\intersect}{\inter}
+\newcommand{\Intersect}{\Inter}
+\newcommand{\boundary}{\partial}
+\newcommand{\bnd}{\boundary}
+%
+% **** SETS **** 
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\realsn}{\reals^{n}}
+\newcommand{\positivereals}{\reals_{>0}}
+\newcommand{\preals}{\positivereals}
+\newcommand{\nonnegativereals}{\reals_{\geq0}}
+\newcommand{\nnreals}{\nonnegativereals}
+\newcommand{\rationals}{\mathbb{Q}}
+\newcommand{\integers}{\mathbb{Z}}
+\newcommand{\naturals}{\mathbb{N}}
+\newcommand{\complexes}{\mathbb{C}}
+\newcommand*{\squarematrices}[1][n]{\reals^{#1 \times #1}}
+\newcommand*{\symmetricmatrices}[1][n]{\mathbb{S}^{#1}}
+\newcommand*{\pdmatrices}[1][n]{\symmetricmatrices[#1]_{++}}
+\newcommand*{\psdmatrices}[1][n]{\symmetricmatrices[#1]_{+}}
+\newcommand*{\unitball}[1][n]{\mathbb{B}^{#1}}
+\newcommand*{\sphere}[1][n]{\mathbb{S}^{#1}}
+\newcommand*{\torus}[1][n]{\mathbb{T}^{#1}}
+\newcommand*{\realprojective}[1][n]{\reals \mathbb{P}^{#1}}
+\newcommand*{\complexprojective}[1][n]{\complexes\mathbb{P}^{#1}}
+%
+% =============================
+% ====== LINEAR ALGEBRA =======
+% ============================= 
+%
+% **** VECTORS **** 
+% If a value is not a vector don't use the "\"
+\renewcommand*{\vec}[1]{\bm{\mathrm{#1}}} % Vector variable
+\newcommand{\x}{{\vec{x}}}
+\newcommand{\y}{{\vec{y}}} 
+\newcommand{\z}{{\vec{z}}}
+\renewcommand{\r}{{\vec{r}}}
+\renewcommand{\u}{{\vec{u}}}
+\renewcommand{\v}{{\vec{v}}}
+\renewcommand{\a}{{\vec{a}}}
+\renewcommand{\b}{{\vec{b}}}
+\newcommand{\0}{\vec 0}
+\newcommand{\onevec}{\mathbb{1}}
+\newcommand{\RRF}{\operatorname{RRF}}
+\newcommand{\RREF}{\operatorname{RREF}}
+\newcommand*{\proj}[1]{\operatorname{proj}_{#1}}
+\newcommand*{\comp}[1]{\operatorname{comp}_{#1}}
+\newcommand*{\orth}[1]{\operatorname{orth}_{#1}}
+%
+% **** VECTOR AND MATRIX FUNCTIONS **** 
+\newcommand*{\innerproduct}[2]{\left\langle #1, #2 \right\rangle}
+\newcommand*{\ip}[2]{\innerproduct{#1}{#2}}
+\newcommand*{\norm}[1]{\left\lvert#1\right\rvert} % double bars "\lVert ... \rVert" are used for signal norms so we use singal bars for euclidean vector norms.
+\newcommand*{\normsq}[1]{\norm{#1}_{1}^2}
+\newcommand*{\onenorm}[1]{\norm{#1}_{1}}
+\newcommand*{\twonorm}[1]{\norm{#1}_{2}}
+\newcommand*{\pnorm}[1]{\norm{#1}_{p}}
+\newcommand*{\frobeniusnorm}[1]{\norm{#1}_{F}}
+\newcommand*{\inftynorm}[1]{\norm{#1}_{\infty}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\rank}{\operatorname{rank}}
+\newcommand{\trace}{\operatorname{tr}}
+%DON'T USE: \renewcommand {\null}{\text{null}}
+\newcommand{\range}{\operatorname{range}}
+\newcommand{\trans}[1][]{^{#1 \top}} % Matrix transpose
+\newcommand{\transstar}{^{*\top}} % Vector or matrix transpose notation (\intercal is an alternative)
+\newcommand{\herm}[1][]{^{#1 H}} % Hermitian 
+\newcommand{\eig}{\operatorname{eig}}
+%
+% **** MATRICES **** 
+% Create a large matrix. Usage \mat[<vertical spacing>]{a & b \\ c & d}
+\newcommand{\mat}[2][1]{\begingroup
+	\renewcommand*{\arraystretch}{#1}
+	\begin{bmatrix}#2\end{bmatrix}
+\endgroup}
+% Create a small matrix suitable to use in the middle of text. 
+% Usage \smallmat{a & b \\ c & d}
+\newcommand*{\smallmat}[1]{\bigl[ \begin{smallmatrix} #1 \end{smallmatrix} \bigr]}
+\newcommand{\diagmatrix}[2]{
+\mat{
+{#1} & & \\
+& \ddots & \\
+& & {#2}
+}}
+\newcommand{\tridiagmatrix}[3]{
+\mat{
+#2     & #3     &         \\
+#1     & \ddots & \ddots  \\
+       & \ddots & \ddots & #3 \\
+       &        & #1     & #2
+}}
+\newcommand{\rotationmat}[1]{\mat{\cos{#1} & \sin{#1} \\ 
+                                  -\sin{#1} & \cos{#1} }}
+%
+% =========================
+% ======= CALCULUS ========
+% =========================
+%
+\newcommand{\diff}{\mathop{}\!d}
+\newcommand{\dt}{\diff t}
+\newcommand{\dx}{\diff x}
+\newcommand{\dy}{\diff y}
+\newcommand{\dz}{\diff z}
+\newcommand*{\derivative}[2][]{\frac{d#1}{d#2}}
+\newcommand*{\derivativeshort}[2][]{\fracshort{d#1}{d#2}}
+\newcommand*{\dd}[2][]{\derivative[#1]{#2}} % Shortcut for \derivative
+\newcommand*{\ddshort}[2][]{\derivativeshort[#1]{#2}}
+\newcommand*{\partialderivative}[2][]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand*{\partialderivativeshort}[2][]{\fracshort{\partial{#1}}{\partial{#2}}}
+\newcommand*{\pd}[2][]{\partialderivative[#1]{#2}}
+\newcommand*{\pdshort}[2][]{\partialderivativeshort[#1]{#2}}
+\newcommand*{\pdx}[1][]{\pd[#1]{x}}
+\newcommand*{\pdy}[1][]{\pd[#1]{y}}
+\newcommand*{\pdz}[1][]{\pd[#1]{z}}
+\newcommand*{\ddx}[1][]{\derivative[#1]{x}}
+\newcommand*{\ddy}[1][]{\derivative[#1]{y}}
+\newcommand*{\ddz}[1][]{\derivative[#1]{z}}
+\newcommand*{\ddt}[1][]{\derivative[#1]{t}}
+\newcommand*{\dds}[1][]{\derivative[#1]{s}}
+\newcommand{\dxdt}{\derivative[x]{t}}
+\newcommand{\dydt}{\derivative[y]{t}}
+\newcommand{\dfdx}{\derivative[f]{x}}
+\newcommand{\dxdy}{\derivative[x]{y}}
+\newcommand{\xdot}{\dot{x}}
+\newcommand{\xddot}{\ddot{x}}
+\newcommand{\ydot}{\dot{y}}
+\newcommand{\yddot}{\ddot{y}}
+\newcommand{\zdot}{\dot{z}}
+\newcommand{\zddot}{\ddot{z}}
+\newcommand{\rdot}{\dot{r}}
+\newcommand{\rddot}{\ddot{r}}
+\newcommand{\thetadot}{\dot{\theta}}
+\newcommand{\thetaddot}{\ddot{\theta}}
+\newcommand{\omegadot}{\dot{\omega}}
+\newcommand{\omegaddot}{\ddot{\omega}}
+\newcommand*{\secondderivative}[2][]{\frac{d^2{#1}}{d{#2}^2}}
+\newcommand{\del}{\nabla}
+\newcommand{\grad}{\nabla}
+\newcommand{\laplace}{\del^2}
+\newcommand{\hessian}{\del^2}
+\newcommand{\Jacobian}[1]{\mat{
+    \partialderivative[#1_1]{x_1} 
+        & \cdots 
+        & \partialderivative[#1_1]{x_n} \\
+    \vdots & \ddots & \vdots \\
+    \partialderivative[#1_n]{x_1} 
+        & \cdots 
+        & \partialderivative[#1_n]{x_n} }}
+\newcommand{\Hessian}[1]{\mat{
+    \partialderivative[^2#1]{x_1^2} 
+        & \cdots 
+        & \partialderivative[^2#1]{x_1\partial x_n} \\
+    \vdots & \ddots & \vdots \\
+    \partialderivative[^2#1]{x_n\partial x_1} 
+        & \cdots 
+        & \partialderivative[^2#1]{x_n^2} }}
+% Exponent Taylor Series Definition
+\newcommand*{\taylorexponent}[1]{\sum^\infty_{k=1} \frac{#1^k}{k!}}
+%
+% **** TRANSFORMS ****
+\newcommand{\Lagrangian}{\mathcal{L}}
+\newcommand*{\Fourier}[1][*]{ \mathcal{F}\left[\,#1\,\right] }
+\newcommand*{\Fourierinvs}[1][*]{ \mathcal{F}\invs\left[\,#1\,\right] }
+\newcommand*{\Laplace}[1][*]{ \mathcal{L}\left[\,#1\,\right] }
+\newcommand*{\Laplaceinvs}[1][*]{ \mathcal{L}\invs\left[\,#1\,\right] }
+%
+% =============================
+% ======= OPTIMIZATION ========
+% =============================
+%
+% Example usage: \convexcombo[\alpha]{x}{y}
+\newcommand*{\convexcombo}[3][\theta]{{#1}{#2} + \left(1 - {#1}\right){#3}}
+\newcommand{\convex}{\operatorname{conv}}
+\newcommand*{\minimize}[1]{\underset{#1}{\textup{minimize}}\quad} % Usage: \minimize{\x \in \reals}
+\newcommand*{\maximize}[1]{\underset{#1}{\textup{maximize}}\quad} % Usage: \maximize{\x \in \reals}
+\newcommand{\subjectto}{\textup{subject to}\quad}
+\newcommand{\epi}{\operatorname{epi}}
+\newcommand*{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\:\:}
+\newcommand*{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\:\:}
+%
+% ===============================
+% ======= Control Theory ========
+% ===============================
+%
+\newcommand{\Kinfty}{\calK_{\infty}}
+\newcommand{\KL}{\mathcal{KL}}
+\newcommand{\KLL}{\mathcal{KLL}}
+% 
+%
+% ===========================================
+% ======= PROBABILITY AND STATISTICS ========
+% ===========================================
+%
+\newcommand{\expectedvalue}{\mathbb{E}}
+\newcommand{\E}{\expectedvalue}
+\newcommand*{\Egiven}[2]{\E\left(#1 \suchthat #2\right)}
+\renewcommand{\P}{\mathbb{P}}
+\renewcommand*{\choose}[2]{_{#1}C_{#2}}
+% Produces P(A|B)
+\newcommand{\Pgiven}[2]{\P\left(#1 \suchthat #2\right)}
+% Produces P(A intesect B) / P(B)
+\newcommand{\Pgivenformula}[2]{\frac{\P(#1 \cap #2)}{\P(#2)}}
+\newcommand{\Var}{\operatorname{Var}}
+\newcommand{\Vargiven}[2]{\Var\left(#1 \suchthat #2\right)}
+\newcommand{\Cov}{\operatorname{Cov}}
+\newcommand{\Covgiven}[2]{\Cov\left(#1 \suchthat #2\right)}
+\newcommand{\pdf}{p.d.f. }
+\newcommand{\cdf}{c.d.f. }
+%
+% ===========================================
+% ======= REAL ANALYSIS ========
+% ===========================================
+%
+\newcommand{\limittoinfy}[1][n]{\lim_{#1 \to \infty}}
+\newcommand{\sumtoinfty}[1][n]{\sum_{#1=1}^{\infty}}
+%
+% ===========================================
+% ======= Manifolds ========
+% ===========================================
+%
+\newcommand{\Lie}{\mathscr{L}}
+%
+% =============================
+% ===== PROGRESS TRACKING =====
+% =============================
+%
+\newcommand{\boxedeq}[1]{\begin{empheq}[box={\fboxsep=6pt\fbox}]{align}#1\end{empheq}}
+
+% Misc
+\newcommand{\xaxis}{$x$-axis }
+\newcommand{\yaxis}{$y$-axis }
+\newcommand{\zaxis}{$z$-axis }
+
+\newcommand{\xvalue}{$x$-value }
+\newcommand{\yvalue}{$y$-value }
+\newcommand{\zvalue}{$z$-value }
+
+\newcommand{\xcoord}{$x$-coordinate }
+\newcommand{\ycoord}{$y$-coordinate }
+\newcommand{\zcoord}{$z$-coordinate }
+
+% \usepackage[dvipsnames]{xcolor}
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{darkred}{rgb}{0.8, 0.0, 0.0}
+
+\newcommand{\red}[1]{{\color{red}#1}}
+\newcommand{\green}[1]{{\color{green}#1}}
+\newcommand{\blue}[1]{{\color{blue}#1}}
+\newcommand{\darkred}[1]{{\color{darkred}#1}}
+\newcommand{\darkgreen}[1]{{\color{darkgreen}#1}}
+\newcommand{\update}[1]{\blue{#1}}
+\newcommand{\updatetwo}[1]{\green{#1}}
+\newcommand{\delete}[1]{\darkred{#1}}
+\newcommand{\macrocolor}[1]{{\ifdraft{\color{magenta}#1}{#1}}}
+\newcommand{\correction}[1]{{\color{purple}#1}}
+
+% Iterations
+\newcommand{\I}{\textrm{I}}
+\newcommand{\II}{\textrm{II}}
+\newcommand{\III}{\textrm{III}}
+\newcommand{\IV}{\textrm{IV}}
+\newcommand{\V}{\textrm{V}}
+
+% Specific to this paper
+% Caligraphy letters
+\newcommand{\calA}{{\mathcal{A}}}
+\newcommand{\calB}{{\mathcal{B}}}
+\newcommand{\calH}{{\mathcal{H}}}
+\newcommand{\calK}{{\mathcal{K}}}
+\newcommand{\calS}{{\mathcal{S}}}
+\newcommand{\calT}{{\mathcal{T}}}
+\newcommand{\calU}{{\mathcal{U}}}
+\newcommand{\calX}{{\mathcal{X}}}
+\newcommand{\calY}{{\mathcal{Y}}}
+\newcommand{\calZ}{{\mathcal{Z}}}
+\newcommand{\calAX}{\macrocolor{\widetilde{\calA}}}
+
+% Zero-vector
+\newcommand{\zerovec}[1]{0_{#1}}
+
+\newcommand{\sigmaone}{\macrocolor{\sigma_1}}
+\newcommand{\sigmazero}{\macrocolor{\sigma_0}}
+\newcommand{\epsilonv}{\macrocolor{\varepsilon_v}}
+\newcommand{\taudot}{\dot{\tau}}
+\newcommand{\vdot}{\dot{v}}
+\newcommand{\qdot}{\dot{q}}
+\newcommand{\basin}{\macrocolor{\calB_{\calA}}}
+\newcommand{\vdiffcoeff}{\macrocolor{\mu}}
+
+%  From https://tex.stackexchange.com/questions/161050/is-there-a-painless-way-to-get-self-loop-decorations-on-mathematical-symbols/161060?noredirect=1#comment1489152_161060
+\usepackage{tikz}
+\usepackage{stackengine}
+\newcommand{\LoopFunction}[1]{%
+  \renewcommand\stacktype{L}%
+  \renewcommand\useanchorwidth{T}%
+  \renewcommand\stackalignment{l}%
+  \setbox0\hbox{$#1$}%
+  \stackon[0pt]{\usebox0}{\hspace{\the\wd0}\hspace{-1.6ex}%
+    \tikz \node {} edge [in=80,out=30,loop] node {} ();}%
+}
+
+\newcommand{\plantstatespace}{\macrocolor{\reals^\nplant}}
+\newcommand{\plantinputspace}{\macrocolor{\reals^\mplant}}
+\newcommand{\calZswitchtoone}{\macrocolor{\calZ_{0\mapsto 1}}}
+\newcommand{\calZholdzero}{\macrocolor{\calZ_{0}}}
+\newcommand{\calZholdone}{\macrocolor{\calZ_{1}}}
+\newcommand{\calZswitchtozero}{\macrocolor{\calZ_{1\mapsto 0}}}
+
+% Distance function
+\newcommand{\distA}[1]{\macrocolor{\abs{#1}_{\calA}}}
+\newcommand{\distAX}[1]{\macrocolor{\abs{#1}_{\calAX}}}
+
+% Dynamics
+\newcommand{\fp}{\macrocolor{f_P}}
+\newcommand{\fv}{\macrocolor{f_v}}
+\newcommand{\ftau}{\macrocolor{f_\tau}}
+\newcommand{\nplant}{\macrocolor{n}}
+\newcommand{\mplant}{\macrocolor{m}}
+
+% This can be set to either contain text "or" or the logic symbol \vee.
+\newcommand{\OR}{\textup{ or }}
+\newcommand{\AND}{,}
+
+% Set-specific subscripts
+\newcommand{\sszero}{^{\macrocolor{0}}}
+\newcommand{\ssone}{^{\macrocolor{1}}}
+\newcommand{\ssb}{^{\macrocolor{b}}}
+
+% Generalized derivatives
+\newcommand{\gdd}[1]{{#1}^\circ} % directional derivative
+\newcommand{\ggrad}{\macrocolor{\partial^\circ}} % gradient
+
+\newcommand{\tangentcone}[1]{\macrocolor{T}_{#1}}
+
+\newcommand{\proofsketch}{\par\textit{Proof sketch.} }
+
+\renewcommand{\sec}{\operatorname{s}}
+\newcommand{\msec}{\operatorname{ms}}
+
+\newcommand{\zzero}{z_0}
+\newcommand{\zone}{z_1}
+
+% Text
+\newcommand{\UGAS}{GAS\xspace}
+
+\newcommand{\VonedotDefinition}{
+  \begin{center}
+    \begin{tcolorbox}[colback=white,colframe=structure,box align=center, width=0.5\linewidth]
+      Let $\dot V_{1}(z) := \ip{\del V(z)}{\fp(z, \qcolor{1}{\kappa_{1}}(z))}.$\qquad
+    \end{tcolorbox}
+  \end{center}
+  \smallskip 
+}
+\newcommand{\calZholdonedef}{\{z \in \plantstatespace \mid \dot V_1(z) \leq -\sigmaone(\distA{z})\}}
+\newcommand{\calZswitchtozerodef}{\{z \in \plantstatespace \mid \dot V_1(z) \geq -\sigmaone(\distA{z})\}}
+
+\newcommand{\tV}{\macrocolor{\widetilde{V}}}
+\newcommand{\tVc}{\macrocolor{\gdd{\widetilde{V}}}}
+\newcommand{\eqss}{{eq}}
+\newcommand{\neqss}{{neq}}
+\newcommand{\xneq}{\macrocolor{x_\neqss}}
+\newcommand{\zneq}{\macrocolor{z_\neqss}}
+\newcommand{\vneq}{\macrocolor{v_\neqss}}
+\newcommand{\qneq}{\macrocolor{q_\neqss}}
+\newcommand{\xeq}{\macrocolor{x_\eqss}}
+\newcommand{\zeq}{\macrocolor{z_\eqss}}
+\newcommand{\veq}{\macrocolor{v_\eqss}}
+\newcommand{\qeq}{\macrocolor{q_\eqss}}
+\newcommand{\flowdir}{\macrocolor{w}}
+% \renewcommand{\calAX}
+
