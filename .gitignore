@@ -298,6 +298,8 @@ TSWLatexianTemp*
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/ltex
+!.vscode/ltex.dictionary.*
+!.vscode/extensions.json
 *.code-workspace
 
 ### VisualStudioCode Patch ###

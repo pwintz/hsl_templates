@@ -80,6 +80,10 @@
 
 %% Misc/Uncategorized Packages %%
 \usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
+% \let\commentsection\comment
+% \let\endcommentsection\endcomment
+% \let\comment\@undefined
+% \let\endcomment\@undefined
 \usepackage{cancel} % For crossing out parts of equations.
 \usepackage{empheq} % For putting boxes around equations
 \usepackage{mathtools}
@@ -150,25 +154,8 @@
 
 \usepackage[final]{listings}
 
-% Allows comments sections
+% Allows code block sections sections
 \usepackage{verbatim} 
-
-% \lstset{frame=tb,
-%   language=Python,
-%   aboveskip=3mm,
-%   belowskip=3mm,
-%   showstringspaces=false,
-%   columns=flexible,
-%   basicstyle={\small\ttfamily},
-%   numbers=none,
-%   numberstyle=\tiny\color{gray},
-%   keywordstyle=\color{blue},
-%   commentstyle=\color{dkgreen},
-%   stringstyle=\color{mauve},
-%   breaklines=true,
-%   breakatwhitespace=true,
-%   tabsize=3
-% }
 
 % ==============================
 % === REFERENCES AND LINKING ===
