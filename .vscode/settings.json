@@ -1,0 +1,82 @@
+{
+    "ltex.latex.commands": {
+        "\\lstinputlisting{}": "ignore",
+        "\\problem{}": "ignore",
+        "\\subproblem{}": "ignore",
+        "\\code{}": "ignore",
+        "\\cite{}": "ignore",
+        "\\nocite{}": "ignore"
+    },
+    "ltex.additionalRules.enablePickyRules": true,
+    "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+    "latex-workshop.latex.external.build.args": [
+        "-interaction=nonstopmode"
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "latexmk 🔃",
+            "tools": [
+                "latexmk"
+            ]
+        },
+    ],
+    "latex-workshop.latex.tools": [
+
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=%OUTDIR%",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        }
+    ],
+    "files.exclude": {
+        "**/*.4ct": true,
+        "**/*.4tc": true,
+        "**/*.aux": true,
+        "**/*.fdb_latexmk": true,
+        "**/*.idv": true,
+        "**/*.lg": true,
+        "**/*.log": true,
+        "**/*.synctex.gz": true,
+        "**/*.tmp": true,
+        "**/*.xref": true,
+        "**/*.bbl": true,
+        "**/*.fls": true,
+        "**/*.loc": true,
+        "**/*.out": true,
+        "**/*.run.xml": true,
+        "**/*.soc": true,
+        "**/*.bcf": true,
+        "**/*.nav": true,
+        "**/*.toc": true,
+        "**/*.snm": true,
+        "**/*.blg": true
+    },
+    "latex-workshop.latex.pdfWatch.delay": 150
+}
