@@ -81,31 +81,59 @@
 %	TITLE SECTION 
 %------------------------------------------------------------------
 
-\title{\input{text/title}} % Poster title
+\makeatletter
+\title{\pwintz@title}% Poster title is defined in document_setup.tex
+\makeatother
+\author{% Populate author information from defnitions in document_setup.tex
+   % Insert first author, if defined.
+   \ifcsdef{pwintz@author1}{% If defined
+        \csname pwintz@author1\endcsname%
+        \textsuperscript{\csname pwintz@authorInstitute1\endcsname}%        
+        \ifcsdef{pwintz@authorEmail1}{ (\csname pwintz@authorEmail1\endcsname)}{}%
+    }{}%
+    % Insert second author, if defined.
+    \ifcsdef{pwintz@author2}{, \ifcsdef{pwintz@author3}{}{and }}{}% Add "," or ", and"
+    \ifcsdef{pwintz@author2}{% If defined
+        \csname pwintz@author2\endcsname%
+        \textsuperscript{\csname pwintz@authorInstitute2\endcsname}%
+    }{}%
+    % Insert third author, if defined.
+    \ifcsdef{pwintz@author3}{, \ifcsdef{pwintz@author4}{}{and }}{}% Add "," or ", and"
+    \ifcsdef{pwintz@author3}{% If defined
+        \csname pwintz@author3\endcsname%
+        \textsuperscript{\csname pwintz@authorInstitute3\endcsname}%
+    }{}%
+    % Insert fourth author, if defined.
+    \ifcsdef{pwintz@author4}{, \ifcsdef{pwintz@author5}{}{and }}{}% Add "," or ", and"
+    \ifcsdef{pwintz@author4}{% If defined
+        \csname pwintz@author4\endcsname%
+        \textsuperscript{\csname pwintz@authorInstitute4\endcsname}%
+    }{}
+}
 
-\author{\input{text/author1_name}$^1$ (\input{text/author1_email}), \input{text/author2_name}$^1$, and \input{text/author3_name}$^2$}
-
-\institute{
-    $^1$University of California, Santa Cruz; %, Department of Applied Mathematics; 
-    % $^2$UC, Santa Cruz, \input{text/author2_department},
-    $^2$University of California, Santa Barbara%, \input{text/author2_department},
-    } % Institution(s)
+\institute{ % Populate institutions that are defined in document_setup.tex
+    \ifcsdef{pwintz@institute1}{% If defined
+        \textsuperscript{1}\csname pwintz@institute1\endcsname%
+    }{}% Else nothing
+    \ifcsdef{pwintz@institute2}{% If defined
+       ; \textsuperscript{2}\csname pwintz@institute2\endcsname%
+    }{}% Else nothing
+    \ifcsdef{pwintz@institute3}{% If defined
+       ; \textsuperscript{3}\csname pwintz@institute3\endcsname%
+    }{}% Else nothing
+    \ifcsdef{pwintz@institute3}{; }{}% Add "; " if there is another institute
+    \ifcsdef{pwintz@institute4}{% If defined
+       ; \textsuperscript{4}\csname pwintz@institute3\endcsname%
+    }{}% Else nothing
+} 
 
 %------------------------------------------------------------------
 
-\newcommand{\kappazero}{\qcolor0{\kappa_0}}
-\newcommand{\kappaone}{\qcolor1{\kappa_1}}
-
 \setlength{\parskip}{40.0 pt plus 5 pt}
 
-% \setbeamercolor{bibliography entry author}{fg=red}
-% \setbeamercolor{bibliography entry title}{fg=blue}
 \setbeamercolor{bibliography entry note}{fg=structure!85!white}
 
-
 \usepackage{demo_setup}
-
-
 
 \begin{document}
 
@@ -224,18 +252,17 @@
 %------------------------------------------------------------------
 
 \begin{block}{Acknowledgements}
-    \small{\rmfamily{ % Use small Roman text for the acknowledgments.
-        \include{text/funding}
-    }} 
-    \vspace{20pt}
-    
-    % Logos for funding agencies.
-    \begin{minipage}{\linewidth}
-        \includegraphics[height=0.16\linewidth,align=c]{example-image-a}\hfill
-        \includegraphics[height=0.16\linewidth,align=c]{example-image-b}\hfill
-        \includegraphics[height=0.16\linewidth,align=c]{example-image-c} 
-    \end{minipage}
-\end{block}
+    % Use small Roman text for the acknowledgments.
+    \small{\rmfamily{\acknowledgementBlurb}} 
+        \vspace{20pt}
+        
+        % Logos for funding agencies.
+        \begin{minipage}{\linewidth}
+            \includegraphics[height=0.16\linewidth,align=c]{example-image-a}\hfill
+            \includegraphics[height=0.16\linewidth,align=c]{example-image-b}\hfill
+            \includegraphics[height=0.16\linewidth,align=c]{example-image-c} 
+        \end{minipage}
+    \end{block}
 
 %------------------------------------------------------------------
 

@@ -464,3 +464,57 @@
 \definecolor{q0}{rgb}{0.169, 0.243, 0.714}
 \definecolor{q1}{rgb}{1, 0.652, 0}
 \newcommand{\qcolor}[2]{{\color{q#1}#2}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% Macros for Defining Document Info %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\setTitle}[1]{%
+  % Create a macro named \pwintz@title.
+  \makeatletter%
+  \expandafter\newcommand\csname pwintz@title\endcsname{#1}
+  \makeatother
+}
+
+\newcommand{\setAuthor}[3]{%
+% Define a macro named \pwintz@authorX where X is the first argument for \setAuthor. 
+% For example, \setAuthor2{John Smith} creates a macro named "\pwintz@author2".
+% Because this macro name has a number in it, it must be referenced using "\csname pwintz@author2\endcsname" (there must not be a space before \endcsname).
+  \makeatletter%
+  \expandafter\newcommand\csname pwintz@author#1\endcsname{#2}%
+  \expandafter\newcommand\csname pwintz@authorInstitute#1\endcsname{#3}%
+  \makeatother%
+}
+
+\newcommand{\setAuthorEmail}[2]{%
+% Define a macro named \pwintz@authorEmailX where X is the first argument for \setAuthorEmail. 
+% For example, \setAuthorEmail2{John Smith} creates a macro named "\pwintz@authorEmail2".
+% Because this macro name has a number in it, it must be referenced using "\csname pwintz@authorEmail2\endcsname" (there must not be a space before \endcsname).
+  \makeatletter%
+  \expandafter\newcommand\csname pwintz@authorEmail#1\endcsname{#2}%
+  \makeatother%
+}
+
+\newcommand{\setInstitute}[2]{%
+% Define a macro named \pwintz@instituteX where X is the first argument for \setInstitute. 
+% For example, \setInstitute2{Harvard} creates a macro named \pwintz@institute2.
+  \makeatletter%
+  \expandafter\newcommand\csname pwintz@institute#1\endcsname{#2}
+  \makeatother
+}
+
+\newcommand{\setLongAffiliation}[2]{%
+% Define a macro named \pwintz@longAffiliationX where X is the first argument for \setLongAffiliation. 
+% For example, \setLongAffiliation2{Harvard} creates a macro named \pwintz@longAffiliation2.
+% The long affiliation for each author should be a sentence fragment that can replace "..." in "The author is with ..." (without trailing space).
+  \makeatletter%
+  \expandafter\newcommand\csname pwintz@longAffiliation#1\endcsname{#2}
+  \makeatother
+}
+
+\newcommand{\setAcknowledgementBlurb}[1]{%
+  % Create a macro named \acknowledgementBlurb.
+  \makeatletter%
+  \expandafter\newcommand\csname acknowledgementBlurb\endcsname{#1}
+  \makeatother
+}

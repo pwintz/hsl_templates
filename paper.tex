@@ -8,7 +8,6 @@
 \input{document_defintions}
 \usepackage{demo_setup} % TODO: Delete this.
 
-
 %%%
 %%% STEP 1
 %%%
@@ -39,33 +38,55 @@
 
 \begin{document}
 
-% IF CONFERENCE
-\title{\input{text/title}}
+% Populate poster title from value defined in document_setup.tex.
+\makeatletter
+\title{\pwintz@title}
+\makeatother
 
-\author{
-    \authorblockN{\input{text/author1_name}}
-    \and
-    \authorblockN{\input{text/author2_name}}
-    \and
-    \authorblockN{\input{text/author3_name}}
+\author{% 
+% Populate author information from definitions in document_setup.tex
+   % Insert first author, if defined.
+    \authorblockN{\csname pwintz@author1\endcsname}%
+    % Insert second author, if defined.
+    \ifcsdef{pwintz@author2}{% If defined
+        \and\authorblockN{\csname pwintz@author2\endcsname}%
+    }{}%
+    % Insert third author, if defined.
+    \ifcsdef{pwintz@author3}{% If defined
+        \and\authorblockN{\csname pwintz@author3\endcsname}%
+    }{}%
+    % Insert fourth author, if defined.
+    \ifcsdef{pwintz@author4}{% If defined
+        \and\authorblockN{\csname pwintz@author4\endcsname}%
+    }{}
     \thanks{
-        \protect\input{text/author1_name} is with
-        \protect\input{text/author1_department},
-        \protect\input{text/author1_address}
-        (\protect\input{text/author1_email}),
-        \protect\input{text/author2_name} is with 
-        \protect\input{text/author2_department},
-        \protect\input{text/author2_address} 
-        (\protect\input{text/author2_email.tex}),
-        \protect\input{text/author3_name} is with 
-        \protect\input{text/author3_department},
-        \protect\input{text/author3_address} 
-        (\protect\input{text/author3_email.tex}).
+        \csname pwintz@author1\endcsname{} is with
+        \csname pwintz@longAffiliation1\endcsname{}
+        (\csname pwintz@authorEmail1\endcsname{})%
+        %
+        \ifcsdef{pwintz@author2}{% If defined
+          ; \csname pwintz@author2\endcsname{} is with
+          \csname pwintz@longAffiliation2\endcsname{}
+          (\csname pwintz@authorEmail2\endcsname{})%
+        }{}%
+        %
+        \ifcsdef{pwintz@author3}{% If defined
+          ; \csname pwintz@author3\endcsname{} is with 
+          \csname pwintz@longAffiliation3\endcsname{}
+          (\csname pwintz@authorEmail3\endcsname{})%
+        }{}%
+        %
+        \ifcsdef{pwintz@author4}{% If defined
+          ; \csname pwintz@author4\endcsname{} is with 
+          \csname pwintz@longAffiliation4\endcsname{}
+          (\csname pwintz@authorEmail4\endcsname{})
+        }{}.
     }
     \thanks{
-        \protect\input{text/funding}
+        \acknowledgementBlurb{}
     }
 }
+
 \maketitle
 
 \input{text/body}
