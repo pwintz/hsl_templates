@@ -79,11 +79,6 @@
 \usepackage{xparse} % Enhanced command definitions.
 
 %% Misc/Uncategorized Packages %%
-\usepackage{comment} % enables the use of multi-line comments (\ifx \fi) 
-% \let\commentsection\comment
-% \let\endcommentsection\endcomment
-% \let\comment\@undefined
-% \let\endcomment\@undefined
 \usepackage{cancel} % For crossing out parts of equations.
 \usepackage{empheq} % For putting boxes around equations
 \usepackage{mathtools}
@@ -156,12 +151,12 @@
 
 % Allows code block sections sections
 \usepackage{verbatim} 
+\let\comment\@undefined
+\let\endcomment\@undefined
 
 % ==============================
 % === REFERENCES AND LINKING ===
 % ==============================
-% \let\inserttitle\@title
-% \let\inserttitle\@title
 
 \makeatletter
 % Enable hyperlinks
@@ -175,11 +170,6 @@
     urlcolor=black!30!blue,  % URLS including links in referencs  
     anchorcolor=blue,
     citecolor=black!30!blue, % In-line citations  
-    % Set the metadata for the produced PDF.
-    pdftitle={UGAS while Exploiting Uncertified Controller},
-    pdfsubject={},
-    pdfauthor={Paul K. Wintz, Ricardo G. Sanfelice, João P. Hespanha},
-    pdfkeywords={Hybrid Dynamical Systems, Control Systems, Switching, Lyapunov Functions, Model Predictive Control}
 }   
 \makeatother
 
@@ -221,14 +211,6 @@
 % =========================
 
 \ifdraft{
-    \newenvironment{workingnotes}{\sffamily \color{violet}}{}
-}{ 
-    \newenvironment{workingnotes}
-    {\expandafter\comment}
-    {\expandafter\endcomment}
-}
-
-\ifdraft{
     \newcommand{\workingnote}[1]{\begin{workingnotes} #1 \end{workingnotes}}
 }{ 
     \newcommand{\workingnote}[1]{}
@@ -254,7 +236,7 @@
 % Support tracking changes and adding "todo" comments.
 % \usepackage[todonotes={colorinlistoftodos,prependcaption,textsize=small,textcolor=white},commandnameprefix=ifneeded]{changes}
 \usepackage[commandnameprefix=ifneeded,
-            % final,
+            % final, % <- enable line to hide all annotations.
             todonotes={colorinlistoftodos,prependcaption,
                        textsize=small,backgroundcolor=orange!10,
                        textcolor=black,linecolor=orange,bordercolor=orange}]{changes}
@@ -314,30 +296,10 @@
     \newtheorem{corollary}{Corollary}
     \crefname{corollary}{corollary}{corollaries}%
 \fi
-
-
-\makeatletter%
-\@ifclassloaded{article}{%
-    \usepackage{amsthm}
-    \theoremstyle{definition}
-    \newtheorem{definition}{Definition}
-    \crefname{definition}{Definition}{Definitions}
-    \newtheorem{assumption}{Assumption}
-    \crefname{assumption}{Assumption}{Assumptions}
-    \theoremstyle{remark}
-    \newtheorem{remark}{Remark}
-    \newtheorem{example}{Example}
-    \theoremstyle{plain}
-    \newtheorem{theorem}{Theorem}
-    \newtheorem{proposition}{Proposition}
-    \newtheorem{lemma}{Lemma}
-    \crefname{lemma}{Lemma}{Lemmas}
-    \newtheorem{corollary}{Corollary}
-    \crefname{corollary}{corollary}{corollaries}
+\ifdefined\conjecture\else
     \newtheorem{conjecture}{Conjecture}
-    \crefname{conjecture}{conjecture}{conjectures}
-}
-\makeatother%
+    \crefname{conjecture}{Conjecture}{Conjectures}%
+\fi
 
 % =================================
 % === BEAMER PRESENTATION STYLE ===
@@ -517,4 +479,26 @@
   \makeatletter%
   \expandafter\newcommand\csname acknowledgementBlurb\endcsname{#1}
   \makeatother
+}
+
+\input{document_setup.tex}
+\newcommand{\authorBriefList}{
+    \csname pwintz@author1\endcsname%
+    \ifcsdef{pwintz@author4}{% If four+ authors, simply append "et al."
+        \ et al.
+    }{%
+        \ifcsdef{pwintz@author2}{% If defined
+            , \authorblockN{\csname pwintz@author2\endcsname}%
+        }{}%
+        \ifcsdef{pwintz@author3}{% If defined
+            , \authorblockN{\csname pwintz@author3\endcsname}%
+        }{}%
+    }%
+}
+\hypersetup{
+    % Set the metadata for the produced PDF.
+    pdftitle={\expandafter\csname pwintz@title\endcsname},
+    pdfsubject={},
+    pdfauthor={\csname authorBriefList\endcsname},
+    pdfkeywords={}
 }

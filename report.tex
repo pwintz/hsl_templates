@@ -8,8 +8,10 @@
 %%% FOR REPORT FORMAT
 \documentclass[11pt]{article}
 
-\input{text/setup}
-\input{text/definitions}
+\usepackage{pwintz_configuration}
+\usepackage{pwintz_definitions}
+\input{document_defintions}
+\usepackage{demo_setup} % TODO: Delete this.
 \graphicspath{{images/}{../images/}}
 
 %%% STEP 1
@@ -46,9 +48,7 @@
 % For speed compilation purposes (process figures when needed)
 %\includeonly{} % comment this if you want to process the figures (or select which tex file you want to process - one per figure)
 % \let\clearpage\relax 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
 
-\bibliographystyle{ieeetr}
 
 \begin{document}
 
@@ -67,21 +67,32 @@
 %%%
 %%% -- - BEGIN ISG TR - --
 
-\ititle{\input{text/title}}
+% Populate poster title from value defined in document_setup.tex.
+\makeatletter
+\ititle{\pwintz@title}
+\makeatother
+
 \iauthor{
-  \input{text/author1_name} \\
-  {\normalsize \input{text/author1_email}} \\
-  \input{text/author2_name} \\
-  {\normalsize \input{text/author2_email}} \\
-  \input{text/author3_name} \\
-  {\normalsize \input{text/author3_email}}
+  \csname pwintz@author1\endcsname%
+  % Insert second author, if defined.
+  \ifcsdef{pwintz@author2}{% If defined
+      \\ {\normalsize \csname pwintz@author2\endcsname}%
+  }{}%
+  % Insert third author, if defined.
+  \ifcsdef{pwintz@author3}{% If defined
+      \\ {\normalsize \csname pwintz@author3\endcsname}%
+  }{}%
+  % Insert fourth author, if defined.
+  \ifcsdef{pwintz@author4}{% If defined
+      \\ {\normalsize \csname pwintz@author4\endcsname}%
+  }{}
 }
 \idate{\today{}} 
-\iyear{2021}
-\irefnr{10}
+\iyear{\red{UPDATE ME}}
+\irefnr{\red{UPDATE ME}}
 \makeititle
 
-\input{text/body}
+\input{paper_body}
 
 \end{document}
 

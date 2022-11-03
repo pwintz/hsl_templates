@@ -27,9 +27,8 @@
 % \usepackage{multimedia} % Provides \movie.
 \usetikzlibrary{calc}
 
-\usepackage{text/pwintz_configuration}
-\usepackage{text/pwintz_definitions}
-\input{document_setup}
+\usepackage{pwintz_configuration}
+\usepackage{pwintz_definitions}
 \input{document_defintions}
 \usepackage{demo_setup} % TODO: Delete this line.
 
@@ -54,9 +53,7 @@
 
 \renewenvironment{remark}{\textit{\structure{Remark.}}}{}
 \newcommand{\mstructure}[1]{{\color{structure} #1}}
-% \newcommand{\shortfootcite}[2][1-]{\footnote<#1>{\structure{\Citeauthor{#2}}, \citetitle{#2} (\citeyear{#2}).}}
 \newcommand{\shortfootcite}[2][1-]{\footnote<#1>{\citet{#2}.}}
-% \newcommand{\shortfootcitetwo}[3][1-]{\footnote<#1>{\structure{\Citeauthor{#2}}, \citetitle{#2} (\citeyear{#2}), \structure{\Citeauthor{#3}}, \citetitle{#3} (\citeyear{#3}).}}
 \let\footnoterule\relax % Hide line above footnotes.
 
 \makeatletter
