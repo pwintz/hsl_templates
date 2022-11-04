@@ -1,11 +1,15 @@
 # Hybrid System Lab Templates
 This repository contains templates for use in papers, slide decks, and presentations.
 
-## Files:
+## Getting the Templates
+
+To get the templates, you need Git [Large File System](https://git-lfs.github.com/) (to download images and PDFs). After installing Git LFS, simply clone this repository using `git clone git@github.com:pwintz/hsl_templates.git` in the desired folder. After cloning, you can delete the `.git` directory and run `git init` to start your own Git repository. 
+
+## Files
 
 The following files are compiled into their respective documents.
 * `paper.tex`: IEEE Conference Paper
-* `report.tex`: Internal Report
+* `report.tex`: Internal Report Document
 * `slides.tex`: Presentation
 * `poster.tex`: Poster
 * `intro_slide.tex`: Single-slide Presentation
@@ -20,8 +24,8 @@ Other files that you need to edit:
 * `document_definitions.tex`: Place definitions of new macros that are specific to this work here.
 
 There are several files that are used by the templates but you do not need to modify (usually):
-*`pwintz_configurations.sty`: Setups up packages used by the templates and other useful things.
-*`pwintz_definitions.sty`: Defines useful macros, such as `\calA` and `\xdot`. 
+* `pwintz_configurations.sty`: Setups up packages used by the templates and other useful things.
+* `pwintz_definitions.sty`: Defines useful macros, such as `\calA` and `\xdot`. 
 
 # Creating a Conference Paper + Report
 
