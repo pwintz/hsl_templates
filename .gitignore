@@ -308,17 +308,12 @@ TSWLatexianTemp*
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/latex,visualstudiocode
-main.pdf
-slides.pdf
-*.pdf
-# *.png
 *preview.png
 *.css
 *.html
 *.loc
 *.tmp
 .DS_Store
-PaulWintz and Ricardo Shared Folder.lnk
 poster.png
 intro_slide.png
 
