@@ -20,7 +20,6 @@
 \usepackage{tcolorbox}
 \usepackage{xcolor}
 \usepackage{color}
-\usepackage{verbatim} 
 \usepackage{markdown}
 \usepackage{bm} % Allows bold Greek letters.
 \usepackage{xspace} % To fix spacing after macros. see https://tex.stackexchange.com/a/17731/153678
@@ -37,6 +36,7 @@
     \setlength{\parindent}{0em}
     \setlength{\parskip}{0.8em}
 }
+\makeatother
 
 %%%% Fix Spacing Around "\left(\right)" %%%
 \usepackage{mleftright} 
@@ -72,7 +72,6 @@
 
 % Support adding "todo" comments.
 \usepackage[colorinlistoftodos,prependcaption,textsize=small,textcolor=white]{todonotes}
-\setlength{\marginparwidth}{2cm} % This doesn't appear to do anything, except suppress a warning related to todonotes.
 
 %% Improved LaTeX definitions %%
 \usepackage{environ}
@@ -153,7 +152,7 @@
 
 \usepackage[final]{listings}
 
-% Allows code block sections sections
+% Allows code block sections
 \usepackage{verbatim} 
 \let\comment\@undefined
 \let\endcomment\@undefined
@@ -221,7 +220,7 @@
 }
 
 \ifdraft{
-    \newcommand {\finalonly}[1]{{\color{red}$<$Hidden$>$}}
+    \newcommand{\finalonly}[1]{{\color{red}$<$Hidden$>$}}
 }{
     \newcommand{\finalonly}[1]{#1}
 }
@@ -427,9 +426,6 @@
 % Define document colors
 \definecolor{blue}{rgb}{0.169, 0.243, 0.714}
 \definecolor{orange}{rgb}{1, 0.652, 0}
-\definecolor{q0}{rgb}{0.169, 0.243, 0.714}
-\definecolor{q1}{rgb}{1, 0.652, 0}
-\newcommand{\qcolor}[2]{{\color{q#1}#2}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%% Macros for Defining Document Info %%%%%%%%%%%%%
@@ -490,7 +486,7 @@
     \csname pwintz@author1\endcsname%
     \ifcsdef{pwintz@author4}{% If four+ authors, simply append "et al."
         \ et al.
-    }{%
+    }{% If less than four authors, appened all authors.
         \ifcsdef{pwintz@author2}{% If defined
             , \authorblockN{\csname pwintz@author2\endcsname}%
         }{}%

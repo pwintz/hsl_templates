@@ -34,3 +34,4 @@ Well-Posedness
 Lyapunov-certified
 Hespanha
 HyEQ
+Zotero

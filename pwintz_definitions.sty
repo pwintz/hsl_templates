@@ -5,21 +5,23 @@
 % ======= TEXT ========
 % =====================
 %
-\newcommand{\textfor}{\textup{for }}%
-\newcommand{\textif}{\textup{if }}%
+\newcommand{\textfor}{\textup{for\xspace}}%
+\newcommand{\textif}{\textup{if\xspace}}%
 \newcommand{\textotherwise}{\textup{otherwise\xspace}}%
 \newcommand{\otherwise}{\textotherwise}%
 \newcommand{\midand}{\quad \textup{and}\quad}%
 \newcommand{\midor}{\quad \textup{or}\quad}%
-% \renewcommand {\if}{&\quad \text{if }}%
 \newcommand{\st}{\ensuremath{^{st}}}%
 \newcommand{\nd}{\ensuremath{^{nd}}}
 \newcommand{\rd}{\ensuremath{^{rd}}}
 \renewcommand{\th}{\ensuremath{^{th}}} % for ith, jth, etc.
 \newcommand*{\circled}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}} % Creates a number enclosed in a circle
-\newcommand{\lhs}{left-hand side }
-\newcommand{\rhs}{right-hand side }
-\newcommand{\wrt}{with respect to }
+% Define \lhs for "left-hand side" in text or "L.H.S." in math. 
+\newcommand{\lhs}{\relax\ifmmode\mathrm{L.H.S.}\else{}left-hand side\xspace\fi}
+% Define \rhs for "right-hand side" in text or "R.H.S." in math. 
+\newcommand{\rhs}{\relax\ifmmode\mathrm{R.H.S.}\else{}right-hand side\xspace\fi}
+\newcommand{\wrt}{with respect to\xspace}
+\newcommand{\nbd}{neighborhood\xspace}
 \newcommand{\Matlab}{\textsc{Matlab}\xspace}
 %
 % =============================
@@ -44,6 +46,13 @@
 \newcommand*{\evaluateat}[1]{\bigg\rvert_{#1}}
 \newcommand*{\evaluatefromto}[2]{\bigg\rvert_{#1}^{#2}}
 \newcommand{\dom}{\operatorname{dom}}
+% Define sub- and super-scripts for 
+% [-infinity, infinity], [0, infinity], and [-infinity, 0].
+\newcommand{\realsscripts}{_{-\infty}^{\infty}}
+\newcommand{\nnrealsscripts}{_{0}^{\infty}} % nonpositive reals
+\newcommand{\prealsscripts}{_{0}^{\infty}} % positive reals
+\newcommand{\nprealsscripts}{_{-\infty}^{0}} % nonpositive reals
+\newcommand{\nrealsscripts}{_{-\infty}^{0}} % negative reals
 % 
 % Create a system of equations.
 % Usage:
@@ -52,6 +61,7 @@
     \begin{aligned}
         #1
     \end{aligned}\right.}
+\renewcommand {\emptyset}{\varnothing} % Use a nicer symbol for empty sets.
 \newcommand{\neginfty}{{-\infty}}
 %
 % **** FUNCTIONS ****
@@ -62,13 +72,41 @@
 \newcommand{\asin}{\arcsin}
 \renewcommand{\arccos}{\cos\invs}
 \newcommand{\acos}{\arccos}
-\newcommand{\abs}[1]{\left|#1\right|}
-\newcommand{\absq}[1]{\abs{#1}^2}
+\DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\absq{\lvert}{\rvert^2}
 %
 % **** COMPLEX NUMBERS **** 
 \newcommand{\real}{\,\mathfrak{Re}}
 \newcommand{\imag}{\,\mathfrak{Im}}
 \newcommand{\conj}[1]{\overline{#1}}
+% 
+% ===== Caligraphy letters =====
+\newcommand{\calA}{{\mathcal{A}}}
+\newcommand{\calB}{{\mathcal{B}}}
+\newcommand{\calC}{{\mathcal{C}}}
+\newcommand{\calD}{{\mathcal{D}}}
+\newcommand{\calE}{{\mathcal{E}}}
+\newcommand{\calF}{{\mathcal{F}}}
+\newcommand{\calG}{{\mathcal{G}}}
+\newcommand{\calH}{{\mathcal{H}}}
+\newcommand{\calI}{{\mathcal{I}}}
+\newcommand{\calJ}{{\mathcal{J}}}
+\newcommand{\calK}{{\mathcal{K}}}
+\newcommand{\calL}{{\mathcal{L}}}
+\newcommand{\calM}{{\mathcal{M}}}
+\newcommand{\calN}{{\mathcal{N}}}
+\newcommand{\calO}{{\mathcal{O}}}
+\newcommand{\calP}{{\mathcal{P}}}
+\newcommand{\calQ}{{\mathcal{Q}}}
+\newcommand{\calR}{{\mathcal{R}}}
+\newcommand{\calS}{{\mathcal{S}}}
+\newcommand{\calT}{{\mathcal{T}}}
+\newcommand{\calU}{{\mathcal{U}}}
+\newcommand{\calV}{{\mathcal{V}}}
+\newcommand{\calW}{{\mathcal{W}}}
+\newcommand{\calX}{{\mathcal{X}}}
+\newcommand{\calY}{{\mathcal{Y}}}
+\newcommand{\calZ}{{\mathcal{Z}}}
 %
 % ==========================
 % ======= Fractions ======== 
@@ -95,12 +133,11 @@
 % ======= SET THEORY ======== 
 % ===========================
 %
-% Set name
-\newcommand{\setname}{\mathcal} 
-% Define a set in the form {<arg 1>|<arg 2>}
-% \newcommand{\suchthat}{\mathrel{} \middle| \mathrel{} } % Alternative: \mid
-\newcommand{\suchthat}{\mathrel{}\ifnum\currentgrouptype=16 \middle\fi|\mathrel{}}
+% To insert a set {A | B} (using set builder notation), 
+% type "\setdef{A \suchthat B}". The heights of the braces and 
+% center bar will adjust automatically to the height of the contents.
 \newcommand*{\setdef}[1]{\left\{#1 \right\}} 
+\newcommand{\suchthat}{\mathrel{}\ifnum\currentgrouptype=16 \middle\fi|\mathrel{}}
 \newcommand*{\closure}[1]{\overline{#1}}
 \newcommand{\interior}{\operatorname{int}}
 \newcommand{\union}{\cup}
@@ -157,10 +194,15 @@
 \newcommand*{\orth}[1]{\operatorname{orth}_{#1}}
 %
 % **** VECTOR AND MATRIX FUNCTIONS **** 
-\newcommand*{\innerproduct}[2]{\left\langle #1, #2 \right\rangle}
-\newcommand*{\ip}[2]{\innerproduct{#1}{#2}}
-\newcommand*{\norm}[1]{\left\lvert#1\right\rvert} % double bars "\lVert ... \rVert" are used for signal norms so we use singal bars for euclidean vector norms.
-\newcommand*{\normsq}[1]{\norm{#1}_{1}^2}
+% Define "\innerproduct" and an abbreviation "\ip" such the code 
+% \ip{a}{b} generate <a, b> with correct spacing and height scaling.
+% Use a star to prevent the angle brackets from growing with the contents. 
+\DeclarePairedDelimiterX{\innerproduct}[2]{\langle}{\rangle}{#1,#2}
+\DeclarePairedDelimiterX{\ip}[2]{\langle}{\rangle}{#1,#2}
+% Define "\norm" for euclidean vector norms. To render the norm of "x" write "\norm{x}". 
+% Note that double bars "\lVert ... \rVert" are used for signal norms so we use singal bars for euclidean vector norms.
+\DeclarePairedDelimiter{\norm}{\lvert}{\rvert} 
+\newcommand*{\normsq}[1]{\norm{#1}^2}
 \newcommand*{\onenorm}[1]{\norm{#1}_{1}}
 \newcommand*{\twonorm}[1]{\norm{#1}_{2}}
 \newcommand*{\pnorm}[1]{\norm{#1}_{p}}
@@ -206,21 +248,22 @@
 % =========================
 %
 \newcommand{\diff}{\mathop{}\!d}
+\newcommand{\ds}{\diff s}
 \newcommand{\dt}{\diff t}
+\newcommand{\du}{\diff u}
+\newcommand{\dv}{\diff v}
 \newcommand{\dx}{\diff x}
 \newcommand{\dy}{\diff y}
 \newcommand{\dz}{\diff z}
+\newcommand{\dtau}{\diff\tau}
+\newcommand{\dX}{\diff X} % For stochastic processes.
+\newcommand{\dW}{\diff W} % For Wiener processes.
+\newcommand{\dH}{\diff H} % For lambda-chain rule.
 \newcommand*{\derivative}[2][]{\frac{d#1}{d#2}}
+\newcommand*{\secondderivative}[2][]{\frac{d^2{#1}}{d{#2}^2}}
 \newcommand*{\derivativeshort}[2][]{\fracshort{d#1}{d#2}}
 \newcommand*{\dd}[2][]{\derivative[#1]{#2}} % Shortcut for \derivative
 \newcommand*{\ddshort}[2][]{\derivativeshort[#1]{#2}}
-\newcommand*{\partialderivative}[2][]{\frac{\partial{#1}}{\partial{#2}}}
-\newcommand*{\partialderivativeshort}[2][]{\fracshort{\partial{#1}}{\partial{#2}}}
-\newcommand*{\pd}[2][]{\partialderivative[#1]{#2}}
-\newcommand*{\pdshort}[2][]{\partialderivativeshort[#1]{#2}}
-\newcommand*{\pdx}[1][]{\pd[#1]{x}}
-\newcommand*{\pdy}[1][]{\pd[#1]{y}}
-\newcommand*{\pdz}[1][]{\pd[#1]{z}}
 \newcommand*{\ddx}[1][]{\derivative[#1]{x}}
 \newcommand*{\ddy}[1][]{\derivative[#1]{y}}
 \newcommand*{\ddz}[1][]{\derivative[#1]{z}}
@@ -230,6 +273,22 @@
 \newcommand{\dydt}{\derivative[y]{t}}
 \newcommand{\dfdx}{\derivative[f]{x}}
 \newcommand{\dxdy}{\derivative[x]{y}}
+% ===== Partial derivates =====
+\newcommand*{\partialderivative}[2][]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand*{\partialderivativeshort}[2][]{\fracshort{\partial{#1}}{\partial{#2}}}
+\newcommand*{\pd}[2][]{\partialderivative[#1]{#2}}
+\newcommand*{\pdshort}[2][]{\partialderivativeshort[#1]{#2}}
+\newcommand*{\pdw}[1][]{\pd[#1]{w}}
+\newcommand*{\pdx}[1][]{\pd[#1]{x}}
+\newcommand*{\pdy}[1][]{\pd[#1]{y}}
+\newcommand*{\pdz}[1][]{\pd[#1]{z}}
+\newcommand*{\pdt}[1][]{\pd[#1]{t}}
+\newcommand*{\pdxx}[1][]{\pd[^2#1]{x^2}}
+\newcommand*{\pdyy}[1][]{\pd[^2#1]{y^2}}
+\newcommand*{\pdzz}[1][]{\pd[^2#1]{z^2}}
+\newcommand*{\pdtt}[1][]{\pd[^2#1]{t^2}}
+\newcommand*{\pdxy}[1][]{\pd[^2#1]{x\partial y}}
+% ===== Time derivates =====
 \newcommand{\xdot}{\dot{x}}
 \newcommand{\xddot}{\ddot{x}}
 \newcommand{\ydot}{\dot{y}}
@@ -242,11 +301,14 @@
 \newcommand{\thetaddot}{\ddot{\theta}}
 \newcommand{\omegadot}{\dot{\omega}}
 \newcommand{\omegaddot}{\ddot{\omega}}
-\newcommand*{\secondderivative}[2][]{\frac{d^2{#1}}{d{#2}^2}}
+% ===== Vector derivates =====
 \newcommand{\del}{\nabla}
 \newcommand{\grad}{\nabla}
 \newcommand{\laplace}{\del^2}
 \newcommand{\hessian}{\del^2}
+% For a function 
+%     f(x) = (f_1(x_1, x_2, ... x_n), ... f_n(x_1, x_2, ... x_n)), 
+% print the Jacobian matrix with "\Jacobian{f}". 
 \newcommand{\Jacobian}[1]{\mat{
     \partialderivative[#1_1]{x_1} 
         & \cdots 
@@ -255,6 +317,9 @@
     \partialderivative[#1_n]{x_1} 
         & \cdots 
         & \partialderivative[#1_n]{x_n} }}
+% For a function 
+%     f(x) = (f_1(x_1, x_2, ... x_n), ... f_n(x_1, x_2, ... x_n)), 
+% print the Hessian matrix with "\Hessian{f}". 
 \newcommand{\Hessian}[1]{\mat{
     \partialderivative[^2#1]{x_1^2} 
         & \cdots 
@@ -266,6 +331,10 @@
 % Exponent Taylor Series Definition
 \newcommand*{\taylorexponent}[1]{\sum^\infty_{k=1} \frac{#1^k}{k!}}
 %
+% === Integrals ===
+\newcommand{\intreals}{\int_{-\infty}^\infty}
+\newcommand{\intpreals}{\int_{0}^\infty} % Positive reals
+\newcommand{\intnreals}{\int_{-\infty}^0} % Negative reals
 % **** TRANSFORMS ****
 \newcommand{\Lagrangian}{\mathcal{L}}
 \newcommand*{\Fourier}[1][*]{ \mathcal{F}\left[\,#1\,\right] }
@@ -283,19 +352,17 @@
 \newcommand*{\minimize}[1]{\underset{#1}{\textup{minimize}}\quad} % Usage: \minimize{\x \in \reals}
 \newcommand*{\maximize}[1]{\underset{#1}{\textup{maximize}}\quad} % Usage: \maximize{\x \in \reals}
 \newcommand{\subjectto}{\textup{subject to}\quad}
-\newcommand{\epi}{\operatorname{epi}}
 \newcommand*{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\:\:}
 \newcommand*{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\:\:}
+\newcommand{\epi}{\operatorname{epi}}
 %
 % ===============================
 % ======= Control Theory ========
 % ===============================
-%
 \newcommand{\Kinfty}{\calK_{\infty}}
 \newcommand{\KL}{\mathcal{KL}}
 \newcommand{\KLL}{\mathcal{KLL}}
 % 
-%
 % ===========================================
 % ======= PROBABILITY AND STATISTICS ========
 % ===========================================
@@ -309,12 +376,16 @@
 \newcommand{\Pgiven}[2]{\P\left(#1 \suchthat #2\right)}
 % Produces P(A intesect B) / P(B)
 \newcommand{\Pgivenformula}[2]{\frac{\P(#1 \cap #2)}{\P(#2)}}
-\newcommand{\Var}{\operatorname{Var}}
-\newcommand{\Vargiven}[2]{\Var\left(#1 \suchthat #2\right)}
-\newcommand{\Cov}{\operatorname{Cov}}
-\newcommand{\Covgiven}[2]{\Cov\left(#1 \suchthat #2\right)}
+\newcommand{\var}{\operatorname{var}}
+\newcommand{\vargiven}[2]{\Var\left(#1 \suchthat #2\right)}
+\newcommand{\covar}{\operatorname{Cov}}
+\newcommand{\covargiven}[2]{\Cov\left(#1 \suchthat #2\right)}
 \newcommand{\pdf}{p.d.f. }
 \newcommand{\cdf}{c.d.f. }
+\newcommand{\erf}{\operatorname{erf}}
+\newcommand{\bern}{\operatorname{Bern}}
+\newcommand{\bino}{\operatorname{Bino}}
+\newcommand{\iid}{\textup{iid}}
 %
 % ===========================================
 % ======= REAL ANALYSIS ========
@@ -328,6 +399,52 @@
 % ===========================================
 %
 \newcommand{\Lie}{\mathscr{L}}
+%
+% ==============================
+% ======= "My" COMMANDS ========
+% ==============================
+% The following "my" commands allow for abreviation of repeated intergals, 
+% summations, and limits.
+%
+% Define a new macro "\myint" for reducing duplication 
+% when writing integrals. The first time an integral with limits (A, B) are used, 
+% write "\myint*[A][B]". Thereafter---until the next \myint*---simply write "\myint"
+\NewDocumentCommand{\myint}{sO{}O{}}{%
+    \IfBooleanT{#1}%
+    {% If a star
+        % "\gdef" is used to define a global macro.
+        \gdef\myintlimits{_{#2}^{#3}}%
+    }
+    \int\myintlimits
+}
+%
+% Define a new macro "\mysum" for reducing duplication 
+% when writing summations. The first time a summation with bound variable "j" starting at j=0
+% and limit "N" occurs, write "\mysum*[j=0][N]". 
+% Thereafter---until the next \wmysum*---simply write "\mysum" to insert a summation
+% with the symbols given in \mynewint.
+\NewDocumentCommand{\mysum}{sO{}O{}}{%
+    \IfBooleanT{#1}%
+    {% If a star
+        % "\gdef" is used to define a global macro.
+        \gdef\mysumlimit{_{#2}^{#3}}%
+    }
+    \sum\mysumlimit
+}
+%
+% Define a new macro "\mylim" for reducing duplication 
+% when writing limits. The first time a limit occurs with variable "x"
+% and limit "\infty", write "\mylim*[x][\infty]". 
+% Thereafter---until the next \mylim*---simply write "\mylim" to insert a limitmation
+% with the symbols given in \mynewint. 
+\NewDocumentCommand{\mylim}{sO{}}{%
+    \IfBooleanT{#1}%
+    {% If a star
+        % "\gdef" is used to define a global macro.
+        \gdef\mylimsubscript{_{#2}}%
+    }
+    \lim\mylimsubscript
+}
 %
 % =============================
 % ===== PROGRESS TRACKING =====
@@ -364,19 +481,3 @@
 \newcommand{\III}{\textrm{III}}
 \newcommand{\IV}{\textrm{IV}}
 \newcommand{\V}{\textrm{V}}
-
-% Specific to this paper
-% Caligraphy letters
-\newcommand{\calA}{{\mathcal{A}}}
-\newcommand{\calB}{{\mathcal{B}}}
-\newcommand{\calH}{{\mathcal{H}}}
-\newcommand{\calK}{{\mathcal{K}}}
-\newcommand{\calS}{{\mathcal{S}}}
-\newcommand{\calT}{{\mathcal{T}}}
-\newcommand{\calU}{{\mathcal{U}}}
-\newcommand{\calX}{{\mathcal{X}}}
-\newcommand{\calY}{{\mathcal{Y}}}
-\newcommand{\calZ}{{\mathcal{Z}}}
-
-% Zero-vector
-\newcommand{\zerovec}[1]{0_{#1}}
