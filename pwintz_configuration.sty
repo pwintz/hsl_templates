@@ -320,8 +320,9 @@
     \setbeamercolor{block body alerted}{bg=blue!3!white}
     \setbeamerfont{block title}{size={}}
     \setbeamertemplate{bibliography item}{\insertbiblabel}
-    % Select font
-    \usefonttheme{serif}
+    % We would like to have normal text etc in sans-serif, but equations in serif.
+    \usefonttheme[onlymath]{serif}
+    
     \setbeamerfont{footnote}{size=\tiny}
     \setbeamercolor{page number in head/foot}{fg=lightblue}
     \setbeamercolor{author in head/foot}{fg=lightblue}
@@ -438,6 +439,13 @@
   \makeatother
 }
 
+\newcommand{\setSubtitle}[1]{%
+  % Create a macro named \pwintz@subtitle.
+  \makeatletter%
+  \expandafter\newcommand\csname pwintz@subtitle\endcsname{#1}
+  \makeatother
+}
+
 \newcommand{\setAuthor}[3]{%
 % Define a macro named \pwintz@authorX where X is the first argument for \setAuthor. 
 % For example, \setAuthor2{John Smith} creates a macro named "\pwintz@author2".
@@ -499,6 +507,6 @@
     % Set the metadata for the produced PDF.
     pdftitle={\expandafter\csname pwintz@title\endcsname},
     pdfsubject={},
-    pdfauthor={\csname authorBriefList\endcsname},
+    pdfauthor={\expandafter\csname authorBriefList\endcsname},
     pdfkeywords={}
 }

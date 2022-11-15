@@ -21,8 +21,6 @@ The templates in this repository are configured to easily generate beautiful PDF
    * Configure automatic formatting of equations, theorems, etc. by using `\cref{<label>}` instead of `\ref{<label>}`.
    * Definitions of `amsthm` environments such as `theorem`, `lemma`, etc. that work on each document type.
 
-
-
 * The LaTeX package `pwintz_definitions.sty` defines useful macros. There are too many to list here, open the file to see all of them. The macros that I use often are 
 
   * `\invs` for inverse (superscript "-1") and `\trans` for transpose (superscript "T") 

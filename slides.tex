@@ -104,7 +104,6 @@
 } 
 
 
-\newcommand{\calAXdef}{\calA \times \{0\} \times \{0, 1\}}
 \newcommand{\itemnote}[1]{\note[item]<.->{#1}}
 
 \begin{document}
@@ -119,42 +118,7 @@
   \hspace{25pt}
 \end{frame}
 
-
-\begin{frame}[t]{Slide With Top-aligned Text}
-  \lipsum[1][1-3]
-  \begin{itemize}
-    \item \lipsum[2][1]
-    \item \lipsum[2][2]
-    \item \lipsum[2][3]
-    \item \lipsum[2][4]
-    \item \lipsum[2][5]
-  \end{itemize}
-\end{frame}
-
-\begin{frame}{Slide with Center-Aligned Text}
-  \lipsum[2]
-\end{frame}
-
-\begin{frame}[t]{Slide with Columns}
-
-  \begin{minipage}[t][\textheight][t]{\linewidth}
-    \begin{columns}
-      \begin{column}[T]{0.48\textwidth}
-        \lipsum[3][1-12]
-      \end{column}
-      \hfill
-      \begin{column}[T]{0.48\textwidth}
-        \lipsum[4][1]
-        \begin{figure}[htbp]
-          \centering
-          \includegraphics[width=0.6\linewidth]{example-image-a}
-        \end{figure}
-        \lipsum[4][2-5]
-      \end{column}
-    \end{columns}
-  \end{minipage}
-
-\end{frame}
+\input{slides_body}
 
 
 \end{document}

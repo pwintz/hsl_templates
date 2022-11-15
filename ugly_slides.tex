@@ -1,0 +1,150 @@
+\documentclass{beamer}
+% PRESENTATION 
+%\documentclass{beamer}
+% TO MAKE HANDOUT use
+%\documentclass[notes=hide,handout]{beamer}
+%\pgfpagesuselayout{4 on 1}[letterpaper,border shrink=5mm] 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{psfrag}
+\usepackage{amsmath}
+\usepackage{lipsum}
+\usepackage{ifthen}
+\usepackage{verbatim}
+\usepackage{calc}
+%\usepackage{multimedia}
+\usepackage{color}
+\usepackage{colortbl}
+\usepackage{graphics,graphicx,amssymb}
+\usepackage{amsxtra}
+\usepackage{epsfig}
+\usepackage{movie15}
+\usepackage{pdfpages}
+\usepackage{pgfpages}
+\usepackage{tikz}
+\usepackage{pgflibraryshapes}
+%\usepackage{beamerthemesplit}
+\usepackage{lipsum}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% MACROS %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{pwintz_configuration}
+% \usepackage{pwintz_definitions}
+\usepackage{rgsMacros}
+\usepackage{rgsBeamerv01}
+%\definecolor{mygreen}{RGB}{0,128,0}
+
+\renewcommand{\em}{\it \color{blue}}
+
+\definecolor{lightblue}{RGB}{60,60,200}
+\definecolor{mygreen}{RGB}{0,128,0}
+\definecolor{catch}{RGB}{0,128,0}
+\definecolor{throw}{RGB}{0,0,255}
+\definecolor{recovery}{RGB}{255,0,0}
+
+\setbeamercolor{block title}{bg= lightblue!10!white}
+\setbeamercolor{block body}{bg= lightblue!5!white}
+\setbeamercolor{block title alerted}{bg=blue!10!white}
+\setbeamercolor{block body alerted}{bg=blue!3!white}
+\setbeamerfont{block title}{size={}}
+
+
+\renewcommand{\comment}[1]{\vspace{1in}{\color{red}\noindent \tt \tiny #1}}
+\newcommand{\BAn}[1]{{\cal B}_{#1}}
+\newcommand{\B}{{\cal B}}
+\renewcommand{\S}{{\cal S}}
+\newcommand{\E}{{\cal E}}
+\renewcommand{\P}{{\cal P}}
+\renewcommand{\Q}{{\cal Q}}
+\renewcommand{\K}{{\cal K}}
+\renewcommand{\U}{{\cal U}}
+
+%\newcommand{\location}{\ - CDC2008\ }
+\newcommand{\location}{}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%% SETTINGS %%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usetheme{rgsv02nopic}
+%\pgfpagesuselayout{4 on 1}[letterpaper,border shrink=5mm] 
+
+\mode <all>
+\graphicspath{{images}}
+
+\makeatletter
+% Populate title using value defined in document_setup.tex
+\title{\pwintz@title}
+\subtitle{\pwintz@subtitle}
+
+% \title{\LARGE Title}
+\author{\csname pwintz@author1\endcsname}
+\institute{Hybrid Systems Lab\\ University of California\\ Department of Computer Engineering\\ Santa Cruz, CA %\\
+%\vspace{0.1in}{Andrew R. Teel (UCSB) and Rafal Goebel (LUC)}
+}
+\makeatother
+
+\def\cmd#1{\texttt{\textbackslash #1}}
+\def\env#1{\texttt{#1}}
+
+% Temporarily out
+%\addlogo{\ucsblogo}
+%\addlogo{\mitlogo}
+%\addlogo{\ensmplogo}
+
+% Use this line to get some text in the logo bar as well
+\logobartext{Ricardo Sanfelice - University of California}
+
+\setbeamertemplate{navigation symbols}{}
+
+% \setwhitesheetcolors
+
+\begin{document}
+\makeatletter
+
+%-------------------------------------------------------------------------------
+%                                                                     title page
+
+\begin{frame}
+    \setbluesheetcolors
+    \normalcolorhack
+    \titlepage
+    \includegraphics[height = 11mm, align=c]{images/UCSC_BaskinEng_Logo_wide.eps}
+    \hfill 
+    \includegraphics[height = 13.5mm, align=c]{images/HSLlogo.eps}
+    \vspace{20pt}% Increase bottom padding.
+\end{frame}
+
+\setwhitesheetcolors
+\normalcolorhack
+
+%-------------------------------------------------------------------------------
+%                                                                  Outline
+
+%\begin{frame}[t,label=outline]{{\color{black}Outline}}
+%\tableofcontents
+%\end{frame}
+
+%-------------------------------------------------------------------------------
+%                                                                  Outline slide repeated at the beginning of every section
+
+%\AtBeginSection[] % Do nothing for \section* 
+%{ 
+%\begin{frame}[t,label=outline]{{\color{black}Outline}}
+%\tableofcontents[currentsection] 
+%\end{frame} 
+%} 
+
+%-------------------------------------------------------------------------------
+%                                                                  Problem Outline
+
+\input{slides_body}
+
+%-------------------------------------------------------------------------------
+% To substract some of the final slides
+\addtocounter{framenumber}{0}
+\end{document}
