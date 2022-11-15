@@ -1,14 +1,52 @@
 {
     "ltex.latex.commands": {
+        "\\tableofcontents[]": "ignore", 
+        "\\@ifclassloaded{}{}{}": "ignore",  
+        "\\newcommand{}{}": "ignore",  
+        "\\renewcommand{}{}": "ignore",  
+        "\\newbool{}": "ignore",  
+        "\\setbool{}": "ignore",
+        "\\crefformat{}{}": "ignore",  
+        "\\crefmultiformat{}{}{}{}{}": "ignore",  
+        "\\newenvironment{}[][]{}{}": "ignore", 
+        "\\newenvironment{}[]{}{}": "ignore", 
+        "\\NewDocumentCommand{}{}{}": "ignore", 
+        "\\DeclarePairedDelimiterX{}[]{}{}": "ignore", 
+        "\\DeclarePairedDelimiter{}{}{}": "ignore", 
+        "\\setbeamertemplate{}[]{}": "ignore", 
+        "\\setbeamercolor{}{}": "ignore",  
+        "\\setbeamerfont{}{}": "ignore", 
+        "\\usebeamercolor[]{}": "ignore", 
+        "\\usebeamertemplate{}][]": "ignore",
         "\\lstinputlisting{}": "ignore",
         "\\problem{}": "ignore",
         "\\subproblem{}": "ignore",
         "\\code{}": "ignore",
         "\\cite{}": "ignore",
-        "\\nocite{}": "ignore"
+        "\\nocite{}": "ignore",
+        "\\deleted{}": "ignore"
     },
+    "ltex.latex.environments": {
+        "lstlisting": "ignore",
+        "verbatim": "ignore", 
+        "comment": "ignore"
+    },
+    "ltex.diagnosticSeverity": {
+        "default": "information", 
+        "PASSIVE_VOICE": "hint",
+        "MORFOLOGIK_RULE_EN_US": "warning" // Spelling errors.
+    },
+    "ltex.enabled": [
+        "bibtex",
+        "context",
+        "context.tex",
+        "latex",
+        // "markdown" // Disable checking of .md files.
+    ],
     "ltex.additionalRules.enablePickyRules": true,
     "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+    "latex-workshop.hover.preview.cursor.enabled": false,
+    "latex-workshop.hover.preview.enabled": false,
     "latex-workshop.latex.external.build.args": [
         "-interaction=nonstopmode"
     ],
