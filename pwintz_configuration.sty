@@ -9,6 +9,14 @@
 \usepackage{amsfonts}
 \usepackage{mathrsfs} % Enables \mathscr{}
 
+% Warn if using out-of-date TeX features. 
+% https://tex.stackexchange.com/a/589/153678
+\RequirePackage[l2tabu, orthodox]{nag}
+
+% Warn if non-AMS math environments are used.
+% https://tex.stackexchange.com/a/599/153678
+\usepackage[all,warning]{onlyamsmath}
+
 % ==============
 % === Layout ===
 % ==============
@@ -19,14 +27,21 @@
 % ==================
 % === Formatting ===
 % ==================
-\usepackage{tcolorbox}
-\usepackage{xcolor}
-\usepackage{color}
 \usepackage{markdown}
 \usepackage{bm} % Allows bold Greek letters.
 \usepackage{xspace} % To fix spacing after macros. see https://tex.stackexchange.com/a/17731/153678
 % allows enumerate with letters, i.e. (a), (b), (c).
 %\usepackage[shortlabels]{enumitem} 
+
+\usepackage{tcolorbox}
+\usepackage{xcolor}
+\usepackage{color}
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{darkred}{rgb}{0.76, 0.0, 0.0}
+\colorlet{unimportant}{black!35!white}
+\colorlet{added}{blue!80!black} 
+\colorlet{added unimportant}{blue!35!white}
+\colorlet{added important}{darkred}
 
 % ===============
 % === SPACING ===
@@ -70,6 +85,13 @@
 \newcommand*\scalemuskip[2]{%
   \muexpr #1*\numexpr\dimexpr#2pt\relax\relax/65536\relax
 }
+
+% Microtype plays with ever-so-slightly shrinking and stretching of the fonts and with the extent to which text protrudes into the margins in a way that yields results that look better, that have fewer instances of hyphenation, and fewer overfull hboxes.
+\ifdraft{}{
+    % If not draft, then apply microtype.
+    \usepackage[stretch=10]{microtype}
+}
+
 % === END OF SPACING ===
 
 % Support adding "todo" comments.
@@ -82,7 +104,16 @@
 %% Misc/Uncategorized Packages %%
 \usepackage{cancel} % For crossing out parts of equations.
 \usepackage{empheq} % For putting boxes around equations
+
+% The mathtools provides a suite of tools for typsetting math.
+% https://ctan.org/pkg/mathtools
 \usepackage{mathtools}
+% Ensure ":" is vertically centered in ":=".
+% This fix applies automatically whenever ":" occurs in an equation. 
+% The macro \ordinarycolon can be used to insert a colon with the standard alignment.
+% https://tex.stackexchange.com/a/4218/153678
+\mathtoolsset{centercolon}
+
 \usepackage{pdfpages} % Allows use of \includepdf[page={page number}]{filename}
 % \usepackage{siunitx} % SI Units used as '\SI{60}{\mile\per\hour} https://tex.stackexchange.com/a/509965/153678
 
@@ -94,6 +125,16 @@
 
 % Define 'switch' environment. 
 % See https://tex.stackexchange.com/a/187710/153678
+% Example of defining "\incolor" command:
+% \newcommand{\incolor}[2]{%
+%     \begin{switch}{#1}%
+%         \case{1}{\color{red}}%
+%         \case{2}{\color{blue}}%
+%         \case{3}{\color{green}}%
+%         \case{4}{\color{black}}%
+%         #2
+%     \end{switch}%
+% }
 \usepackage{xifthen}
 \newcommand{\ifequals}[3]{\ifthenelse{\equal{#1}{#2}}{#3}{}}
 \newcommand{\case}[2]{#1 #2} % Dummy, so \renewcommand has something to overwrite...
@@ -156,8 +197,6 @@
 
 % Allows code block sections
 \usepackage{verbatim} 
-\let\comment\@undefined
-\let\endcomment\@undefined
 
 % ==============================
 % === REFERENCES AND LINKING ===
@@ -178,19 +217,27 @@
 }   
 \makeatother
 
+% Configure PDF strings to replace certain commands with PDF-strings friendly symbols
+% \pdfstringdefDisableCommands{%
+%   \def\\{}% Remove line breaks
+%   \def\times{}{x}% Replaces the times symbol with the letter x.
+% }
+
 % Display Theorem/Lemma/Corollary (1) in cross references.  
 % IT'S IMPORTANT TO LOAD THIS LAST AFTER ALL THE OTHER \usepackages.
-\usepackage[noabbrev, capitalise]{cleveref} 
+\usepackage[noabbrev, capitalise, nameinlink]{cleveref} 
 % Make ranges of references use an dash between the equation numbers. 
 % See https://tex.stackexchange.com/a/18988/153678
 \newcommand{\crefrangeconjunction}{--} 
 
 % Configure Clever Reference
 % Make equations referenced as "(1)" instead of "Equation 1"
-\crefname{equation}{}{}
 \crefformat{equation}{(#2#1#3)}
-% \crefrangeformat{equation}{(#3#1#4) to~(#5#2#6)}
 \crefmultiformat{equation}{(#2#1#3)}%
+{ and~(#2#1#3)}{, (#2#1#3)}{ and~(#2#1#3)}
+% For equations referenced at the start of a sentence, we want to include "Equation" or "Equations". The following formats are used when "\Cref" is used instead of "\cref".
+\Crefformat{equation}{Equation (#2#1#3)}
+\Crefmultiformat{equation}{Equations (#2#1#3)}%
 { and~(#2#1#3)}{, (#2#1#3)}{ and~(#2#1#3)}
 
 \newcommand{\setupAssumption}[1][A]{
@@ -240,6 +287,12 @@
 
 % Support tracking changes and adding "todo" comments.
 % \usepackage[todonotes={colorinlistoftodos,prependcaption,textsize=small,textcolor=white},commandnameprefix=ifneeded]{changes}
+\makeatletter
+\let\commentsection\comment
+\let\endcommentsection\endcomment
+\let\comment\@undefined
+\let\endcomment\@undefined
+\makeatother
 \usepackage[commandnameprefix=ifneeded,
             % final, % <- enable line to hide all annotations.
             todonotes={colorinlistoftodos,prependcaption,
@@ -248,7 +301,7 @@
 
 % ============================================
 % === ENVIRONMENTS (Theorems, lemmas, etc) ===
-% ====================================f========
+% ============================================
 
 \makeatletter%
 \@ifclassloaded{ieeeconf}{% if using ieeeconf
@@ -270,6 +323,12 @@
 }{}
 \makeatother%
 \usepackage{amsthm}
+
+% Set the text style for theorems and the like to slanted instead of italics.
+% I find this makes the text easier to read.
+\makeatletter
+\renewcommand\th@plain{\slshape}
+\makeatother
 
 \theoremstyle{definition}%
 \ifdefined\definition\else
