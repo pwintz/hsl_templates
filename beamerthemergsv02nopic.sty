@@ -3,7 +3,7 @@
 \RequirePackage{beamerbasethemes}[2004/10/07]
 \RequirePackage{pgf}
 
-% We would like to have normal text etc in sans-serif, but equations in serif.
+
 \usefonttheme[onlymath]{serif}
 
 %-------------------------------------------------------------------------------
@@ -41,16 +41,20 @@
 
 \def\setwhitesheetcolors{
 \setbeamercolor*{normal text}{fg=black,bg=white}
+\setbeamercolor{item}{fg=wurblue} % Item bullets.
+\setbeamercolor{normal text}{fg=black}
 \setbeamercolor*{alerted text}{fg=wurblue}
-\setbeamercolor*{structure}{fg=black} % Sets the color of the header line AND the titles in Theorems, Lemmas, etc.
+\setbeamercolor*{structure}{fg=black}
 \setanysheetcolors
+\normalcolorhack
 }
 
 \def\setbluesheetcolors{
-\setbeamercolor*{normal text}{fg=black,bg=backblue}
+\setbeamercolor*{normal text}{fg=white,bg=backblue}
 \setbeamercolor*{alerted text}{fg=wurgreen}
 \setbeamercolor*{structure}{fg=black}
 \setanysheetcolors
+\normalcolorhack
 }
 
 \def\setblacksheetcolors{
@@ -58,9 +62,9 @@
 \setbeamercolor*{alerted text}{fg=yellow}
 \setbeamercolor*{structure}{fg=white}
 \setanysheetcolors
+\normalcolorhack
 }
 
-\newcommand{\logobarcolor}{white}
 
 % Enforce blue-on-white when making handouts.
 
@@ -70,8 +74,8 @@
 %-------------------------------------------------------------------------------
 %                                                               font definitions
 
-\setbeamerfont{title}{size=\large, series=\bfseries}
-\setbeamerfont{subtitle}{series=\bfseries}
+\setbeamerfont{title}{size=\huge}
+\setbeamerfont{subtitle}{size=\LARGE}
 \setbeamerfont{author}{}
 \setbeamerfont{institution}{size=\small}
 
@@ -205,7 +209,7 @@
 \def\bluesheetfootline{
   \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\logobarheight}
     % Draw a white rectangle to mark the logo bar
-    \pgfsetfillcolor{\logobarcolor}
+    \pgfsetfillcolor{white}
     \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\paperwidth}{\the\logobarheight}}
     \pgfusepath{fill}
     % Make a TeX box containing the actual logo bar contents, and place it at the lower-left
