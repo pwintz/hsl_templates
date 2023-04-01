@@ -299,6 +299,9 @@ TSWLatexianTemp*
 !.vscode/launch.json
 !.vscode/ltex
 !.vscode/ltex.dictionary.*
+!.vscode/ltex.disabledRules.*
+!.vscode/ltex.hiddenFalsePositives.*
+!.vscode/settings.json
 !.vscode/extensions.json
 *.code-workspace
 

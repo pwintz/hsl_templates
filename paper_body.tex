@@ -6,6 +6,21 @@
     \lipsum[1]
 \end{abstract}
  
+\ifdraft{%
+\reportonly{%
+Text that is only included in the report is displayed like this.
+}% 
+\confonly{%
+Text that is only included in the conference manuscript is displayed like this.
+}% 
+\added{%
+New or modified text appears like this.
+}%
+\workingnote{%
+    Text that will not appear in any final manuscripts are displayed like this.
+}% End of \workingnote
+}% end \ifdraft
+
 % \begin{keywords}
 %     Switching, hybrid system, stability \todo[inline]{Remove from PDF before submission.}
 % \end{keywords}

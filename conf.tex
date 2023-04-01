@@ -4,7 +4,6 @@
 
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
-\input{document_defintions}
 \usepackage{demo_setup} % TODO: Delete this.
 
 %%%
@@ -22,12 +21,21 @@
 %%% For Report, Change to "false"
 \newbool{conf}
 \setbool{conf}{true}
-\newcommand{\confonly}[1]{#1}
-\newcommand{\reportonly}[1]{}%{\delete{$\langle$Report only$\rangle$: #1}}
+\ifdraft{
+  % \newcommand{\confonly}[1]{\darkgreen{#1}}
+  % \newcommand{\reportonly}[1]{}
+  \newcommand{\confonly}[1]{\darkgreen{#1}}
+  \newcommand{\reportonly}[1]{\red{#1}}
+}{
+  \newcommand{\confonly}[1]{#1}
+  \newcommand{\reportonly}[1]{}
+}
+
+\input{document_defintions}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For speed compilation purposes (process figures when needed)
 %\includeonly{} % comment this if you want to process the figures 
 % (or select which tex file you want to process - one per figure)
@@ -42,6 +50,7 @@
 \title{\pwintz@title}
 \makeatother
 
+\newcommand{\insertemailfromcs}[1]{\href{mailto:\csname #1\endcsname}{\csname #1\endcsname}}
 \author{% 
 % Populate author information from definitions in document_setup.tex
    % Insert first author, if defined.
@@ -61,24 +70,24 @@
     \thanks{
         \csname pwintz@author1\endcsname{} is with
         \csname pwintz@longAffiliation1\endcsname{}
-        (\csname pwintz@authorEmail1\endcsname{})%
+        (\insertemailfromcs{pwintz@authorEmail1})%
         %
         \ifcsdef{pwintz@author2}{% If defined
           ; \csname pwintz@author2\endcsname{} is with
           \csname pwintz@longAffiliation2\endcsname{}
-          (\csname pwintz@authorEmail2\endcsname{})%
+          (\insertemailfromcs{pwintz@authorEmail2})%
         }{}%
         %
         \ifcsdef{pwintz@author3}{% If defined
           ; \csname pwintz@author3\endcsname{} is with 
           \csname pwintz@longAffiliation3\endcsname{}
-          (\csname pwintz@authorEmail3\endcsname{})%
+          (\insertemailfromcs{pwintz@authorEmail3})%
         }{}%
         %
         \ifcsdef{pwintz@author4}{% If defined
           ; \csname pwintz@author4\endcsname{} is with 
           \csname pwintz@longAffiliation4\endcsname{}
-          (\csname pwintz@authorEmail4\endcsname{})
+          (\insertemailfromcs{pwintz@authorEmail4})%
         }{}.
     }
     \thanks{
@@ -88,6 +97,7 @@
 
 \maketitle
 
+% Uncomment to compile.
 \input{paper_body}
 
 \end{document}

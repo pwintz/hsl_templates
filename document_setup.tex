@@ -4,11 +4,11 @@
 
 %  ==== Define the authors for this project ==== 
 % Each author is defined using 
-%    \setAuthorX{Y}{Z}
+%    \setAuthorN{name}{institution}
 % where 
-%  - X is a unique author-index
-%  - Y is the author's name
-%  - Z is the institution-index for the author's institution.
+%  - N \in {1,2,3,4} is a unique author-index
+%  - 'name' is the author's name
+%  - 'institution' is the institution-index for the author's institution.
 % Up to four authors are supported, currently.
 
 % Author 1 info (required)
@@ -32,9 +32,9 @@
 \setLongAffiliation4{the Department of Prehistoric Mathematics, University of California, Santa Cruz, CA 95064}
 
 % Define institutions using 
-%    \setInstituteX{Y}
-%  - X is a unique institution-index
-%  - Y is the institution's name
+%    \setInstituteN{name}
+%  - N \in {1,2,3,4} is a unique institution-index
+%  - 'name' is the institution's name
 % Up to four institutes are supported, currently
 \setInstitute1{University of California, Santa Cruz}
 \setInstitute2{University of Pangaea}
@@ -43,7 +43,7 @@
 % - The abbreviation of numbers (plural) is "nos." 
 % - When writing a period that does not end sentence (e.g., after "nos."), follow it with "\ " to create a space of the correct width. 
 \setAcknowledgementBlurb{
-    This research was supported by the National Science Foundation under grant nos.\ ECS-1710621, CNS-1544396, and CNS-2039054; by the Air Force Office of Scientific Research under grant nos.\ FA9550-19-1-0053, FA9550-19-1-0169, and FA9550-20-1-0238; by the Army Research Office under grant no.\ W911NF-20-1-0253; and by the U.S. Office of Naval Research under the MURI grant no.\ N00014-16-1-2710.
+    This research was funded by National Science Foundation grant nos.\ ECS-1710621, CNS-1544396, and CNS-2039054; Air Force Office of Scientific Research grant nos.\ FA9550-19-1-0053, FA9550-19-1-0169, and FA9550-20-1-0238; and Army Research Office grant no.\ W911NF-20-1-0253.
 }
 
 
@@ -61,3 +61,12 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% COLOR OPTIONS %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% References %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Import the bibliography file
+\addbibresource{biblio.bib}
+\addbibresource{biblio_report.bib}

@@ -35,3 +35,14 @@ Lyapunov-certified
 Hespanha
 HyEQ
 Zotero
+superlevel
+semidefinite
+Prajna
+Jadbabaie
+Gurriet
+supremum
+Nagumo
+extremal
+Mitio
+contractivity
+equilibria

@@ -43,7 +43,11 @@
 \newcommand{\rhs}{\relax\ifmmode\mathrm{R.H.S.}\else{}right-hand side\xspace\fi}
 \newcommand{\wrt}{with respect to\xspace}
 \newcommand{\nbd}{neighborhood\xspace}
+\newcommand{\fnc}{function\xspace}
 \newcommand{\Matlab}{\textsc{Matlab}\xspace}
+\newcommand{\closedloop}{closed-loop\xspace}
+\newcommand{\Closedloop}{Closed-loop\xspace}
+\newcommand{\ClosedLoop}{Closed-Loop\xspace}
 \newcommand{\sic}{[\textit{sic}]} % To mark errors present in the source of a quotation.
 %
 % =============================
@@ -51,7 +55,7 @@
 % =============================
 %
 \newcommand*{\invs}{^{-1}}
-\NewDocumentCommand{\hypt}{s m m}{
+\NewDocumentCommand{\hypot}{s m m}{
 	% \hypt{a}{b} generates sqrt(a^2 + b^2). 
 	% \hypt*{a}{b} puts parentheses around a and b.
     \IfBooleanTF #1%
@@ -198,15 +202,6 @@
 %
 % **** VECTORS **** 
 % If a value is not a vector don't use the "\"
-% \renewcommand*{\vec}[1]{\bm{\mathrm{#1}}} % Vector variable
-% \newcommand{\x}{{\vec{x}}}
-% \newcommand{\y}{{\vec{y}}} 
-% \newcommand{\z}{{\vec{z}}}
-% \renewcommand{\r}{{\vec{r}}}
-% \renewcommand{\u}{{\vec{u}}}
-% \renewcommand{\v}{{\vec{v}}}
-% \renewcommand{\a}{{\vec{a}}}
-% \renewcommand{\b}{{\vec{b}}}
 % Zero-vector
 \newcommand{\zerovec}[1]{0_{#1}}
 % One-vector
