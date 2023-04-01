@@ -50,6 +50,9 @@
         "\\mathtoolsset{}": "ignore",
         "\\qedhere{}": "ignore", // This doesn't seem to work.
         "\\qedhere": "ignore", // This doesn't seem to work.
+        "\\ltexignore{}": "ignore",
+        "\\ltexdummy{}": "dummy",
+        "\\ltexvoweldummy{}": "vowelDummy"
     },
     "ltex.latex.environments": {
         "lstlisting": "ignore",
