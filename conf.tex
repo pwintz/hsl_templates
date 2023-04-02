@@ -40,8 +40,19 @@
 %\includeonly{} % comment this if you want to process the figures 
 % (or select which tex file you want to process - one per figure)
 % \let\clearpage\relax 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+   
+% Create \ifdraft{}{} conditional 
+% that switches based on whether "draft" 
+% is passed to document class.
+\usepackage{ifdraft} 
+\ifdraft{
+    % Adjust spacing to fit margin notes.
+    \usepackage[
+            inner=1in,
+            outer=1in,
+            marginparwidth=0.8in]{geometry} 
+}{}
 
 \begin{document}
 

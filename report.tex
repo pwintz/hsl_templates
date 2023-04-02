@@ -1,12 +1,4 @@
-%%% STEP 0
-%%%
-%%% Comment/Uncomment items below for either
-%%% confeerence or report format.
-%%%
-
-% Version 1
-%%% FOR REPORT FORMAT
-\documentclass[11pt]{article}
+\documentclass[11pt,draft]{article}
 
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
@@ -31,17 +23,12 @@
 \newcommand{\confonly}[1]{}%\red{#1}}%$\langle$confonly$\rangle$: #1}}
 \newcommand{\reportonly}[1]{#1}%{\darkgreen{#1}}
 
-%%% Example of boolean code structure:
-\ifbool{conf}{
-% Items for conference version go in here.
-}{
 % Items for report version go in here.
- \addtolength{\oddsidemargin}{-.875in}
-	\addtolength{\evensidemargin}{-.875in}
-	\addtolength{\textwidth}{1.75in}
-	\addtolength{\topmargin}{-.875in}
-	\addtolength{\textheight}{1.75in} 
-}
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
@@ -49,6 +36,17 @@
 %\includeonly{} % comment this if you want to process the figures (or select which tex file you want to process - one per figure)
 % \let\clearpage\relax 
 
+% Create \ifdraft{}{} conditional 
+% that switches based on whether "draft" 
+% is passed to document class.
+\usepackage{ifdraft} 
+\ifdraft{
+    % Adjust spacing to fit margin notes.
+    \usepackage[
+            inner=20mm,
+            outer=40mm,
+            marginparwidth=34mm]{geometry} 
+}{}
 
 \begin{document}
 

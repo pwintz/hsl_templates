@@ -35,7 +35,6 @@
 
 \usepackage{tcolorbox}
 \usepackage{xcolor}
-\usepackage{color}
 \definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
 \definecolor{darkred}{rgb}{0.76, 0.0, 0.0}
 
@@ -89,9 +88,6 @@
 }
 
 % === END OF SPACING ===
-
-% Support adding "todo" comments.
-\usepackage[colorinlistoftodos,prependcaption,textsize=small,textcolor=white]{todonotes}
 
 %% Improved LaTeX definitions %%
 \usepackage{environ}
@@ -292,20 +288,30 @@
     \newcommand{\doneish}{}
 }
 
-% Support tracking changes and adding "todo" comments.
-% \usepackage[todonotes={colorinlistoftodos,prependcaption,textsize=small,textcolor=white},commandnameprefix=ifneeded]{changes}
+% Redefine "\comment" command so that \comments{} is the \changes command.
 \makeatletter
 \let\commentsection\comment
 \let\endcommentsection\endcomment
 \let\comment\@undefined
 \let\endcomment\@undefined
 \makeatother
-\usepackage[commandnameprefix=ifneeded,
-            % draft, % <- enable line to show annotations.
-            % final, % <- enable line to hide annotations.
-            todonotes={colorinlistoftodos,prependcaption,
-                       textsize=small,backgroundcolor=orange!10,
-                       textcolor=black,linecolor=orange,bordercolor=orange}]{changes}
+% Support tracking changes and adding "todo" comments.
+\usepackage[ % import "changes" package
+    % If any of the changes commands are already defined, then the option "commandnameprefix=ifneeded" 
+    % tells changes to append "ch" to the name of the changes command in order to avoid a name collision.
+    % Commonly, "\comment" will be changed to "\chcomment".
+    commandnameprefix=ifneeded, 
+    % Changes imports the "todo" package. The following options are passed to the "todo" package.
+    todonotes={colorinlistoftodos,
+                prependcaption,
+                textsize=small,
+                backgroundcolor=orange!10,
+                textcolor=black,
+                linecolor=orange,
+                bordercolor=orange} % 
+    % draft, % <- enable line to show annotations regardless of the document being in 'final' mode.
+    % final, % <- enable line to hide annotations regardless of the document being in 'draft' mode.
+]{changes}
 
 % ============================================
 % === ENVIRONMENTS (Theorems, lemmas, etc) ===
