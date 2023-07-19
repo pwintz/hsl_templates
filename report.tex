@@ -1,11 +1,10 @@
-\documentclass[11pt,draft]{article}
+\documentclass[11pt,final]{article}
 
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
 
 \input{document_definitions}
 \usepackage{demo_setup} % TODO: Delete this.
-\graphicspath{{images/}{../images/}}
 
 %%% STEP 1
 %%%
@@ -21,8 +20,15 @@
 %%% For Report, Change to "false"
 \newbool{conf}
 \setbool{conf}{false}
-\newcommand{\confonly}[1]{}%\red{#1}}%$\langle$confonly$\rangle$: #1}}
-\newcommand{\reportonly}[1]{#1}%{\darkgreen{#1}}
+\ifdraft{% If 'draft', show color-coded report and conference or only color-coded report (change commented lines to choose).
+	% \newcommand{\confonly}[1]{\darkred{#1}}
+	% \newcommand{\reportonly}[1]{\darkgreen{#1}}
+\newcommand{\confonly}[1]{}
+\newcommand{\reportonly}[1]{\darkgreen{#1}}
+}{% If 'final', only show report.
+	\newcommand{\confonly}[1]{}
+	\newcommand{\reportonly}[1]{#1}
+}
 
 % Items for report version go in here.
 \addtolength{\oddsidemargin}{-.875in}
@@ -36,6 +42,7 @@
 % For speed compilation purposes (process figures when needed)
 %\includeonly{} % comment this if you want to process the figures (or select which tex file you want to process - one per figure)
 % \let\clearpage\relax 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%    
 
 % Create \ifdraft{}{} conditional 
 % that switches based on whether "draft" 
@@ -44,7 +51,7 @@
 \ifdraft{
     % Adjust spacing to fit margin notes.
     \usepackage[
-            inner=20mm,
+            inner=80mm,
             outer=40mm,
             marginparwidth=34mm]{geometry} 
 }{}
@@ -66,7 +73,7 @@
 %%%
 %%% -- - BEGIN ISG TR - --
 
-% Populate poster title from value defined in document_setup.tex.
+% Populate title from value defined in document_setup.tex.
 \makeatletter
 \ititle{\pwintz@title}
 \makeatother

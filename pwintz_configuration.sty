@@ -30,13 +30,27 @@
 \usepackage{markdown}
 \usepackage{bm} % Allows bold Greek letters.
 \usepackage{xspace} % To fix spacing after macros. see https://tex.stackexchange.com/a/17731/153678
-% allows enumerate with letters, i.e. (a), (b), (c).
-%\usepackage[shortlabels]{enumitem} 
+
+\makeatletter%
+\@ifclassloaded{beamer}{% If beamer, then don't load enumitem.
+}{% If not beamer, then load enumitem.
+    % Allows additional configuration of list environments.
+    % The 'shortlabels' option allows the label format to be given like "(a)" or "1."
+    \let\labelindent\relax % This prevents an compilation error. See here: https://tex.stackexchange.com/a/188555/153678
+    \usepackage[shortlabels]{enumitem} 
+}
+\makeatother%
+
+
+% Define Colors
+\usepackage{xcolor}
+\definecolor{darkred}{rgb}{0.76, 0.0, 0.0}% Hex: c20000ff
+\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
+\definecolor{darkblue}{rgb}{0.169, 0.243, 0.714}% Hex: 2b3eb6ff
+\definecolor{orange}{rgb}{1, 0.652, 0}
+
 
 \usepackage{tcolorbox}
-\usepackage{xcolor}
-\definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
-\definecolor{darkred}{rgb}{0.76, 0.0, 0.0}
 
 % ===============
 % === SPACING ===
@@ -82,7 +96,9 @@
 }
 
 % Microtype plays with ever-so-slightly shrinking and stretching of the fonts and with the extent to which text protrudes into the margins in a way that yields results that look better, that have fewer instances of hyphenation, and fewer overfull hboxes.
-\ifdraft{}{
+\ifdraft{
+    % Don't apply microtype.
+}{
     % If not draft, then apply microtype.
     \usepackage[stretch=10]{microtype}
 }
@@ -106,31 +122,44 @@
 % https://tex.stackexchange.com/a/4218/153678
 \mathtoolsset{centercolon}
 
-\usepackage{pdfpages} % Allows use of \includepdf[page={page number}]{filename}
-% \usepackage{siunitx} % SI Units used as '\SI{60}{\mile\per\hour} https://tex.stackexchange.com/a/509965/153678
+% SI Units used as '\SI{60}{\mile\per\hour} https://tex.stackexchange.com/a/509965/153678
+% \usepackage{siunitx} 
 
 % =========================
 % === CONDITIONAL LOGIC ===
 % =========================
-\usepackage{etoolbox} % Used for LaTeX conditionals. See: https://tex.stackexchange.com/a/5896/153678.
+% Used for LaTeX conditionals. See: https://tex.stackexchange.com/a/5896/153678.
+\usepackage{etoolbox} 
 \newtoggle{solutions}
 
 % Define 'switch' environment. 
 % See https://tex.stackexchange.com/a/187710/153678
-% Example of defining "\incolor" command:
-% \newcommand{\incolor}[2]{%
-%     \begin{switch}{#1}%
-%         \case{1}{\color{red}}%
-%         \case{2}{\color{blue}}%
-%         \case{3}{\color{green}}%
-%         \case{4}{\color{black}}%
-%         #2
-%     \end{switch}%
-% }
+% Example of defining "\incolor" command:    
+%      \newcommand{\incolor}[2]{%
+%      \begin{switch}{#1}%
+%          \case{1}{\color{red}}%
+%          \case{2}{\color{blue}}%
+%          \case{3}{\color{green}}%
+%          \otherwise{\color{black}}%
+%          #2%
+%      \end{switch}%
+%      }
 \usepackage{xifthen}
-\newcommand{\ifequals}[3]{\ifthenelse{\equal{#1}{#2}}{#3}{}}
-\newcommand{\case}[2]{#1 #2} % Dummy, so \renewcommand has something to overwrite...
-\newenvironment{switch}[1]{\renewcommand{\case}{\ifequals{#1}}}{}
+\newcommand{\ifequals}[3]{\ifthenelse{\equal{#1}{#2}}{%
+    #3%
+    \renewcommand{\casesmatched}{true}%
+}{}}
+\newcommand{\casesmatched}{}% Dummy, so \renewcommand has something to overwrite...
+\newcommand{\case}[2]{#1 #2}% Dummy, so \renewcommand has something to overwrite...
+\newenvironment{switch}[1]{%
+    \renewcommand{\casesmatched}{false}%
+    \renewcommand{\case}{\ifequals{#1}}%
+    \renewcommand{\otherwise}[1]{%
+        \ifthenelse{\equal{\casesmatched}{false}}{%
+            ##1%
+        }{}%
+    }%
+}{}
 
 % ============================
 % === Figures and Graphics ===
@@ -194,26 +223,30 @@
 % === REFERENCES AND LINKING ===
 % ==============================
 
+% Allows URLs to break at the end of a line.
+\usepackage{xurl} 
+
 % Enable hyperlinks
 \usepackage[]{hyperref}
 \hypersetup{
     final,                   % Include links even if document is in 'draft' mode.
     hidelinks,               % Prevent boxes from being drawn around links in some editors.
+    breaklinks=true,
     colorlinks=true, 
-    linkcolor=black,         % TOC, links to labels
+    linkcolor=black,         % TOC, links to labeled equations and environments
     filecolor=magenta,      
-    urlcolor=black!30!blue,  % URLS including links in referencs  
+    urlcolor=black!30!blue,  % URLS including links in references  
     anchorcolor=blue,
     citecolor=black!30!blue, % In-line citations  
 }  
 
-% Configure PDF strings to replace certain commands with PDF-strings friendly symbols
+% % Configure PDF strings to replace certain commands with PDF-strings friendly symbols
 % \pdfstringdefDisableCommands{%
 %   \def\\{}% Remove line breaks
 %   \def\times{}{x}% Replaces the times symbol with the letter x.
 % }
 
-% Display Theorem/Lemma/Corollary (1) in cross references.  
+% Display "Theorem 1", "Lemma 2", etc. in cross references.  
 % IT'S IMPORTANT TO LOAD THIS LAST AFTER ALL THE OTHER \usepackages.
 \usepackage[noabbrev, capitalise, nameinlink]{cleveref} 
 % Make ranges of references use an dash between the equation numbers. 
@@ -244,74 +277,18 @@
 }
 
 
-% =================
+% ==================
 % === REFERENCES ===
-% =================
+% ==================
 
 % Setup references for presentations
-\usepackage[url = false,doi = false,isbn = false,natbib,style=ieee]{biblatex}
+\usepackage[url = false,%
+            doi = false,%
+            isbn = false,%
+            natbib,%
+            style=ieee%
+            ]{biblatex}
 % Import the bibliography files in document_setup.tex using "\addbibresource{biblio.bib}"
-
-% ====================================
-% === DRAFTS and EDITORIAL MARKUPS ===
-% ====================================
-
-\ifdraft{
-    % Double-space lines to allow space for comments.
-    % \usepackage{setspace}
-    % \doublespacing
-
-    % Display images regardless of "draft" mode.
-    \setkeys{Gin}{draft=false} 
-}
-
-\ifdraft{
-    \newcommand{\workingnote}[1]{{\color{violet} #1}}
-}{ 
-    \newcommand{\workingnote}[1]{}
-}
-
-\ifdraft{
-    \newcommand{\finalonly}[1]{{\color{red}$<$Hidden$>$}}
-}{
-    \newcommand{\finalonly}[1]{#1}
-}
-
-% Progress tracking
-\ifdraft{
-    \newcommand{\done}{\ensuremath{\checkmark}} % Variant: \surd
-    \newcommand{\undone}{\ensuremath{\square}}
-    \newcommand{\doneish}{\done-ish}
-}{
-    \newcommand{\done}{}
-    \newcommand{\undone}{}
-    \newcommand{\doneish}{}
-}
-
-% Redefine "\comment" command so that \comments{} is the \changes command.
-\makeatletter
-\let\commentsection\comment
-\let\endcommentsection\endcomment
-\let\comment\@undefined
-\let\endcomment\@undefined
-\makeatother
-% Support tracking changes and adding "todo" comments.
-\usepackage[ % import "changes" package
-    % If any of the changes commands are already defined, then the option "commandnameprefix=ifneeded" 
-    % tells changes to append "ch" to the name of the changes command in order to avoid a name collision.
-    % Commonly, "\comment" will be changed to "\chcomment".
-    commandnameprefix=ifneeded, 
-    % Changes imports the "todo" package. The following options are passed to the "todo" package.
-    todonotes={colorinlistoftodos,
-                prependcaption,
-                textsize=small,
-                backgroundcolor=orange!10,
-                textcolor=black,
-                linecolor=orange,
-                bordercolor=orange} % 
-    % draft, % <- enable line to show annotations regardless of the document being in 'final' mode.
-    % final, % <- enable line to hide annotations regardless of the document being in 'draft' mode.
-]{changes}
 
 % ============================================
 % === ENVIRONMENTS (Theorems, lemmas, etc) ===
@@ -344,39 +321,98 @@
 \renewcommand\th@plain{\slshape}
 \makeatother
 
+%%---------------------------------------------------%%
+%| Define environments that use the definition style |%
+%%---------------------------------------------------%%
 \theoremstyle{definition}%
+
+%%% Define definition environment %%%
 \ifdefined\definition\else
     \newtheorem{definition}{Definition}
 \fi
+% Add a mark at the end of each example.
+\AtBeginEnvironment{definition}{%
+  \pushQED{\qed}\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
+}
+\AtEndEnvironment{definition}{\popQED\endexample}
+
+%%% Define problem environment %%%
 \ifdefined\problem\else
     \newtheorem{problem}{Problem}
+    \crefname{problem}{Problem}{Problems}%
 \fi
+
+%%% Define assumption environment %%%
 \newtheorem{assumption}{Assumption}% Use singular even when there are multiple assumptions in a particular block.
 \crefname{assumption}{Assumption}{Assumptions}
+% Add a mark at the end of each example.
+\AtBeginEnvironment{assumption}{%
+  \pushQED{\qed}\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
+}
+\AtEndEnvironment{assumption}{\popQED\endexample}
+
+%%-----------------------------------------------%%
+%| Define environments that use the remark style |%
+%%-----------------------------------------------%%
 \theoremstyle{remark}%
+
+%%% Define remark environment %%%
 \ifdefined\remark\else
     \newtheorem{remark}{Remark}
 \fi
+
+%%% Define example environment %%%
 \ifdefined\example\else
     \newtheorem{example}{Example}
 \fi
-% \newtheorem{example}{Example}%
+% Add a mark at the end of each example.
+\AtBeginEnvironment{example}{%
+  \pushQED{\qed}\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
+}
+\AtEndEnvironment{example}{\popQED\endexample}
+
+
+%%----------------------------------------------%%
+%| Define environments that use the plain style |%
+%%----------------------------------------------%%
 \theoremstyle{plain}%
+
+%%% Define theorem environment %%%
 \ifdefined\theorem\else
     \newtheorem{theorem}{Theorem}
 \fi
+
+%%% Define proposition environment %%%
 \newtheorem{proposition}{Proposition}
 \ifdefined\lemma\else
     \newtheorem{lemma}{Lemma}
     \crefname{lemma}{Lemma}{Lemmas}%
 \fi
+
+%%% Define corollary environment %%%
 \ifdefined\corollary\else
     \newtheorem{corollary}{Corollary}
-    \crefname{Corollary}{Corollary}{Corollaries}%
+    \crefname{corollary}{Corollary}{Corollaries}%
 \fi
+
+%%% Define conjecture environment %%%
 \ifdefined\conjecture\else
     \newtheorem{conjecture}{Conjecture}
     \crefname{conjecture}{Conjecture}{Conjectures}%
+\fi
+
+\ifcsname thechapter\endcsname
+    % Update numbering to use chapters.
+    \numberwithin{assumption}{chapter}
+    \numberwithin{definition}{chapter}
+    \numberwithin{remark}{chapter}
+    \numberwithin{example}{chapter}
+    \numberwithin{proposition}{chapter}
+    \numberwithin{theorem}{chapter}
+    \numberwithin{lemma}{chapter}
+    \numberwithin{corollary}{chapter}
+    \numberwithin{conjecture}{chapter}
+    \numberwithin{application}{chapter}
 \fi
 
 % =================================
@@ -499,10 +535,6 @@
 \end{reminder}\egroup
 }
 
-% Define document colors
-\definecolor{blue}{rgb}{0.169, 0.243, 0.714}
-\definecolor{orange}{rgb}{1, 0.652, 0}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%% Macros for Defining Document Info %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -512,6 +544,7 @@
   \makeatletter%
   \expandafter\newcommand\csname pwintz@title\endcsname{#1}
   \makeatother
+  \title{#1}
 }
 
 \newcommand{\setSubtitle}[1]{%
@@ -519,6 +552,7 @@
   \makeatletter%
   \expandafter\newcommand\csname pwintz@subtitle\endcsname{#1}
   \makeatother
+  \ifcsdef{subtitle}{\subtitle{#1}}
 }
 
 \newcommand{\setAuthor}[3]{%
@@ -564,6 +598,11 @@
   \makeatother
 }
 
+% Document Toggles (WIP)
+\newbool{showWorkingNotesInDraft}
+\newbool{showProofsInDraft}
+
+% Read Document Configurations (edited by user)
 \input{document_setup.tex}
 \newcommand{\authorBriefList}{
     \csname pwintz@author1\endcsname%
@@ -585,3 +624,87 @@
     pdfauthor={\expandafter\csname authorBriefList\endcsname},
     pdfkeywords={}
 }
+
+
+% ====================================
+% === DRAFTS and EDITORIAL MARKUPS ===
+% ====================================
+
+\definecolor{workingnote}{rgb}{0.8, 0.3, 0.7}
+
+\ifdraft{
+    % Double-space lines to allow space for comments.
+    % \usepackage{setspace}
+    % \doublespacing
+
+    % Display images regardless of "draft" mode.
+    \setkeys{Gin}{draft=false} 
+}
+
+\ifdraft{
+    \ifbool{showWorkingNotesInDraft}%
+    {\newcommand{\workingnote}[1]{{\color{workingnote} #1}}}
+    {\newcommand{\workingnote}[1]{}}
+}{ 
+    \newcommand{\workingnote}[1]{}
+}
+
+\ifdraft{
+    \newcommand{\finalonly}[1]{{\color{red}$<$Hidden$>$}}
+}{
+    \newcommand{\finalonly}[1]{#1}
+}
+
+% Progress tracking
+\ifdraft{
+    \newcommand{\done}{\ensuremath{\checkmark}} % Variant: \surd
+    \newcommand{\undone}{\ensuremath{\square}}
+    \newcommand{\doneish}{\done-ish}
+    \newcommand{\citationneeded}{${}^{\color{darkred}\textup{\textsc{[Citation needed]}}}$}
+    \newcommand{\removebeforeflight}{${}^{\color{darkred}\textup{\textsc{[Remove before flight]}}}$}
+    \newcommand{\restorebeforeflight}[1]{${}^{\color{darkred}\textup{[\textsc{Restore before flight}: {#1}]}}$}
+    
+    \ifbool{showWorkingNotesInDraft}{
+        \newcommand{\checkbeforeflight}[1]{${}^{\color{darkred}\textup{[\textsc{Check before flight}: #1]}}$}
+    }{
+        \newcommand{\checkbeforeflight}[1]{}
+    }
+}{
+    \newcommand{\done}{}
+    \newcommand{\undone}{}
+    \newcommand{\doneish}{}
+
+    \newcommand{\citationneeded}{}
+    % \newcommand{\removebeforeflight}{${}^{\color{darkred}\textup{\textsc{[Remove before flight!!!!!!!!!!]}}}$}
+    % \newcommand{\restorebeforeflight}[1]{${}^{\color{darkred}\textup{[Restore before flight!!!!!!!: \textsc{#1}]}}$}
+    % \newcommand{\removebeforeflight}{\message{LaTeX Warning: Remove Before Flight command included in 'final' document.}}
+    % \newcommand{\restorebeforeflight}[1]{\message{LaTeX Warning: Restore Before Flight command included in 'final' document.}}
+}
+
+% Redefine "comment" environment (from "verbatim" package) 
+% to "commentsection" so that \comments{} can be defined 
+% by the `changes` package.
+\makeatletter
+\let\commentsection\comment
+\let\endcommentsection\endcomment
+\let\comment\@undefined
+\let\endcomment\@undefined
+\makeatother
+
+% Support tracking changes and adding "todo" comments.
+\usepackage[ % import "changes" package
+    % If any of the changes commands are already defined, then the option "commandnameprefix=ifneeded" 
+    % tells changes to append "ch" to the name of the changes command in order to avoid a name collision.
+    % Commonly, "\comment" will be changed to "\chcomment".
+    commandnameprefix=ifneeded, 
+    % Changes imports the "todo" package. The following options are passed to the "todo" package.
+    todonotes={colorinlistoftodos,
+                prependcaption,
+                textsize=small,
+                backgroundcolor=orange!10,
+                textcolor=black,
+                linecolor=orange,
+                bordercolor=orange}
+    % draft, % <- enable line to show annotations regardless of the document being in 'final' mode.
+    % final, % <- enable line to hide annotations regardless of the document being in 'draft' mode.
+]{changes}

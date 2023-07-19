@@ -2,8 +2,14 @@
     "ltex.latex.commands": {
         "\\tableofcontents[]": "ignore", 
         "\\@ifclassloaded{}{}{}": "ignore",  
+        "\\includeonly{}": "ignore",  
         "\\newcommand{}{}": "ignore",  
-        "\\renewcommand{}{}": "ignore",  
+        "\\renewcommand{}{}": "ignore", 
+        "\\newenvironment{}[][]{}{}": "ignore", 
+        "\\newenvironment{}[]{}{}": "ignore", 
+        "\\newenvironment{}": "ignore",  
+        "\\NewEnviron{}[]{}": "ignore",  
+        "\\newtheoremstyle{}{}{}{}{}{}{}{}{}": "ignore",  
         "\\nbd{}": "dummy", 
         "\\nbd": "dummy", 
         "\\lhs{}": "dummy", 
@@ -11,6 +17,8 @@
         "\\rhs{}": "dummy", 
         "\\rhs": "dummy", 
         "\\th{}": "ignore", 
+        "\\Matlab": "dummy",
+        "\\texttt{}": "dummy",
         "\\newbool{}": "ignore",  
         "\\setbool{}": "ignore",
         "\\setbool{}{}": "ignore",
@@ -18,9 +26,7 @@
         "\\Crefformat{}{}": "ignore", 
         "\\crefmultiformat{}{}{}{}{}": "ignore",  
         "\\Crefmultiformat{}{}{}{}{}": "ignore",  
-        "\\newenvironment{}[][]{}{}": "ignore", 
-        "\\newenvironment{}[]{}{}": "ignore", 
-        "\\newenvironment{}": "ignore",  
+        "\\crtcrefreference{}": "dummy",  
         "\\NewDocumentCommand{}{}{}": "ignore", 
         "\\DeclarePairedDelimiterX{}[]{}{}": "ignore", 
         "\\DeclarePairedDelimiter{}{}{}": "ignore", 
@@ -52,7 +58,10 @@
         "\\qedhere": "ignore", // This doesn't seem to work.
         "\\ltexignore{}": "ignore",
         "\\ltexdummy{}": "dummy",
-        "\\ltexvoweldummy{}": "vowelDummy"
+        "\\ltexvoweldummy{}": "vowelDummy",
+        "\\checkbeforeflight{}": "ignore",
+        "\\removebeforeflight{}": "ignore",
+        "\\restorbeforeflight{}": "ignore"
     },
     "ltex.latex.environments": {
         "lstlisting": "ignore",
@@ -61,9 +70,10 @@
     },
     "ltex.diagnosticSeverity": {
         "default": "information", 
+        "MORFOLOGIK_RULE_EN_US": "warning", // Spelling errors.
         "PASSIVE_VOICE": "hint",
         "ENGLISH_WORD_REPEAT_BEGINNING_RULE": "hint",
-        "MORFOLOGIK_RULE_EN_US": "warning" // Spelling errors.
+        "TOO_LONG_SENTENCE": "hint"
     },
     "ltex.enabled": [
         "bibtex",
@@ -130,7 +140,9 @@
         "**/*.idv": true,
         "**/*.lg": true,
         "**/*.log": true,
+        "**/*.lof": true,
         "**/*.synctex.gz": true,
+        "**/*.synctex(busy)": true,
         "**/*.tmp": true,
         "**/*.xref": true,
         "**/*.bbl": true,

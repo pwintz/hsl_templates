@@ -1,5 +1,6 @@
 % For rendering each frame as one page, use 'handout'.
 \documentclass[notheorems, aspectratio=169, presentation]{beamer}
+% \documentclass[notheorems, aspectratio=169, presentation,handout]{beamer}
 
 % % For presentation mode
 % \setbeamertemplate{note page}[plain] % Don't show outline or next slide.
@@ -10,21 +11,17 @@
 %   \setbeamertemplate{note page}[plain] % Don't show outline or next slide.
 %   \setbeameroption{show notes}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\usepackage{amsmath}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \usepackage{ifthen}
 \usepackage{adjustbox}
-\usepackage{color}
-\usepackage{graphics,graphicx,amssymb}
-\usepackage{amsxtra}
 \usepackage{amsfonts}
-\usepackage{epsfig}
 \usepackage{multicol}
-\usepackage{tikz}
 \usepackage{animate}
 % \usepackage{multimedia} % Provides \movie.
+\usepackage{tikz}
 \usetikzlibrary{calc}
 
 \usepackage{pwintz_configuration}
@@ -37,59 +34,62 @@
 \newcommand{\setparskip}{\setlength{\parskip}{7pt plus2pt minus4pt}}
 \AtBeginEnvironment{column}{\setlength{\parskip}{7pt plus2pt minus4pt}}
 
-\graphicspath{{images/}{../images/}}
-
 \newcommand{\mycolorbox}[1]{
   \begin{tcolorbox}[colback=white,colframe=structure]
     #1
   \end{tcolorbox}
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% MACROS %%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\usepackage{rgsMacros}
+% \usepackage{rgsMacros}
 
 \renewenvironment{remark}{\textit{\structure{Remark.}}}{}
 \newcommand{\mstructure}[1]{{\color{structure} #1}}
 \newcommand{\shortfootcite}[2][1-]{\footnote<#1>{\citet{#2}.}}
 \let\footnoterule\relax % Hide line above footnotes.
 
-\makeatletter
-% Populate title using value defined in document_setup.tex
-\title{\pwintz@title}
-\makeatother
-
 \author{% 
 % Populate author information from definitions in document_setup.tex
     % Insert first author, if defined.
-    \csname pwintz@author1\endcsname%
-    \textsuperscript{\csname pwintz@authorInstitute1\endcsname}%
+    \csuse{pwintz@author1}%
+    % \csname pwintz@author1\endcsname%
+    \ifcsdef{pwintz@institute2}{% 
+      % If there are two (or more) institutes, then we add a supscript number to indicate which authors are at which institutes.
+      \textsuperscript{\csuse{pwintz@authorInstitute1}}%
+    }{}%
     %
     % Insert second author, if defined.
-    \ifcsdef{pwintz@author2}{, \ifcsdef{pwintz@author3}{}{and }}{}% Add "," or ", and"
+    \ifcsdef{pwintz@author2}{%
+      \ifcsdef{pwintz@author3}{, }{, and }%
+    }{}% Add "," or ", and"
     \ifcsdef{pwintz@author2}{% If defined
-        \qquad \csname pwintz@author2\endcsname%
-        \textsuperscript{\csname pwintz@authorInstitute2\endcsname}%
+        \qquad \csuse{pwintz@author2}%
+        \textsuperscript{\csuse{pwintz@authorInstitute2}}%
     }{}%
     % Insert third author, if defined.
-    \ifcsdef{pwintz@author3}{, \ifcsdef{pwintz@author4}{}{and }}{}% Add "," or ", and"
+    \ifcsdef{pwintz@author3}{, \ifcsdef{pwintz@author4}{}{and }}{}% Add ", " or ", and "
     \ifcsdef{pwintz@author3}{% If defined
-        \qquad \csname pwintz@author3\endcsname%
-        \textsuperscript{\csname pwintz@authorInstitute3\endcsname}%
+        \qquad \csuse{pwintz@author3}%
+        \textsuperscript{\csuse{pwintz@authorInstitute3}}%
     }{}%
     % Insert fourth author, if defined.
     \ifcsdef{pwintz@author4}{, \ifcsdef{pwintz@author5}{}{and~}}{}% Add "," or ", and"
     \ifcsdef{pwintz@author4}{% If defined
-        \qquad\csname pwintz@author4\endcsname%
-        \textsuperscript{\csname pwintz@authorInstitute4\endcsname}%
+        \qquad\csuse{pwintz@author4}%
+        \textsuperscript{\csuse{pwintz@authorInstitute4}}%
     }{}
 }
 
-\institute{ % Populate institutions that are defined in document_setup.tex
+\institute{% Populate institutions that are defined in document_setup.tex
     \ifcsdef{pwintz@institute1}{% If defined
-        \textsuperscript{1}\csname pwintz@institute1\endcsname%
+      \ifcsdef{pwintz@institute2}{% 
+        % If there are two (or more) institutes, then we add a supscript number to indicate which authors are at which institutes.
+          \textsuperscript{1}%
+      }{}% Else nothing
+      \csname pwintz@institute1\endcsname%
     }{}% Else nothing
     \ifcsdef{pwintz@institute2}{% If defined
        \\ \textsuperscript{2}\csname pwintz@institute2\endcsname%
@@ -103,6 +103,14 @@
     }{}% Else nothing
 } 
 
+\usepackage{ifdraft} 
+\ifdraft{
+    % Remove PDF compression to reduce compilation times (at the cost of larger output files).
+    \pdfcompresslevel=0%
+    \pdfobjcompresslevel=0%
+}{%if not draft
+}
+
 
 \newcommand{\itemnote}[1]{\note[item]<.->{#1}}
 
@@ -111,6 +119,7 @@
 
 % TITLE FRAME
 \begin{frame}[plain]
+  % Set the title and an (optional) subtitle in document_setup.tex.
   \maketitle
   \includegraphics[height = 11mm,align=c]{UCSC_BaskinEng_Logo_wide.eps}
   \hfill 

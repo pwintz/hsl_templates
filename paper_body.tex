@@ -21,6 +21,11 @@ New or modified text appears like this.
 }% End of \workingnote
 }% end \ifdraft
 
+Here is \added{added}, \deleted{deleted} 
+and \replaced{replaced}{replaysed} text.
+\comment{Maybe I shouldn't have written this?}
+\todo[inline]{To-do: Write something worthwhile.}
+
 % \begin{keywords}
 %     Switching, hybrid system, stability \todo[inline]{Remove from PDF before submission.}
 % \end{keywords}
@@ -34,8 +39,11 @@ New or modified text appears like this.
 % This comment only appear in \texttt{draft} mode.
 % \end{workingnotes}
 
-Here is \added{added}, \deleted{deleted} and \replaced{replaced}{replaysed} text.
+
+Here is \added{added}, \deleted{deleted} 
+and \replaced{replaced}{replaysed} text.
 \comment{Maybe I shouldn't have written this?}
+\todo[inline]{To-do: Write something worthwhile.}
 
 \lipsum[3]
 \lipsum[3]
@@ -52,7 +60,7 @@ Here is \added{added}, \deleted{deleted} and \replaced{replaced}{replaysed} text
 We consider hybrid systems modeled in the form \cite{goebel_hybrid_2012}
 \begin{equation}
     \calH{:}\: \left\{\begin{aligned}
-        \xdot \hspace{4pt}&= f(x) & x \in C \\
+        \dot x \hspace{4pt}&= f(x) & x \in C \\
         x^+ &= g(x) & x \in D
     \end{aligned}\right. 
     \label{eq:hybrid system}

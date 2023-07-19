@@ -47,6 +47,11 @@
 }
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%% DOCUMENT PACKAGES %%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Include packages specific to this document here.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% TYPESETTING OPTIONS %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,12 +62,32 @@
 %%%% Use \varepsilon instead of \epsilon. Comment to disable. %%%%
 \let\epsilon\varepsilon
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% IMAGE PATH %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Define the search path for images.
+\graphicspath{% List directories to search for images.
+    {images/}%
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% COLOR OPTIONS %%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+% Colors for annotations.
+\ifdraft{% Is draft
+    \colorlet{unimportant}{black!35!white}
+    \colorlet{not ready}{black!35!white}
+    \colorlet{added}{blue!80!black} 
+    \colorlet{added unimportant}{blue!35!white}
+    \colorlet{added important}{darkred}
+}{% Not draft
+    \colorlet{unimportant}{black}
+    % \colorlet{not ready}{black!35!white}
+    \colorlet{added}{black} 
+    \colorlet{added unimportant}{black}
+    \colorlet{added important}{black}
+}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% References %%%%%%%%%%%%%%%%%%
@@ -70,3 +95,25 @@
 % Import the bibliography file
 \addbibresource{biblio.bib}
 \addbibresource{biblio_report.bib}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% DOCUMENT HIDE/SHOW TOGGLES %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% WORK IN PROGRESS
+\setbool{showWorkingNotesInDraft}{true}
+\setbool{showProofsInDraft}{true}
+
+\ifdraft{
+    % Hide Proofs
+    \ifbool{showProofsInDraft}{% If true, show proofs
+    }{% If false, hide proofs
+        \renewenvironment{proof}{\emph{Proof.} \workingnote{[Proof omitted from draft.]}\commentsection}{\endcommentsection\par\medskip}%
+    }
+    % % Hide Examples
+    % \renewenvironment{example}{\textbf{Example.} \workingnote{[Example omitted from draft.]}\commentsection}{\endcommentsection\par\medskip}
+    % Hide paragraph headings.
+    \providecommand{\paragraph}[1]{\workingnote{\textbf{#1} }}
+}{
+    \providecommand{\paragraph}[1]{}
+}

@@ -35,7 +35,12 @@
 \newcommand{\st}{\ensuremath{^{st}}}%
 \newcommand{\nd}{\ensuremath{^{nd}}}
 \newcommand{\rd}{\ensuremath{^{rd}}}
-\renewcommand{\th}{\ensuremath{^{th}}} % for ith, jth, etc.
+\renewcommand{\th}{\ensuremath{^{\mathrm{th}}}} % for ith, jth, etc.
+\newcommand{\ith}{\ensuremath{i\text{th}}\xspace}
+\newcommand{\jth}{\ensuremath{j\text{th}}\xspace}
+\newcommand{\kth}{\ensuremath{k\text{th}}\xspace}
+\newcommand{\mth}{\ensuremath{m\text{th}}\xspace}
+\newcommand{\nth}{\ensuremath{n\text{th}}\xspace}
 \newcommand*{\circled}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}} % Creates a number enclosed in a circle
 % Define \lhs for "left-hand side" in text or "L.H.S." in math. 
 \newcommand{\lhs}{\relax\ifmmode\mathrm{L.H.S.}\else{}left-hand side\xspace\fi}
@@ -45,9 +50,9 @@
 \newcommand{\nbd}{neighborhood\xspace}
 \newcommand{\fnc}{function\xspace}
 \newcommand{\Matlab}{\textsc{Matlab}\xspace}
-\newcommand{\closedloop}{closed-loop\xspace}
-\newcommand{\Closedloop}{Closed-loop\xspace}
-\newcommand{\ClosedLoop}{Closed-Loop\xspace}
+\newcommand{\closedloop}{closed--loop\xspace}
+\newcommand{\Closedloop}{Closed--loop\xspace}
+\newcommand{\ClosedLoop}{Closed--Loop\xspace}
 \newcommand{\sic}{[\textit{sic}]} % To mark errors present in the source of a quotation.
 %
 % =============================
@@ -134,6 +139,35 @@
 \newcommand{\calY}{{\mathcal{Y}}}
 \newcommand{\calZ}{{\mathcal{Z}}}
 %
+% ===== Blackboard letters ======
+% We omit R, Z, N, Q because you should use \reals, \integers, etc.
+\newcommand{\bbA}{{\mathbb{A}}}
+\newcommand{\bbB}{{\mathbb{B}}}
+% \newcommand{\bbC}{{\mathbb{C}}}
+\newcommand{\bbD}{{\mathbb{D}}}
+\newcommand{\bbE}{{\mathbb{E}}}
+\newcommand{\bbF}{{\mathbb{F}}}
+\newcommand{\bbG}{{\mathbb{G}}}
+\newcommand{\bbH}{{\mathbb{H}}}
+\newcommand{\bbI}{{\mathbb{I}}}
+\newcommand{\bbJ}{{\mathbb{J}}}
+\newcommand{\bbK}{{\mathbb{K}}}
+\newcommand{\bbL}{{\mathbb{L}}}
+\newcommand{\bbM}{{\mathbb{M}}}
+\newcommand{\bbN}{{\mathbb{N}}}
+\newcommand{\bbO}{{\mathbb{O}}}
+\newcommand{\bbP}{{\mathbb{P}}}
+% \newcommand{\bbQ}{{\mathbb{Q}}}
+% \newcommand{\bbR}{{\mathbb{R}}}
+\newcommand{\bbS}{{\mathbb{S}}}
+\newcommand{\bbT}{{\mathbb{T}}}
+\newcommand{\bbU}{{\mathbb{U}}}
+\newcommand{\bbV}{{\mathbb{V}}}
+\newcommand{\bbW}{{\mathbb{W}}}
+\newcommand{\bbX}{{\mathbb{X}}}
+\newcommand{\bbY}{{\mathbb{Y}}}
+% \newcommand{\bbZ}{{\mathbb{Z}}}
+%
 % ==========================
 % ======= Fractions ======== 
 % ==========================
@@ -166,22 +200,27 @@
 \newcommand{\suchthat}{\mathrel{}\ifnum\currentgrouptype=16 \middle\fi|\mathrel{}}
 \newcommand*{\closure}[1]{\overline{#1}}
 \newcommand{\interior}{\operatorname{int}}
-\newcommand{\union}{\cup}
-\newcommand{\Union}{\bigcup}
-\newcommand{\inter}{\cap}
-\newcommand{\Inter}{\bigcap}
-\newcommand{\intersect}{\inter}
-\newcommand{\Intersect}{\Inter}
+\newcommand{\exterior}{\operatorname{ext}}
 \newcommand{\boundary}{\partial}
 \newcommand{\bnd}{\boundary}
+\newcommand{\union}{\cup}
+\DeclareMathOperator*{\Union}{\bigcup}
+\newcommand{\inter}{\cap}
+\DeclareMathOperator*{\Inter}{\bigcap}
+\newcommand{\intersect}{\inter}
+\DeclareMathOperator*{\Intersect}{\Inter}
 %
 % **** SETS **** 
 \newcommand{\reals}{\mathbb{R}}
 \newcommand{\realsn}{\reals^{n}}
 \newcommand{\positivereals}{\reals_{>0}}
 \newcommand{\preals}{\positivereals}
+\newcommand{\negativereals}{\reals_{>0}}
+\newcommand{\nreals}{\negativereals}
 \newcommand{\nonnegativereals}{\reals_{\geq0}}
 \newcommand{\nnreals}{\nonnegativereals}
+\newcommand{\nonpositivereals}{\reals_{\leq0}}
+\newcommand{\npreals}{\nonpositivereals}
 \newcommand{\rationals}{\mathbb{Q}}
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\naturals}{\mathbb{N}}
@@ -190,11 +229,26 @@
 \newcommand*{\symmetricmatrices}[1][n]{\mathbb{S}^{#1}}
 \newcommand*{\pdmatrices}[1][n]{\symmetricmatrices[#1]_{++}}
 \newcommand*{\psdmatrices}[1][n]{\symmetricmatrices[#1]_{+}}
+\newcommand{\ball}{\mathbb{B}}
 \newcommand*{\unitball}[1][n]{\mathbb{B}^{#1}}
 \newcommand*{\sphere}[1][n]{\mathbb{S}^{#1}}
 \newcommand*{\torus}[1][n]{\mathbb{T}^{#1}}
 \newcommand*{\realprojective}[1][n]{\reals \mathbb{P}^{#1}}
 \newcommand*{\complexprojective}[1][n]{\complexes\mathbb{P}^{#1}}
+%
+% ===== SEQUENCES =====
+% The \seq[j]{x_j} command inserts an infinite sequence with index variable 'j' and 
+% entries x_j. A starred version of the command disables growing the size of the braces 
+% to match the height of the interior.
+\newcommand{\seq}[2][i]{\{#2\}_{#1 = 0}^\infty}
+\WithSuffix\newcommand\seq*[2][i]{\left{#2\right}_{#1 = 0}^\infty}
+\newcommand\iseq[2][0]{\{#2\}_{i = #1}^\infty}
+\newcommand\jseq[2][0]{\{#2\}_{j = #1}^\infty}
+\newcommand\kseq[2][0]{\{#2\}_{k = #1}^\infty}
+\WithSuffix\newcommand\iseq*[2][0]{\left\{#2\right\}_{i = #1}^\infty}
+\WithSuffix\newcommand\jseq*[2][0]{\left\{#2\right\}_{j = #1}^\infty}
+\WithSuffix\newcommand\kseq*[2][0]{\left\{#2\right\}_{k = #1}^\infty}
+% \newcommand{\iseq}[1]{\left\{#1\right\}_{i = 0}^\infty} % Bad name! Easily confused for "is equal".
 %
 % =============================
 % ====== LINEAR ALGEBRA =======
@@ -205,12 +259,18 @@
 % Zero-vector
 \newcommand{\zerovec}[1]{0_{#1}}
 % One-vector
+\newcommand{\what}{{\hat{w}}} 
+\newcommand{\xhat}{{\hat{x}}}
+\newcommand{\yhat}{{\hat{y}}} 
+\newcommand{\zhat}{{\hat{z}}}
 \newcommand{\onevec}{\mathbb{1}}
 \newcommand{\RRF}{\operatorname{RRF}}
 \newcommand{\RREF}{\operatorname{RREF}}
 \newcommand*{\proj}[1]{\operatorname{proj}_{#1}}
 \newcommand*{\comp}[1]{\operatorname{comp}_{#1}}
 \newcommand*{\orth}[1]{\operatorname{orth}_{#1}}
+\newcommand{\mxn}{\ensuremath{{m \times n}}\xspace}
+\newcommand{\nxn}{\ensuremath{{n \times n}}\xspace}
 %
 % **** VECTOR AND MATRIX FUNCTIONS **** 
 % Define "\innerproduct" and an abbreviation "\ip" such the code 
@@ -218,8 +278,10 @@
 % Use a star to prevent the angle brackets from growing with the contents. 
 \DeclarePairedDelimiterX{\innerproduct}[2]{\langle}{\rangle}{#1,#2}
 \DeclarePairedDelimiterX{\ip}[2]{\langle}{\rangle}{#1,#2}
-% Define "\norm" for euclidean vector norms. To render the norm of "x" write "\norm{x}". 
-% Note that double bars "\lVert ... \rVert" are used for signal norms so we use singal bars for euclidean vector norms.
+
+% Define "\norm" for Euclidean vector norms. To render the norm of "x" write "\norm{x}". 
+% Note that double bars "\lVert ... \rVert" are used for signal norms so we use singal bars for Euclidean vector norms.
+% To make the bars of the norm match the height of their contents, use "\norm*{}".
 \DeclarePairedDelimiter{\norm}{\lvert}{\rvert} 
 \newcommand*{\normsq}[1]{\norm{#1}^2}
 \newcommand*{\onenorm}[1]{\norm{#1}_{1}}
@@ -231,18 +293,21 @@
 \newcommand{\rank}{\operatorname{rank}}
 \newcommand{\trace}{\operatorname{tr}}
 %DON'T USE: \renewcommand {\null}{\text{null}}
-\newcommand{\range}{\operatorname{range}}
-\newcommand{\trans}[1][]{^{#1 \top}} % Matrix transpose
+\newcommand{\range}{\operatorname{rge}}
+\newcommand{\rge}{\range}
+\newcommand{\rng}{\range}
+\newcommand{\trans}[1][]{^{#1 \top}\!} % Matrix transpose
 \newcommand{\transstar}{^{*\top}} % Vector or matrix transpose notation (\intercal is an alternative)
 \newcommand{\herm}[1][]{^{#1 H}} % Hermitian 
 \newcommand{\eig}{\operatorname{eig}}
 %
 % **** MATRICES **** 
-% Create a large matrix. Usage \mat[<vertical spacing>]{a & b \\ c & d}
+% Insert a matrix. Usage \mat[<vertical spacing>]{a & b \\ c & d}
 \newcommand{\mat}[2][1]{\begingroup
 	\renewcommand*{\arraystretch}{#1}
 	\begin{bmatrix}#2\end{bmatrix}
 \endgroup}
+% 
 % Create a small matrix suitable to use in the middle of text. 
 % Usage \smallmat{a & b \\ c & d}
 \newcommand*{\smallmat}[1]{\bigl[ \begin{smallmatrix} #1 \end{smallmatrix} \bigr]}
@@ -254,11 +319,25 @@
 }}
 \newcommand{\tridiagmatrix}[3]{
 \mat{
-#2     & #3     &         \\
-#1     & \ddots & \ddots  \\
+#2     & #3     &        & 0  \\
+#1     & \ddots & \ddots &    \\
        & \ddots & \ddots & #3 \\
-       &        & #1     & #2
+0      &        & #1     & #2
 }}
+% Create an augmented matrix in the form "[A|b]".
+\newenvironment{augmatrix}[1]{%
+  \left[\begin{array}{@{}*{#1}{c}|c@{}}
+}{%
+  \end{array}\right]
+}
+\newcommand{\augmat}[2][1]{
+\begin{augmatrix}{#1}
+   #2
+\end{augmatrix}
+}
+% Determinate of a matrix	
+\newcommand {\detmat}[1]{\begin{vmatrix}
+            #1 \end{vmatrix}}
 \newcommand{\rotationmat}[1]{\mat{\cos{#1} & \sin{#1} \\ 
                                   -\sin{#1} & \cos{#1} }}
 %
@@ -266,6 +345,7 @@
 % ======= CALCULUS ========
 % =========================
 %
+% ===== Ordinary derivates =====
 \newcommand{\diff}{\mathop{}\!d}
 \newcommand{\ds}{\diff s}
 \newcommand{\dt}{\diff t}
@@ -309,14 +389,6 @@
 \newcommand*{\pdtt}[1][]{\pd[^2#1]{t^2}}
 \newcommand*{\pdxy}[1][]{\pd[^2#1]{x\partial y}}
 % ===== Time derivates =====
-\newcommand{\xdot}{\dot{x}}
-\newcommand{\xddot}{\ddot{x}}
-\newcommand{\ydot}{\dot{y}}
-\newcommand{\yddot}{\ddot{y}}
-\newcommand{\zdot}{\dot{z}}
-\newcommand{\zddot}{\ddot{z}}
-\newcommand{\rdot}{\dot{r}}
-\newcommand{\rddot}{\ddot{r}}
 \newcommand{\thetadot}{\dot{\theta}}
 \newcommand{\thetaddot}{\ddot{\theta}}
 \newcommand{\omegadot}{\dot{\omega}}
@@ -355,7 +427,11 @@
 \newcommand{\intreals}{\int_{-\infty}^\infty}
 \newcommand{\intpreals}{\int_{0}^\infty} % Positive reals
 \newcommand{\intnreals}{\int_{-\infty}^0} % Negative reals
-% **** TRANSFORMS ****
+%
+% =============================
+% ======== TRANSFORMS =========
+% =============================
+% 
 \newcommand{\Lagrangian}{\mathcal{L}}
 \newcommand*{\Fourier}[1][*]{ \mathcal{F}\left[\,#1\,\right] }
 \newcommand*{\Fourierinvs}[1][*]{ \mathcal{F}\invs\left[\,#1\,\right] }
@@ -369,9 +445,9 @@
 % Example usage: \convexcombo[\alpha]{x}{y}
 \newcommand*{\convexcombo}[3][\theta]{{#1}{#2} + \left(1 - {#1}\right){#3}}
 \newcommand{\convex}{\operatorname{conv}}
-\newcommand*{\minimize}[1]{\underset{#1}{\textup{minimize}}\quad} % Usage: \minimize{\x \in \reals}
-\newcommand*{\maximize}[1]{\underset{#1}{\textup{maximize}}\quad} % Usage: \maximize{\x \in \reals}
-\newcommand{\subjectto}{\textup{subject to}\quad}
+\newcommand*{\minimize}[1]{\operatorname*{minimize}_{#1}\quad} % Usage: \minimize{\x \in \reals}
+\newcommand*{\maximize}[1]{\operatorname*{maximize}_{#1}\quad} % Usage: \maximize{\x \in \reals}
+\newcommand{\subjectto}{\textrm{subject to}\quad}
 \newcommand*{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\:\:}
 \newcommand*{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\:\:}
 \newcommand{\epi}{\operatorname{epi}}
@@ -379,6 +455,7 @@
 % ===============================
 % ======= Control Theory ========
 % ===============================
+%
 \newcommand{\Kinfty}{\calK_{\infty}}
 \newcommand{\KL}{\mathcal{KL}}
 \newcommand{\KLL}{\mathcal{KLL}}
@@ -429,13 +506,14 @@
 % Define a new macro "\memint" for reducing duplication 
 % when writing integrals. The first time an integral with limits (A, B) are used, 
 % write "\memint*[A][B]". Thereafter---until the next \memint*---simply write "\memint"
-\NewDocumentCommand{\memint}{sO{}O{}}{%
+\NewDocumentCommand{\memint}{sO{}O{}O{}m}{%
     \IfBooleanT{#1}%
     {% If a star
         % "\gdef" is used to define a global macro.
         \gdef\memintlimits{_{#2}^{#3}}%
+        \gdef\memintsuffix{#4}
     }
-    \int\memintlimits
+    \int\memintlimits #5 \mathrel{}\memintsuffix
 }
 %
 % Define a new macro "\memsum" for reducing duplication 
@@ -468,8 +546,7 @@
 % Define a new macro "\memlim" for reducing duplication 
 % when writing limits. The first time a limit occurs with variable "x"
 % and limit "\infty", write "\memlim*[x][\infty]". 
-% Thereafter---until the next \memlim*---simply write "\memlim" to insert a limitmation
-% with the symbols given in \memnewint. 
+% Thereafter---until the next \memlim*---simply write "\memlim" to insert the same limit.
 \NewDocumentCommand{\memlim}{sO{}}{%
     \IfBooleanT{#1}%
     {% If a star
@@ -477,6 +554,45 @@
         \gdef\memlimsubscript{_{#2}}%
     }
     \lim\memlimsubscript
+}
+%
+% Define a new macro "\memseq" for reducing duplication 
+% when writing sequences. 
+% The first time a sequence occurs with limits "j=0" to "\infty", write "\memseq*[j=0][\infty]{x_j}". 
+% Thereafter---until the next \memseq*---simply write "\memseq".
+\NewDocumentCommand{\memseq}{sO{}O{}m}{%
+    \IfBooleanT{#1}%
+    {% If a star
+        % "\gdef" is used to define a global macro.
+        \gdef\memseqsubscript{_{#2}^{#3}}%
+    }
+    \{#4\}\memseqsubscript
+}
+%
+% Define a new macro "\memsup" for reducing duplication 
+% when writing supremums. 
+% The first time a supermum $\sup_{x \in \reals}$ "\memsup*[x \in \reals]". 
+% Thereafter---until the next \memsup*---simply write "\memsup" to insert the same supermum.
+\NewDocumentCommand{\memsup}{sO{}}{%
+    \IfBooleanT{#1}%
+    {% If a star
+        % "\gdef" is used to define a global macro.
+        \gdef\memsupsubscript{_{#2}}%
+    }
+    \sup\memsupsubscript
+}
+%
+% Define a new macro "\meminf" for reducing duplication 
+% when writing infimum. 
+% The first time a infimum $\sup_{x \in \reals}$ "\meminf*[x \in \reals]". 
+% Thereafter---until the next \meminf*---simply write "\meminf" to insert the same infimum.
+\NewDocumentCommand{\meminf}{sO{}}{%
+    \IfBooleanT{#1}%
+    {% If a star
+        % "\gdef" is used to define a global macro.
+        \gdef\meminfsubscript{_{#2}}%
+    }
+    \sup\meminfsubscript
 }
 % 
 % Create abbreviations that have a short version and a long version.
@@ -490,7 +606,7 @@
     \expandafter\NewDocumentCommand\csname #1\endcsname{s}{%
         \IfBooleanTF##1%
         {#3}% If a star is seen
-        {#2}%     If no star is seen
+        {#2}% If no star is seen
     }%
 }
 %
