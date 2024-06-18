@@ -1,0 +1,88 @@
+% Disable LTeX for this file (https://valentjn.github.io/ltex/advanced-usage.html#magic-comments)
+% LTeX: enabled=false
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pwintz_matlab}
+[2024/02/21 Paul Wintz Setup for MATLAB Code Display]
+
+% ======== CODE DISPLAY ========= % 
+
+% MATLAB Code Display (https://tex.stackexchange.com/a/158816/153678)
+\usepackage[numbered,framed]{matlab-prettifier}
+
+\let\ph\mlplaceholder % shorter macro
+\lstMakeShortInline"
+
+\tcbuselibrary{breakable}
+\tcbuselibrary{most}
+
+\lstset{
+  style              = Matlab-editor,
+  basicstyle         = \ttfamily,
+  escapechar         = ",
+	tabsize=4,
+  mlshowsectionrules = false,
+	backgroundcolor=\color{white},
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	framesep=5pt,
+	columns=fixed
+}
+
+\lstnewenvironment{matlab}[1][]
+{\lstset{
+	frameround=ffff,
+  #1
+}}
+{}
+
+\lstnewenvironment{matlabPlain}[1][]
+{\lstset{
+	tabsize=4,
+  % mlshowsectionrules = true,
+	numbers=none,
+	#1
+}}
+{}
+
+\lstnewenvironment
+{commandWindow}
+{\lstset{
+	frame=none,
+	numbers=none,
+	% every listing line={\small\ttfamily\bfseries >> }
+}}
+{}
+
+\lstnewenvironment
+{matlabOutput}[1][]
+{\lstset{
+	frameround=tttt,
+	numbers=none,  	     
+  #1
+}}
+{}
+
+
+% % Define a new tcolorbox environment for listings
+% \tcbuselibrary{listings,skins}
+
+% \newtcblisting{mylisting}[2][]{
+%     title=#2,
+%     colback=white,
+%     colframe=black!70,
+%     fonttitle=\bfseries,
+%     listing options={
+%         basicstyle=\ttfamily\small,
+%         frame=single,
+%         numbers=left,
+%         % numberstyle=\tiny,
+%         captionpos=b,
+%         breaklines=true,
+%         showstringspaces=false,
+%         #1
+%     }
+% }
+
+% \newtcblisting[auto counter]{mycbox}[1]{%
+% colback=red!5!white,colframe=red!75!black,fonttitle=\bfseries,
+% title=Listing \thetcbcounter: #1}

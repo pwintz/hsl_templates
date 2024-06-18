@@ -1,4 +1,4 @@
-% Enter the title of your work.
+% Enter the title of your work. Replace spaces with "~" to prevent line breaks between particular words. 
 \setTitle{This is my title}
 \setSubtitle{This is my (optional) subtitle}
 
@@ -43,7 +43,7 @@
 % - The abbreviation of numbers (plural) is "nos." 
 % - When writing a period that does not end sentence (e.g., after "nos."), follow it with "\ " to create a space of the correct width. 
 \setAcknowledgementBlurb{
-    This research was funded by National Science Foundation grant nos.\ ECS-1710621, CNS-1544396, and CNS-2039054; Air Force Office of Scientific Research grant nos.\ FA9550-19-1-0053, FA9550-19-1-0169, and FA9550-20-1-0238; and Army Research Office grant no.\ W911NF-20-1-0253.
+    This research was supported by NSF grant nos.\ CNS-2039054 and CNS-2111688; by AFOSR grant nos.\ FA9550-19-1-0169, FA9550-20-1-0238, FA9550-23-1-0145, and FA9550-23-1-0313; by AFRL grant nos.\ FA8651-22-1-0017 and FA8651-23-1-0004; by ARO grant no.\ W911NF-20-1-0253; and by DOD grant no.\ W911NF-23-1-0158.
 }
 
 
@@ -55,6 +55,9 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% TYPESETTING OPTIONS %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Define hyphenation for technical words.
+\hyphenation{}
 
 %%%% Use \varphi instead of \phi. Comment to disable. %%%%
 \let\phi\varphi
@@ -92,28 +95,36 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% References %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Import the bibliography file
-\addbibresource{biblio.bib}
-\addbibresource{biblio_report.bib}
+
+% Import the bibliography files (BibLaTeX)
+\addbibresource{biblio.bib} % Add in biblio.bib for most citations.
+% Add in biblio_report.bib for citing the report from the conference version.
+% \addbibresource{biblio_report.bib} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% DOCUMENT HIDE/SHOW TOGGLES %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % WORK IN PROGRESS
-\setbool{showWorkingNotesInDraft}{true}
-\setbool{showProofsInDraft}{true}
+% \setbool{showWorkingNotesInDraft}{true}
+% \setbool{showProofsInDraft}{true}
 
-\ifdraft{
-    % Hide Proofs
-    \ifbool{showProofsInDraft}{% If true, show proofs
-    }{% If false, hide proofs
-        \renewenvironment{proof}{\emph{Proof.} \workingnote{[Proof omitted from draft.]}\commentsection}{\endcommentsection\par\medskip}%
-    }
-    % % Hide Examples
-    % \renewenvironment{example}{\textbf{Example.} \workingnote{[Example omitted from draft.]}\commentsection}{\endcommentsection\par\medskip}
-    % Hide paragraph headings.
-    \providecommand{\paragraph}[1]{\workingnote{\textbf{#1} }}
-}{
-    \providecommand{\paragraph}[1]{}
-}
+% \ifdraft{
+%     % Hide Proofs
+%     \ifbool{showProofsInDraft}{% If true, show proofs
+%     }{% If false, hide proofs
+%         \renewenvironment{proof}{\emph{Proof.} \workingnote{[Proof omitted from draft.]}\commentsection}{\endcommentsection\par\medskip}%
+%     }
+%     % % Hide Examples
+%     % \renewenvironment{example}{\textbf{Example.} \workingnote{[Example omitted from draft.]}\commentsection}{\endcommentsection\par\medskip}
+%     % Hide paragraph headings.
+%     \providecommand{\paragraph}[1]{\workingnote{\textbf{#1} }}
+% }{
+%     \providecommand{\paragraph}[1]{}
+% }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% CHANGES PACKAGE ANNOTATIONS %%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

@@ -1,0 +1,106 @@
+%===============================================================================
+% $Id: ifacconf.tex 19 2011-10-27 09:32:13Z jpuente $  
+% Template for IFAC meeting papers
+% Copyright (c) 2007-2008 International Federation of Automatic Control
+%===============================================================================
+\documentclass[final]{ifacconf}
+
+ % Fix a problem with the ifacconf class that causes cleveref to crash.
+\newcounter{part}
+\counterwithin*{section}{part}
+
+% Fix the inline citation style.
+% \let\cite\citep
+
+\usepackage{graphicx}      % include this line if your document contains figures
+\usepackage{natbib}        % required for bibliography
+
+\usepackage{pwintz_configuration}
+\usepackage{pwintz_definitions}
+\input{document_definitions} 
+
+% Create \ifdraft{}{} conditional 
+% that switches based on whether "draft" 
+% is passed to document class.
+\usepackage{ifdraft}
+
+% Make the columns on the last page even.
+\usepackage{flushend}
+
+\newbool{conf}
+\setbool{conf}{true}
+\ifdraft{% If 'draft', show color-coded report and conference or only color-coded report (change commented lines to choose).
+	% \newcommand{\confonly}[1]{\darkgreen{#1}}
+	% \newcommand{\reportonly}[1]{\darkred{#1}}
+	\newcommand{\confonly}[1]{#1}
+	% \newcommand{\reportonly}[1]{\darkred{#1}} % Show report content in red.
+	\newcommand{\reportonly}[1]{} % Hide report content.
+}{% If 'final', only show conf.
+	\newcommand{\confonly}[1]{#1}
+	\newcommand{\reportonly}[1]{}
+}
+
+\ifdraft{% If draft
+  \renewcommand{\paragraph}[1]{\textbf{\color{black}#1:}\xspace}
+}{% If not draft
+  \renewcommand{\paragraph}[1]{}
+}
+
+% Define the search path for images.
+\graphicspath{% List directories to search for images.
+    {images/}%
+}
+
+% \newtheorem{remark}{Remark}
+% \newtheorem{example}{Example}
+\newtheorem{proof}{Proof}
+% \newtheorem{definition}{Definition}
+
+
+% Set the text style for theorems and the like to slanted instead of italics.
+% I find this makes the text easier to read.
+\makeatletter
+% \renewcommand\th@plain{\slshape}
+\gdef\th@plain{\slshape
+\def\@begintheorem##1##2{\item[\hskip\labelsep
+	{\theorem@headerfont ##1\ ##2.}]}%
+\def\@opargbegintheorem##1##2##3{\item[\hskip\labelsep
+	{\theorem@headerfont ##1\ ##2}\ {\upshape (##3).}]}}
+\makeatother
+% \newcommand{\qedhere}{}
+
+% Make the PDF version compliant with the submission requirements for ADHS.
+\pdfminorversion=4
+
+%===============================================================================
+\begin{document}
+
+	\begin{frontmatter}
+
+		\makeatletter
+		% Title, preferably not more than 10 words.
+		\title{\pwintz@title{}\thanksref{footnoteinfo}} 
+		
+		\thanks[footnoteinfo]{\acknowledgementBlurb}
+		
+		\author[First]{\csname pwintz@author1\endcsname}\quad
+		\author[Second]{\csname pwintz@author2\endcsname} 
+		
+		\address[First]{\csname pwintz@longAffiliation1\endcsname{} \textup{(\insertemailfromcs{pwintz@authorEmail1})}}
+		\address[Second]{\csname pwintz@longAffiliation2\endcsname{} \textup{(\insertemailfromcs{pwintz@authorEmail2})}}
+		
+		\begin{abstract}
+			\input{abstract}
+		\end{abstract}
+		\makeatother
+		
+		\begin{keyword}
+			Stability and stabilization of hybrid systems, Stability of nonlinear systems
+		\end{keyword}
+	
+	\end{frontmatter}
+	%===============================================================================
+
+	\input{adhs24_body}
+
+\end{document} 

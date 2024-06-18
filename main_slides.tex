@@ -34,6 +34,8 @@
 \newcommand{\setparskip}{\setlength{\parskip}{7pt plus2pt minus4pt}}
 \AtBeginEnvironment{column}{\setlength{\parskip}{7pt plus2pt minus4pt}}
 
+\graphicspath{{images/}{../images/}}
+
 \newcommand{\mycolorbox}[1]{
   \begin{tcolorbox}[colback=white,colframe=structure]
     #1
@@ -51,35 +53,39 @@
 \newcommand{\shortfootcite}[2][1-]{\footnote<#1>{\citet{#2}.}}
 \let\footnoterule\relax % Hide line above footnotes.
 
+\makeatletter
+% Populate title using value defined in document_setup.tex
+\title{\pwintz@title}
+\makeatother
+
 \author{% 
 % Populate author information from definitions in document_setup.tex
     % Insert first author, if defined.
+    \hfill
     \csuse{pwintz@author1}%
-    % \csname pwintz@author1\endcsname%
-    \ifcsdef{pwintz@institute2}{% 
+    \ifcsdef{pwintz@institute2}{%
       % If there are two (or more) institutes, then we add a supscript number to indicate which authors are at which institutes.
       \textsuperscript{\csuse{pwintz@authorInstitute1}}%
     }{}%
+    \hfill% 
     %
     % Insert second author, if defined.
-    \ifcsdef{pwintz@author2}{%
-      \ifcsdef{pwintz@author3}{, }{, and }%
-    }{}% Add "," or ", and"
     \ifcsdef{pwintz@author2}{% If defined
-        \qquad \csuse{pwintz@author2}%
+        \csuse{pwintz@author2}%
         \textsuperscript{\csuse{pwintz@authorInstitute2}}%
+        \hfill% 
     }{}%
     % Insert third author, if defined.
-    \ifcsdef{pwintz@author3}{, \ifcsdef{pwintz@author4}{}{and }}{}% Add ", " or ", and "
     \ifcsdef{pwintz@author3}{% If defined
-        \qquad \csuse{pwintz@author3}%
+         \csuse{pwintz@author3}%
         \textsuperscript{\csuse{pwintz@authorInstitute3}}%
+        \hfill% 
     }{}%
     % Insert fourth author, if defined.
-    \ifcsdef{pwintz@author4}{, \ifcsdef{pwintz@author5}{}{and~}}{}% Add "," or ", and"
     \ifcsdef{pwintz@author4}{% If defined
-        \qquad\csuse{pwintz@author4}%
+        \csuse{pwintz@author4}%
         \textsuperscript{\csuse{pwintz@authorInstitute4}}%
+        \hfill% 
     }{}
 }
 

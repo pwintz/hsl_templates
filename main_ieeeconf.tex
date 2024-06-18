@@ -2,6 +2,11 @@
 
 \pdfminorversion=4
 
+% % Change the search path to include "./packages/".
+\makeatletter
+\def\input@path{{./packages/}}
+\makeatother
+
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
 \usepackage{demo_setup} % TODO: Delete this.
@@ -10,10 +15,10 @@
 %%% STEP 1
 %%%
 %%% Use the "hslTR" package. Make sure you have the
-%%% "hslTR.sty" file in your current directory.
+%%% "hslTR.sty" file in the packages folder or your current directory.
 %%%
-%%%  HSL LAB PACKAGE -- MODIFIED HSL TR PACKAGE - --
-\usepackage{./macros/hslTR}
+%%%  HSL Technical Report PACKAGE
+\usepackage{hslTR}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% VERSION CONTROL COMMAND
@@ -22,13 +27,29 @@
 \newbool{conf}
 \setbool{conf}{true}
 \ifdraft{
+  %% Show conference-only text in green.
   % \newcommand{\confonly}[1]{\darkgreen{#1}}
   % \newcommand{\reportonly}[1]{}
   \newcommand{\confonly}[1]{\darkgreen{#1}}
+  \newenvironment{confonlyblock}{\color{darkgreen}}{\color{black}}
+
+  % Show report-only content (which will be hidden in the final version) in red.
   \newcommand{\reportonly}[1]{\red{#1}}
+  \newenvironment{reportonlyblock}{\color{darkred}}{\color{black}}
+
+  % % Alternatively, use the following lines to hide the report-only content in drafts.
+  % \newcommand{\reportonly}[1]{\red{#1}}
+  % \newenvironment{reportonlyblock}{\commentsection}{\endcommentsection}
 }{
+  % Show conference-only content.
   \newcommand{\confonly}[1]{#1}
+
+  % Hide report-only content.
+  \newenvironment{confonlyblock}{}{}
+
+  % Hide report-only content.
   \newcommand{\reportonly}[1]{}
+  \newenvironment{reportonlyblock}{\commentsection}{\endcommentsection}
 }
 
 \input{document_definitions}
@@ -61,7 +82,6 @@
 \title{\pwintz@title}
 \makeatother
 
-\newcommand{\insertemailfromcs}[1]{\href{mailto:\csname #1\endcsname}{\csname #1\endcsname}}
 \author{% 
 % Populate author information from definitions in document_setup.tex
    % Insert first author, if defined.

@@ -1,0 +1,104 @@
+
+% Disable LTeX for this file (https://valentjn.github.io/ltex/advanced-usage.html#magic-comments)
+% LTeX: enabled=false
+\documentclass[9pt,sigconf,anonymous,final]{acmart}
+% \documentclass[9pt,sigconf]{acmart}
+
+\usepackage{pwintz_configuration}
+\usepackage{pwintz_definitions}
+ 
+\input{document_definitions}
+
+
+% Change the search path to include "./packages/".
+\makeatletter
+\def\input@path{{./packages/}}
+\makeatother
+
+%%% STEP 1
+%%%
+%%% Use the "hslTR" package. Make sure you have the
+%%% "hslTR.sty" file in your current directory.
+%%%
+%%%  HSL LAB PACKAGE -- MODIFIED HSL TR PACKAGE - --
+\usepackage{hslTR}
+
+% Create \ifdraft{}{} conditional 
+% that switches based on whether "draft" 
+% is passed to document class.
+\usepackage{ifdraft} 
+
+\newbool{conf}
+\setbool{conf}{true}
+\ifdraft{% If 'draft', show color-coded report and conference or only color-coded report (change commented lines to choose).
+	% \newcommand{\confonly}[1]{\darkgreen{#1}}
+	% \newcommand{\reportonly}[1]{\darkred{#1}}
+\newcommand{\confonly}[1]{#1}
+\newcommand{\reportonly}[1]{\darkred{#1}}
+}{% If 'final', only show conf.
+	\newcommand{\confonly}[1]{#1}
+	\newcommand{\reportonly}[1]{}
+}
+
+\ifdraft{
+    % Adjust spacing to fit margin notes.
+    \usepackage[
+            inner=20mm,
+            outer=40mm,
+            marginparwidth=34mm]{geometry} 
+}{}
+
+\ifdraft{% If draft
+  \renewcommand{\paragraph}[1]{\textbf{\color{black}#1:}\xspace}
+}{% If not draft
+  \renewcommand{\paragraph}[1]{}
+}
+
+\input{abstract}
+
+\keywords{Hybrid systems, asymptotic stability,	
+conical approximations.}
+
+% \title[short version]{full title}
+\begin{document}
+
+% Populate title from value defined in document_setup.tex.
+% \makeatletter
+% \ititle{\pwintz@title}
+% \makeatother
+
+\author{\csname pwintz@author1\endcsname}%
+% \affiliation{\csname pwintz@authorInstitute1\endcsname}
+% \country{USA}
+\email{\csname pwintz@authorEmail1\endcsname}
+% Insert second author, if defined.
+\ifcsdef{pwintz@author2}{% If defined
+    \author{\csname pwintz@author2\endcsname}%
+    % \affiliation{\csname pwintz@authorInstitute2\endcsname}
+    % \country{USA}
+    \email{\csname pwintz@authorEmail2\endcsname}
+}{}%
+% Insert third author, if defined.
+\ifcsdef{pwintz@author3}{% If defined
+  \author{\csname pwintz@author3\endcsname}%
+  \institution{\csname pwintz@authorInstitute3\endcsname}
+  \email{\csname pwintz@authorEmail3\endcsname}
+}{}%
+% Insert fourth author, if defined.
+\ifcsdef{pwintz@author4}{% If defined
+  \author{\csname pwintz@author4\endcsname}%
+  \institution{\csname pwintz@authorInstitute4\endcsname}
+  \email{\csname pwintz@authorEmail4\endcsname}
+}{}
+% \idate{\today{}} 
+% \renewcommand{\shortauthors}{Wintz and Sanfelice}
+\acmConference[HSCC]{27th ACM International Conference on Hybrid Systems: Computation and Control}{14-16 May 2024}{Hong Kong}
+
+\maketitle
+\input{acc24_body.tex}
+
+% Add bibliography (BibLaTeX).s
+% \printbibliography{}
+
+\end{document}
+ 

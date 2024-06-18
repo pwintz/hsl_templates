@@ -1,15 +1,20 @@
 {
     "ltex.latex.commands": {
         "\\tableofcontents[]": "ignore", 
-        "\\@ifclassloaded{}{}{}": "ignore",  
+        "\\@ifclassloaded{}{}{}": "ignore",
         "\\includeonly{}": "ignore",  
+	// Command and environment definitions
         "\\newcommand{}{}": "ignore",  
         "\\renewcommand{}{}": "ignore", 
         "\\newenvironment{}[][]{}{}": "ignore", 
         "\\newenvironment{}[]{}{}": "ignore", 
         "\\newenvironment{}": "ignore",  
+        "\\NewDocumentCommand{}{}{}": "ignore",  
         "\\NewEnviron{}[]{}": "ignore",  
         "\\newtheoremstyle{}{}{}{}{}{}{}{}{}": "ignore",  
+        "\\DeclarePairedDelimiterX{}[]{}{}": "ignore", 
+        "\\DeclarePairedDelimiter{}{}{}": "ignore", 
+        // Abbreviations
         "\\nbd{}": "dummy", 
         "\\nbd": "dummy", 
         "\\lhs{}": "dummy", 
@@ -17,19 +22,23 @@
         "\\rhs{}": "dummy", 
         "\\rhs": "dummy", 
         "\\th{}": "ignore", 
+        "\\mxn": "vowelDummy",
+        "\\nxn": "vowelDummy",
+        "\\closedloop{}": "dummy", 
+        "\\Closedloop{}": "dummy", 
+        "\\ClosedLoop{}": "dummy", 
         "\\Matlab": "dummy",
-        "\\texttt{}": "dummy",
+        "\\MATLAB": "dummy",
         "\\newbool{}": "ignore",  
         "\\setbool{}": "ignore",
         "\\setbool{}{}": "ignore",
+        // Cross Referencing
         "\\crefformat{}{}": "ignore",  
         "\\Crefformat{}{}": "ignore", 
         "\\crefmultiformat{}{}{}{}{}": "ignore",  
         "\\Crefmultiformat{}{}{}{}{}": "ignore",  
         "\\crtcrefreference{}": "dummy",  
-        "\\NewDocumentCommand{}{}{}": "ignore", 
-        "\\DeclarePairedDelimiterX{}[]{}{}": "ignore", 
-        "\\DeclarePairedDelimiter{}{}{}": "ignore", 
+        // Beamer
         "\\setbeamertemplate{}[]{}": "ignore", 
         "\\setbeamercolor{}{}": "ignore",  
         "\\setbeamerfont{}{}": "ignore", 
@@ -40,12 +49,21 @@
         "\\usebeamertemplate{}[]{}": "ignore",
         "\\setbeamerfont{}": "ignore", 
         "\\addtolength{}{}": "ignore", 
+        // Code Listing
         "\\lstinputlisting{}": "ignore",
         "\\problem{}": "ignore",
         "\\subproblem{}": "ignore",
         "\\code{}": "ignore",
+        // Citations and references
         "\\cite{}": "dummy",
         "\\nocite{}": "ignore",
+        "\\cref[]{}": "dummy", 
+        "\\crefformat{}{}": "ignore",  
+        "\\Crefformat{}{}": "ignore", 
+        "\\crefmultiformat{}{}{}{}{}": "ignore",  
+        "\\Crefmultiformat{}{}{}{}{}": "ignore", 
+        "\\crtcrefreference{}": "dummy",  
+        // Changes annotations
         "\\deleted{}": "ignore",
         "\\comment{}": "ignore",
         "\\chcomment{}": "ignore",
@@ -56,12 +74,17 @@
         "\\mathtoolsset{}": "ignore",
         "\\qedhere{}": "ignore", // This doesn't seem to work.
         "\\qedhere": "ignore", // This doesn't seem to work.
+        // Macros to hide LTeX false-positive
         "\\ltexignore{}": "ignore",
         "\\ltexdummy{}": "dummy",
         "\\ltexvoweldummy{}": "vowelDummy",
         "\\checkbeforeflight{}": "ignore",
         "\\removebeforeflight{}": "ignore",
-        "\\restorbeforeflight{}": "ignore"
+        "\\restorbeforeflight{}": "ignore",
+        // IFAC Conf format
+        "\\thanksref{}": "ignore",
+        "\\thanks[]{}": "ignore",
+	//Specific to this paper.
     },
     "ltex.latex.environments": {
         "lstlisting": "ignore",
@@ -98,7 +121,6 @@
         },
     ],
     "latex-workshop.latex.tools": [
-
         {
             "name": "latexmk",
             "command": "latexmk",
@@ -108,6 +130,7 @@
                 "-file-line-error",
                 "-pdf",
                 "-outdir=%OUTDIR%",
+                "-f", // Force continuation
                 "%DOC%"
             ],
             "env": {}
@@ -119,6 +142,7 @@
                 "-synctex=1",
                 "-interaction=nonstopmode",
                 "-file-line-error",
+                "-output-directory=%OUTDIR%",
                 "%DOC%"
             ],
             "env": {}
@@ -155,7 +179,17 @@
         "**/*.nav": true,
         "**/*.toc": true,
         "**/*.snm": true,
-        "**/*.blg": true
+        "**/*.blg": true,
+        "*.pdf": true,
+        "**/*-SAVE-ERROR": true
     },
-    "latex-workshop.latex.pdfWatch.delay": 150
+    "latex-workshop.latex.pdfWatch.delay": 150,
+    "pasteImage.insertPattern": "\\begin{center}\n\t\t\\includegraphics[width=\\linewidth]{pasted-images/${imageFileName}}\n\t\\end{center}",
+    "pasteImage.filePathConfirmInputBoxMode": "onlyName",
+    "pasteImage.encodePath": "none",
+    "pasteImage.basePath": "${currentFileDir}",
+    "pasteImage.showFilePathConfirmInputBox": true,
+    "pasteImage.defaultName": "${currentFileNameWithoutExt}-HH-mm-ss",
+    "pasteImage.path": "${currentFileDir}/pasted-images",
+    "latex-workshop.latex.outDir": "%DIR%/out_dir"
 }

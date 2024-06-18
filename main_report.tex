@@ -1,4 +1,11 @@
+% Disable LTeX for this file (https://valentjn.github.io/ltex/advanced-usage.html#magic-comments)
+% LTeX: enabled=false
 \documentclass[11pt,final]{article}
+
+% % Change the search path to include "./packages/".
+\makeatletter
+\def\input@path{{./packages/}}
+\makeatother
 
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
@@ -9,10 +16,10 @@
 %%% STEP 1
 %%%
 %%% Use the "hslTR" package. Make sure you have the
-%%% "hslTR.sty" file in your current directory.
+%%% "hslTR.sty" file in the ./packages/ subdirectory.
 %%%
-%%%  HSL LAB PACKAGE -- MODIFIED HSL TR PACKAGE - --
-\usepackage{./macros/hslTR}
+%%%  HSL LAB PACKAGE -- HSL Technical Report PACKAGE - --
+\usepackage{hslTR}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% VERSION CONTROL COMMAND
@@ -23,8 +30,8 @@
 \ifdraft{% If 'draft', show color-coded report and conference or only color-coded report (change commented lines to choose).
 	% \newcommand{\confonly}[1]{\darkred{#1}}
 	% \newcommand{\reportonly}[1]{\darkgreen{#1}}
-\newcommand{\confonly}[1]{}
-\newcommand{\reportonly}[1]{\darkgreen{#1}}
+    \newcommand{\confonly}[1]{}
+    \newcommand{\reportonly}[1]{\darkgreen{#1}}
 }{% If 'final', only show report.
 	\newcommand{\confonly}[1]{}
 	\newcommand{\reportonly}[1]{#1}
@@ -36,6 +43,7 @@
 \addtolength{\textwidth}{1.75in}
 \addtolength{\topmargin}{-.875in}
 \addtolength{\textheight}{1.75in} 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      
@@ -51,19 +59,18 @@
 \ifdraft{
     % Adjust spacing to fit margin notes.
     \usepackage[
-            inner=80mm,
+            inner=20mm,
             outer=40mm,
             marginparwidth=34mm]{geometry} 
 }{}
 
 \begin{document}
 
-% IF REPORT
-%%%
+
 %%% STEP 2
 %%%
-%%% Include the following code after the "\begin{document}"
-%%% statement. Make sure you set the following:
+%%% Include the following code after "\begin{document}".
+%%% Make sure you set the following:
 %%%
 %%% \ititle{}  : title of the paper
 %%% \iauthor{} : authors of the paper
@@ -71,7 +78,6 @@
 %%% \iredno{}  : report number (make sure you get a unique report
 %%%             number)
 %%%
-%%% -- - BEGIN ISG TR - --
 
 % Populate title from value defined in document_setup.tex.
 \makeatletter
@@ -94,8 +100,8 @@
   }{}
 }
 \idate{\today{}} 
-\iyear{\red{UPDATE ME}}
-\irefnr{\red{UPDATE ME}}
+\iyear{UPDATE ME}% TODO
+\irefnr{UPDATE ME}% TODO
 \makeititle
 
 \input{paper_body}

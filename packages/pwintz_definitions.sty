@@ -1,9 +1,17 @@
 % Disable LTeX for this file (https://valentjn.github.io/ltex/advanced-usage.html#magic-comments)
 % LTeX: enabled=false
 
+% \NeedsTeXFormat{LaTeX2e}
+% \ProvidesPackage{pwintz_definitions}
+% [2024/01/21 Paul Wintz Macro Definitions]
+
 % Import packages that provide symbols used below.
 \usepackage{amsmath}
-\usepackage{amssymb}
+\makeatletter%
+\@ifclassloaded{acmart}{% if using ACM article class, amssymb is already loaded.
+}{
+    \RequirePackage{amssymb}
+}
 \usepackage{bbm}
 \usepackage{xspace}
 
@@ -30,7 +38,7 @@
 \newcommand{\textif}{\textup{if\xspace}}%
 \newcommand{\textotherwise}{\textup{otherwise\xspace}}%
 \newcommand{\otherwise}{\textotherwise}%
-\newcommand{\midand}{\quad \textup{and}\quad}%
+\newcommand{\midand}{\squishyquad \textup{and}\squishyquad}%
 \newcommand{\midor}{\quad \textup{or}\quad}%
 \newcommand{\st}{\ensuremath{^{st}}}%
 \newcommand{\nd}{\ensuremath{^{nd}}}
@@ -41,19 +49,26 @@
 \newcommand{\kth}{\ensuremath{k\text{th}}\xspace}
 \newcommand{\mth}{\ensuremath{m\text{th}}\xspace}
 \newcommand{\nth}{\ensuremath{n\text{th}}\xspace}
-\newcommand*{\circled}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}} % Creates a number enclosed in a circle
+% Define \circled to insert a number enclosed in a circle.
+\newcommand*{\circled}[1]{\raisebox{.5pt}{\textcircled{\raisebox{-.9pt} {#1}}}} 
 % Define \lhs for "left-hand side" in text or "L.H.S." in math. 
 \newcommand{\lhs}{\relax\ifmmode\mathrm{L.H.S.}\else{}left-hand side\xspace\fi}
 % Define \rhs for "right-hand side" in text or "R.H.S." in math. 
 \newcommand{\rhs}{\relax\ifmmode\mathrm{R.H.S.}\else{}right-hand side\xspace\fi}
+\newcommand{\LHS}{\lhs}
+\newcommand{\RHS}{\rhs}
 \newcommand{\wrt}{with respect to\xspace}
 \newcommand{\nbd}{neighborhood\xspace}
 \newcommand{\fnc}{function\xspace}
-\newcommand{\Matlab}{\textsc{Matlab}\xspace}
+\newcommand{\MATLAB}{\texorpdfstring{\textsc{Matlab}}{MATLAB}\xspace}
+\newcommand{\Matlab}{\MATLAB}
 \newcommand{\closedloop}{closed--loop\xspace}
 \newcommand{\Closedloop}{Closed--loop\xspace}
 \newcommand{\ClosedLoop}{Closed--Loop\xspace}
 \newcommand{\sic}{[\textit{sic}]} % To mark errors present in the source of a quotation.
+% Spacing
+\def\squishyquad{\hskip1em minus 0.5em\relax}
+\newcommand{\noqed}{\phantom{\qedhere}}
 %
 % =============================
 % ======= GENERAL MATH ======== 
@@ -77,6 +92,11 @@
 \newcommand*{\evaluateat}[1]{\bigg\rvert_{#1}}
 \newcommand*{\evaluatefromto}[2]{\bigg\rvert_{#1}^{#2}}
 \newcommand{\dom}{\operatorname{dom}}
+% Negated Implications
+\usepackage{centernot}
+\newcommand{\notimplies}{\centernot\implies}
+\newcommand{\notimpliedby}{\centernot\impliedby}
+\newcommand{\notiff}{\centernot\iff}
 % Define sub- and super-scripts for 
 % [-infinity, infinity], [0, infinity], and [-infinity, 0].
 \newcommand{\realsscripts}{_{-\infty}^{\infty}}
@@ -92,7 +112,7 @@
     \begin{aligned}
         #1
     \end{aligned}\right.}
-\renewcommand {\emptyset}{\varnothing} % Use a nicer symbol for empty sets.
+\renewcommand{\emptyset}{\varnothing} % Use a nicer symbol for empty sets.
 \newcommand{\neginfty}{{-\infty}}
 %
 % **** FUNCTIONS ****
@@ -172,22 +192,36 @@
 % ======= Fractions ======== 
 % ==========================
 %
-\newcommand{\fracshort}[2]{\left.#1 \:\middle/\: #2\right.}
+\newcommand{\fracshort}[2]{\left.#1 \middle/ #2\right.}
 \newcommand{\oneover}[1]{\frac{1}{#1}}
 \newcommand{\doneover}[1]{\dfrac{1}{#1}} % Displaystyle fraction
 \newcommand{\oneovershort}[1]{\fracshort{1}{#1}}
-\newcommand{\half}[1][1]{\frac{#1}{2}}
+\providecommand{\half}{}
+\renewcommand{\half}[1][1]{\frac{#1}{2}}
 \newcommand{\third}[1][1]{\frac{#1}{3}}
 \newcommand{\quarter}[1][1]{\frac{#1}{4}}
 \newcommand{\fifth}[1][1]{\frac{#1}{5}}
 \newcommand{\sixth}[1][1]{\frac{#1}{6}}
+\newcommand{\eighth}[1][1]{\frac{#1}{8}}
+\newcommand{\tenth}[1][1]{\frac{#1}{10}}
 \newcommand{\twelfth}[1][1]{\frac{#1}{12}}
+% Short fractions for inline equations.
 \newcommand{\halfshort}[1][1]{\fracshort{#1}{2}}
 \newcommand{\thirdshort}[1][1]{\fracshort{#1}{3}}
 \newcommand{\quartershort}[1][1]{\fracshort{#1}{4}}
 \newcommand{\fifthshort}[1][1]{\fracshort{#1}{5}}
 \newcommand{\sixthshort}[1][1]{\fracshort{#1}{6}}
+\newcommand{\eighthshort}[1][1]{\fracshort{#1}{8}}
+\newcommand{\tenthshort}[1][1]{\fracshort{#1}{10}}
 \newcommand{\twelfthshort}[1][1]{\fracshort{#1}{12}}
+% Dislpay style fractions.
+\newcommand{\dhalf}[1][1]{\dfrac{#1}{2}}
+\newcommand{\dthird}[1][1]{\dfrac{#1}{3}}
+\newcommand{\dquarter}[1][1]{\dfrac{#1}{4}}
+\newcommand{\dfifth}[1][1]{\dfrac{#1}{5}}
+\newcommand{\dsixth}[1][1]{\dfrac{#1}{6}}
+\newcommand{\dtenth}[1][1]{\dfrac{#1}{10}}
+\newcommand{\dtwelfth}[1][1]{\dfrac{#1}{12}}
 %
 % ===========================
 % ======= SET THEORY ======== 
@@ -196,7 +230,13 @@
 % To insert a set {A | B} (using set builder notation), 
 % type "\setdef{A \suchthat B}". The heights of the braces and 
 % center bar will adjust automatically to the height of the contents.
-\newcommand*{\setdef}[1]{\left\{#1 \right\}} 
+\newcommand*{\setdef}[1]{
+    \begingroup
+        \def\OR{\textup{ or }}%
+        \def\AND{,\ }%  
+        \left\{#1 \right\}%
+    \endgroup
+} 
 \newcommand{\suchthat}{\mathrel{}\ifnum\currentgrouptype=16 \middle\fi|\mathrel{}}
 \newcommand*{\closure}[1]{\overline{#1}}
 \newcommand{\interior}{\operatorname{int}}
@@ -215,21 +255,22 @@
 \newcommand{\realsn}{\reals^{n}}
 \newcommand{\positivereals}{\reals_{>0}}
 \newcommand{\preals}{\positivereals}
-\newcommand{\negativereals}{\reals_{>0}}
-\newcommand{\nreals}{\negativereals}
 \newcommand{\nonnegativereals}{\reals_{\geq0}}
 \newcommand{\nnreals}{\nonnegativereals}
+\newcommand{\negativereals}{\reals_{<0}}
+\newcommand{\nreals}{\negativereals}
 \newcommand{\nonpositivereals}{\reals_{\leq0}}
 \newcommand{\npreals}{\nonpositivereals}
 \newcommand{\rationals}{\mathbb{Q}}
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\naturals}{\mathbb{N}}
+\newcommand{\pnaturals}{\mathbb{N}_{>0}}
 \newcommand{\complexes}{\mathbb{C}}
 \newcommand*{\squarematrices}[1][n]{\reals^{#1 \times #1}}
 \newcommand*{\symmetricmatrices}[1][n]{\mathbb{S}^{#1}}
 \newcommand*{\pdmatrices}[1][n]{\symmetricmatrices[#1]_{++}}
 \newcommand*{\psdmatrices}[1][n]{\symmetricmatrices[#1]_{+}}
-\newcommand{\ball}{\mathbb{B}}
+\newcommand*{\ball}{\mathbb{B}}
 \newcommand*{\unitball}[1][n]{\mathbb{B}^{#1}}
 \newcommand*{\sphere}[1][n]{\mathbb{S}^{#1}}
 \newcommand*{\torus}[1][n]{\mathbb{T}^{#1}}
@@ -241,7 +282,7 @@
 % entries x_j. A starred version of the command disables growing the size of the braces 
 % to match the height of the interior.
 \newcommand{\seq}[2][i]{\{#2\}_{#1 = 0}^\infty}
-\WithSuffix\newcommand\seq*[2][i]{\left{#2\right}_{#1 = 0}^\infty}
+\WithSuffix\newcommand\seq*[2][i]{\left\{#2\right\}_{#1 = 0}^\infty}
 \newcommand\iseq[2][0]{\{#2\}_{i = #1}^\infty}
 \newcommand\jseq[2][0]{\{#2\}_{j = #1}^\infty}
 \newcommand\kseq[2][0]{\{#2\}_{k = #1}^\infty}
@@ -259,25 +300,88 @@
 % Zero-vector
 \newcommand{\zerovec}[1]{0_{#1}}
 % One-vector
-\newcommand{\what}{{\hat{w}}} 
-\newcommand{\xhat}{{\hat{x}}}
-\newcommand{\yhat}{{\hat{y}}} 
-\newcommand{\zhat}{{\hat{z}}}
 \newcommand{\onevec}{\mathbb{1}}
-\newcommand{\RRF}{\operatorname{RRF}}
-\newcommand{\RREF}{\operatorname{RREF}}
+\newcommand{\REF}{\ensuremath{\operatorname{REF}}\xspace}
+\newcommand{\RREF}{\ensuremath{\operatorname{RREF}}\xspace}
 \newcommand*{\proj}[1]{\operatorname{proj}_{#1}}
 \newcommand*{\comp}[1]{\operatorname{comp}_{#1}}
 \newcommand*{\orth}[1]{\operatorname{orth}_{#1}}
 \newcommand{\mxn}{\ensuremath{{m \times n}}\xspace}
 \newcommand{\nxn}{\ensuremath{{n \times n}}\xspace}
+
+% Create a linear system. 
+% Example usage:
+% \linearsystem{
+%    -3 x\+2 y\-6 z\=6 \\
+%    5 x\+7 y\none\=6 \\
+%    x\+4 y\-2 z\=8}
+% Requires the 'mathtools' package.
+% Within the environment, you can use the following macros:
+%   \+: Column-aligned addition
+%   \-: Column-aligned subtraction
+%   \=: Column-aligned subtraction
+%   \< Column-aligned less-than
+%   \> Column-aligned greater-than
+%   \none Column-aligned empty space
+%   \vdots: Column-aligned vertical dots
+%   \cdots: Column-aligned horizontal dots
+%   \ddots: Column-aligned diagonal dots
+\RequirePackage{amsmath}% Provides "aligned".
+\RequirePackage{mathtools}% Provides "matrix*" environment
+\setcounter{MaxMatrixCols}{100}% Increase the max number of columns (the default is only 10!)
+\newcommand{\+}{}% Blank definition so that we can redefine.
+\newcommand{\<}{}% Blank definition so that we can redefine.
+\newcommand{\none}{}% Blank definition so that we can redefine.
+
+\newcounter{variablenumber}
+\newcommand{\linearsystem}[1]{
+    \arraycolsep=2pt        % Adjust the column separation. 
+    \begingroup % Restrict the scope of our redefinitions.
+        % Redefine
+        \setcounter{variablenumber}{1}
+        % \def\insertVariable{x_{\thevariablenumber}\stepcounter{variablenumber}}
+        \def\insertVariable{}
+        \renewcommand{\+}{\insertVariable & + &}
+        \renewcommand{\-}{\insertVariable & - &}
+        \renewcommand{\=}{\insertVariable & = &}
+        \renewcommand{\<}{\insertVariable & < &}
+        \renewcommand{\>}{\insertVariable & > &}
+        \renewcommand{\none}{& \hspace{0.5em} &}
+        \renewcommand{\0}{\none}
+        % Redefine \leq and \geq
+        \let\builtingeq\geq
+        \let\builtinleq\leq
+        \renewcommand{\geq}{& \builtingeq &}
+        \renewcommand{\leq}{& \builtinleq &}
+        % Redefine dots.
+        \let\builtinvdots\vdots
+        \let\builtincdots\cdots
+        \let\builtinddots\ddots
+        \renewcommand{\vdots}{\hfill\builtinvdots\hfill}
+        \renewcommand{\cdots}{\hfill\builtincdots\hfill}
+        \renewcommand{\ddots}{\hfill\builtinddots\hfill}
+        % 
+        % See https://tex.stackexchange.com/a/234320/153678
+        % \let\builtinhalign\halign
+        % \def\halign{%
+        %     \let\builtinlinebreak\\
+        %     \renewcommand{\\}{\builtinlinebreak Hello!\setcounter{variablenumber}{0}}
+        %     \builtinhalign
+        % }
+        \let\builtinlinebreak\\
+        % \renewcommand{\\}{asldkfadjk\hfill\builtinlinebreak}
+        \system{\begin{matrix*}[r]
+            #1
+        \end{matrix*}}\quad
+    \endgroup
+}
 %
 % **** VECTOR AND MATRIX FUNCTIONS **** 
 % Define "\innerproduct" and an abbreviation "\ip" such the code 
 % \ip{a}{b} generate <a, b> with correct spacing and height scaling.
 % Use a star to prevent the angle brackets from growing with the contents. 
-\DeclarePairedDelimiterX{\innerproduct}[2]{\langle}{\rangle}{#1,#2}
-\DeclarePairedDelimiterX{\ip}[2]{\langle}{\rangle}{#1,#2}
+\DeclarePairedDelimiterX{\innerproduct}[2]{\langle}{\rangle}{#1,\:#2}
+\DeclarePairedDelimiterX{\ip}[2]{\langle}{\rangle}{#1,\:#2}
 
 % Define "\norm" for Euclidean vector norms. To render the norm of "x" write "\norm{x}". 
 % Note that double bars "\lVert ... \rVert" are used for signal norms so we use singal bars for Euclidean vector norms.
@@ -289,11 +393,16 @@
 \newcommand*{\pnorm}[1]{\norm{#1}_{p}}
 \newcommand*{\frobeniusnorm}[1]{\norm{#1}_{F}}
 \newcommand*{\inftynorm}[1]{\norm{#1}_{\infty}}
+% Matrix functions
 \newcommand{\diag}{\operatorname{diag}}
 \newcommand{\rank}{\operatorname{rank}}
+\newcommand{\nullity}{\operatorname{null}}
 \newcommand{\trace}{\operatorname{tr}}
+\newcommand{\vspan}{\operatorname{span}}
 %DON'T USE: \renewcommand {\null}{\text{null}}
-\newcommand{\range}{\operatorname{rge}}
+\newcommand{\Null}{\operatorname{\calN}}
+\newcommand{\Col}{\operatorname{\calC}}
+\newcommand{\range}{\operatorname{range}}
 \newcommand{\rge}{\range}
 \newcommand{\rng}{\range}
 \newcommand{\trans}[1][]{^{#1 \top}\!} % Matrix transpose
@@ -311,11 +420,12 @@
 % Create a small matrix suitable to use in the middle of text. 
 % Usage \smallmat{a & b \\ c & d}
 \newcommand*{\smallmat}[1]{\bigl[ \begin{smallmatrix} #1 \end{smallmatrix} \bigr]}
-\newcommand{\diagmatrix}[2]{
+\newcommand{\diagmatrix}[3]{
 \mat{
-{#1} & & \\
-& \ddots & \\
-& & {#2}
+    {#1} &    0 & \cdots & 0 \\
+       0 & {#2} & \cdots & 0 \\
+   \vdots&\vdots& \ddots & \vdots \\ 
+       0 &    0 &  \cdots & {#3}
 }}
 \newcommand{\tridiagmatrix}[3]{
 \mat{
@@ -324,17 +434,40 @@
        & \ddots & \ddots & #3 \\
 0      &        & #1     & #2
 }}
+%
 % Create an augmented matrix in the form "[A|b]".
-\newenvironment{augmatrix}[1]{%
-  \left[\begin{array}{@{}*{#1}{c}|c@{}}
+% I generally don't use this environment directly. Instead I use \augmat, 
+% which is described blow.
+\newenvironment{augmatrix}[2][1]{%
+  % Inputs:
+  % #1 (optional): The number of columns to the right of the vertical bar.
+  % #2 (required): The number of columns to the left of the vertical bar.
+  % How this works: In the argument to the array environment:
+  %   "@{\,}" describes the space between columns or the edge of the array. 
+  %   "*{n}{c}" indicates to repeat the column description "c" a total of "n" times.
+  \left[\begin{array}{@{\,}*{#2}{c}|*{#1}c@{\,}}
 }{%
   \end{array}\right]
 }
+% augmat: Command for creating augmented matrices.
+% Usage:
+%   \augmat[# of columns in A]{ entries in A and b. }
+% Example:
+%   \augmat[2]{3 & 5 & 0 \\ -3 & -5 & 0}
 \newcommand{\augmat}[2][1]{
 \begin{augmatrix}{#1}
    #2
 \end{augmatrix}
 }
+\NewDocumentCommand{\supaugmat}{ O{1} O{1} m }{
+  % #1: Number of columns before the | (Optional argument with default = 1)
+  % #2: Number of columns after the | (Optional argument with default = 1)
+  % #3: Contents of the array.
+  \begin{augmatrix}[#1]{#2}
+    #3
+ \end{augmatrix}
+}
+
 % Determinate of a matrix	
 \newcommand {\detmat}[1]{\begin{vmatrix}
             #1 \end{vmatrix}}
@@ -368,6 +501,7 @@
 \newcommand*{\ddz}[1][]{\derivative[#1]{z}}
 \newcommand*{\ddt}[1][]{\derivative[#1]{t}}
 \newcommand*{\dds}[1][]{\derivative[#1]{s}}
+\newcommand*{\ddtshort}[1][]{\derivativeshort[#1]{t}}
 \newcommand{\dxdt}{\derivative[x]{t}}
 \newcommand{\dydt}{\derivative[y]{t}}
 \newcommand{\dfdx}{\derivative[f]{x}}
@@ -447,7 +581,7 @@
 \newcommand{\convex}{\operatorname{conv}}
 \newcommand*{\minimize}[1]{\operatorname*{minimize}_{#1}\quad} % Usage: \minimize{\x \in \reals}
 \newcommand*{\maximize}[1]{\operatorname*{maximize}_{#1}\quad} % Usage: \maximize{\x \in \reals}
-\newcommand{\subjectto}{\textrm{subject to}\quad}
+\newcommand{\subjectto}{\textup{subject to}\quad}
 \newcommand*{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\:\:}
 \newcommand*{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\:\:}
 \newcommand{\epi}{\operatorname{epi}}
@@ -540,7 +674,7 @@
         % "\gdef" is used to define a global macro.
         \gdef\memprodlimit{_{#2}^{#3}}%
     }
-    \sum\memprodlimit
+    \prod\memprodlimit
 }
 %
 % Define a new macro "\memlim" for reducing duplication 

@@ -1,0 +1,87 @@
+
+% Patch the built-in \section command to allow for an optional 
+% argument that is used as the PDF string. 
+% See https://tex.stackexchange.com/a/380116/153678
+\makeatletter
+% Redefine \section
+\let\builtinsection\section
+\def\section{%
+  \@ifstar{\section@Starred}{\section@nonStarred}%
+}
+\def\section@Starred{%
+  \@ifnextchar[%
+  {\section@StarredWith}%
+  {\section@StarredWithout}%
+}      
+\def\section@StarredWith[#1]#2{%
+  \builtinsection*{\texorpdfstring{#2}{#1}}%
+}
+\def\section@StarredWithout#1{
+  \builtinsection*{#1}%
+}
+\def\section@nonStarred{%
+  \@ifnextchar[%
+  {\section@nonStarredWith}%
+  {\section@nonStarredWithout}%
+}
+\def\section@nonStarredWith[#1]#2{%
+  \builtinsection{\texorpdfstring{#2}{#1}}%
+}
+\def\section@nonStarredWithout#1{%
+  \builtinsection{#1}%
+}
+% \subsection
+\let\builtinsubsection\subsection
+\def\subsection{%
+  \@ifstar{\subsection@Starred}{\subsection@nonStarred}%
+}
+\def\subsection@Starred{%
+  \@ifnextchar[%
+  {\subsection@StarredWith}%
+  {\subsection@StarredWithout}%
+}      
+\def\subsection@StarredWith[#1]#2{%
+  \builtinsubsection*{\texorpdfstring{#2}{#1}}%
+}
+\def\subsection@StarredWithout#1{
+  \builtinsubsection*{#1}%
+}
+\def\subsection@nonStarred{%
+  \@ifnextchar[%
+  {\subsection@nonStarredWith}%
+  {\subsection@nonStarredWithout}%
+}
+\def\subsection@nonStarredWith[#1]#2{%
+  \builtinsubsection{\texorpdfstring{#2}{#1}}%
+}
+\def\subsection@nonStarredWithout#1{%
+  \builtinsubsection{#1}%
+}
+% \subsubsection
+\let\builtinsubsubsection\subsubsection
+\def\subsubsection{%
+  \@ifstar{\subsubsection@Starred}{\subsubsection@nonStarred}%
+}
+\def\subsubsection@Starred{%
+  \@ifnextchar[%
+  {\subsubsection@StarredWith}%
+  {\subsubsection@StarredWithout}%
+}      
+\def\subsubsection@StarredWith[#1]#2{%
+  \builtinsubsubsection*{\texorpdfstring{#2}{#1}}%
+}
+\def\subsubsection@StarredWithout#1{
+  \builtinsubsubsection*{#1}%
+}
+\def\subsubsection@nonStarred{%
+  \@ifnextchar[%
+  {\subsubsection@nonStarredWith}%
+  {\subsubsection@nonStarredWithout}%
+}
+\def\subsubsection@nonStarredWith[#1]#2{%
+  \builtinsubsubsection{\texorpdfstring{#2}{#1}}%
+}
+\def\subsubsection@nonStarredWithout#1{%
+  \builtinsubsubsection{#1}%
+}
+\makeatother

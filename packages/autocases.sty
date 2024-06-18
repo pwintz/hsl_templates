@@ -1,0 +1,22 @@
+\usepackage{amsmath}
+
+\ExplSyntaxOn
+
+\tl_new:N \l__wintz_cases_tl
+
+\NewDocumentEnvironment {autocases} {b}
+  {
+    \tl_set:Nn \l__wintz_cases_tl { #1 }
+    % Search for every control sequences immediately followed by "if" 
+    % and insert a space between so the subsequent regex works. 
+    \regex_replace_all:nnN { (\c{.*}) if } { \1\ if } \l__wintz_cases_tl
+    % Search and replace "<space>if<space>" with ", \quad & \text{if }"
+    \regex_replace_all:nnN { \s+if\s+ } { , \c{quad} \& \c{textup}\{if\ \} } \l__wintz_cases_tl
+    % Search and replace "otherwise" with ", \quad & \text{otherwise}"
+    \regex_replace_all:nnN { otherwise } { , \c{quad} \& \c{textup}\{otherwise\} } \l__wintz_cases_tl
+    % Output the result.
+    \begin{cases}
+    \tl_use:N \l__wintz_cases_tl
+    \end{cases}
+  }{}
+\ExplSyntaxOff

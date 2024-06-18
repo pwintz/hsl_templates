@@ -3630,7 +3630,7 @@ which is provided to fool Hyperref.}}
 \if@technote%
    {\bfseries\large\@title\par}\vskip 1.3em{\lineskip .5em\@author\@specialpapernotice\par}%
 \else% not a technote
-   \vskip0.25in{\LARGE\@title\par}\vskip1.0em\par%
+   \vskip0.25in{\bfseries\LARGE\@title\par}\vskip1.0em\par%
    % V1.6 handle \author differently if in conference mode
    \if@confmode%
       {\@specialpapernotice\mbox{}\vskip\@IEEEauthorblockconfadjspace%

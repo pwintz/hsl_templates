@@ -1,6 +1,11 @@
 % Disable LTeX for this file (https://valentjn.github.io/ltex/advanced-usage.html#magic-comments)
 % LTeX: enabled=false
 
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pwintz_configuration}
+[2024/01/21 Paul Wintz Configuration Package]
+
+
 % Create \ifdraft{}{} conditional that switches based on whether "draft" is passed to document class.
 \usepackage{ifdraft} 
 \usepackage[utf8]{inputenc}
@@ -24,23 +29,28 @@
 \usepackage{float}
 % \usepackage[bottom]{footmisc} % Forces footnotes to be at the very bottom of the page. https://tex.stackexchange.com/a/9427/153678
 
+% Force footnotes to be at the bottom of the page.
+\usepackage[bottom]{footmisc}
+
 % ==================
 % === Formatting ===
 % ==================
 \usepackage{markdown}
 \usepackage{bm} % Allows bold Greek letters.
-\usepackage{xspace} % To fix spacing after macros. see https://tex.stackexchange.com/a/17731/153678
 
 \makeatletter%
-\@ifclassloaded{beamer}{% If beamer, then don't load enumitem.
+\@ifclassloaded{beamer}{
+    % If using Beamer class, then don't load enumitem since they are incompatitble.
 }{% If not beamer, then load enumitem.
     % Allows additional configuration of list environments.
     % The 'shortlabels' option allows the label format to be given like "(a)" or "1."
     \let\labelindent\relax % This prevents an compilation error. See here: https://tex.stackexchange.com/a/188555/153678
-    \usepackage[shortlabels]{enumitem} 
+    \usepackage[
+            % shortlabels % I don't remember what this does.
+        ]{enumitem} 
+    \setlist[1]{labelindent=\parindent, leftmargin=*}% < Usually a good idea
 }
 \makeatother%
-
 
 % Define Colors
 \usepackage{xcolor}
@@ -49,12 +59,14 @@
 \definecolor{darkblue}{rgb}{0.169, 0.243, 0.714}% Hex: 2b3eb6ff
 \definecolor{orange}{rgb}{1, 0.652, 0}
 
-
 \usepackage{tcolorbox}
 
 % ===============
 % === SPACING ===
 % ===============
+
+% Fix spacing after macros. See https://tex.stackexchange.com/a/17731/153678
+\usepackage{xspace} 
 
 % Format paragraphs. 
 \makeatletter%
@@ -95,13 +107,19 @@
   \muexpr #1*\numexpr\dimexpr#2pt\relax\relax/65536\relax
 }
 
-% Microtype plays with ever-so-slightly shrinking and stretching of the fonts and with the extent to which text protrudes into the margins in a way that yields results that look better, that have fewer instances of hyphenation, and fewer overfull hboxes.
-\ifdraft{
-    % Don't apply microtype.
+
+\makeatletter%
+\@ifclassloaded{acmart}{% if using ACM article class, microtype is enabled by the class(?).
 }{
-    % If not draft, then apply microtype.
-    \usepackage[stretch=10]{microtype}
+    % Microtype plays with ever-so-slightly shrinking and stretching of the fonts and with the extent to which text protrudes into the margins in a way that yields results that look better, that have fewer instances of hyphenation, and fewer overfull hboxes.
+    \ifdraft{
+        % Don't apply microtype.
+    }{
+        % If not draft, then apply microtype.
+        \usepackage[stretch=10]{microtype}
+    }
 }
+\makeatother
 
 % === END OF SPACING ===
 
@@ -121,6 +139,7 @@
 % The macro \ordinarycolon can be used to insert a colon with the standard alignment.
 % https://tex.stackexchange.com/a/4218/153678
 \mathtoolsset{centercolon}
+
 
 % SI Units used as '\SI{60}{\mile\per\hour} https://tex.stackexchange.com/a/509965/153678
 % \usepackage{siunitx} 
@@ -168,19 +187,27 @@
 \usepackage{pdfpages} % Allows use of \includepdf[page={page number}]{filename}
 \usepackage{rotating}% For rotating figures, tables, etc. See https://tex.stackexchange.com/a/50071/153678
 \usepackage{blkarray} % allows labeling rows/columns of block matrix. 
-% Setup captions
-% \usepackage{caption,setspace} % needed to set caption line spacing. See: https://tex.stackexchange.com/a/186327/153678
+
+% Setup captions package. Allows removal of "Figure 1:" in caption 
+% when "\caption*{}" is used. 
 \usepackage{caption}
 % Allows removal of "Figure 1:" in caption when "\caption*{}" is used. 
-% \captionsetup{font={stretch=1.2}}
-\captionsetup{belowskip=-4pt}
+\captionsetup{belowskip=-7pt plus 3pt, aboveskip=4pt,font={small}}
 
+\makeatletter%
+\@ifclassloaded{ieeeconf}{% if using ieeeconf
+    % Adjust the size to match the ieeeconf style.
+    \captionsetup{font={small}}
+}{% if not using ieeeconf
+}%
+
+\makeatother%
 %%%% Support subfigures %%%%
-% The package 'subfigure' is deprecated. Now, either 'subfig' or 'subcaption'
-% is recommend.
-% \usepackage{caption}
+% The package 'subfigure' is deprecated. 
+% Now, either 'subfig' or 'subcaption'is  recommend.
+
 % \usepackage{subfig}
-%% Example of how to use 'subfig' package:
+%%% Example of how to use 'subfig' package %%%
 % \begin{figure}
 % \centering
 % \begin{subfigure}{.5\textwidth}
@@ -193,8 +220,8 @@
 % \end{subfigure}
 % \end{figure}
 
-\usepackage{subcaption}
-%% Example of how to use 'subcaption' package:
+% \usepackage{subcaption}
+%%% Example of how to use 'subcaption' package %%%
 % \begin{figure*} % Star makes multi-column figure. 
 %     \centering
 %     \subcaptionbox{Subfigure (a) caption.\label{subfig a label}}
@@ -205,6 +232,22 @@
 %     \caption{Figure caption.}
 %     \label{figure label}
 % \end{figure*}
+
+%%% Alternative Approach %%%
+% \begin{figure}
+%     \centering
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=0.9\textwidth]{example-image-a} % first figure itself
+%         \caption{first figure}
+%     \end{minipage}\hfill
+%     \begin{minipage}{0.45\textwidth}
+%         \centering
+%         \includegraphics[width=0.9\textwidth]{example-image-b} % second figure itself
+%         \caption{second figure}
+%     \end{minipage}
+% \end{figure}
+
 
 % The graphbox package adds an "align" option to the % \includegraphics command that makes this very easy to certically align images. https://tex.stackexchange.com/a/350374/153678
 % Use as \includegraphics[align=c]{filename} to center align.
@@ -226,6 +269,20 @@
 % Allows URLs to break at the end of a line.
 \usepackage{xurl} 
 
+\makeatletter%
+\@ifclassloaded{ifacconf}{% if using ifacconf
+    % Do some hack-y thing to make hyperref work in ifacconf.
+    % See https://tex.stackexchange.com/a/463637/153678
+    
+    % Do some hack-y thing to make hyperref work.
+    \makeatletter
+    \let\old@ssect\@ssect % Store how ifacconf defines \@ssect
+    \makeatother
+}{% if not using ifacconf
+}%
+\makeatother%
+
+
 % Enable hyperlinks
 \usepackage[]{hyperref}
 \hypersetup{
@@ -236,15 +293,29 @@
     linkcolor=black,         % TOC, links to labeled equations and environments
     filecolor=magenta,      
     urlcolor=black!30!blue,  % URLS including links in references  
-    anchorcolor=blue,
+    anchorcolor=blue,        % I'm not sure what this does.
     citecolor=black!30!blue, % In-line citations  
 }  
 
-% % Configure PDF strings to replace certain commands with PDF-strings friendly symbols
-% \pdfstringdefDisableCommands{%
-%   \def\\{}% Remove line breaks
-%   \def\times{}{x}% Replaces the times symbol with the letter x.
-% }
+\makeatletter%
+\@ifclassloaded{ifacconf}{% if using ifacconf
+    % Do some hack-y thing to make hyperref work in ifacconf.
+    % See https://tex.stackexchange.com/a/463637/153678
+    \makeatletter
+    \def\@ssect#1#2#3#4#5#6{%
+    \NR@gettitle{#6}% Insert key \nameref title grab
+    \old@ssect{#1}{#2}{#3}{#4}{#5}{#6}% Restore ifacconf's \@ssect
+    }
+    \makeatother
+}{% if not using ifacconf
+}%
+\makeatother%
+
+% % % Configure PDF strings to replace certain commands with PDF-strings friendly symbols
+% % \pdfstringdefDisableCommands{%
+% %   \def\\{}% Remove line breaks
+% %   \def\times{}{x}% Replaces the times symbol with the letter x.
+% % }
 
 % Display "Theorem 1", "Lemma 2", etc. in cross references.  
 % IT'S IMPORTANT TO LOAD THIS LAST AFTER ALL THE OTHER \usepackages.
@@ -258,22 +329,31 @@
 \crefname{equation}{}{}
 \crefformat{equation}{(#2#1#3)}
 % \crefrangeformat{equation}{(#3#1#4) to~(#5#2#6)}
-\crefmultiformat{equation}{(#2#1#3)}%
-{ and~(#2#1#3)}{, (#2#1#3)}{ and~(#2#1#3)}
+\crefmultiformat{equation}{(#2#1#3)}{ and~(#2#1#3)}{, (#2#1#3)}{ and~(#2#1#3)}
 % For equations referenced at the start of a sentence, we want to include "Equation" or "Equations". The following formats are used when "\Cref" is used instead of "\cref".
 \Crefformat{equation}{Equation (#2#1#3)}
-\Crefmultiformat{equation}{Equations (#2#1#3)}%
-{ and~(#2#1#3)}{, (#2#1#3)}{ and~(#2#1#3)}
+\Crefmultiformat{equation}{Equations (#2#1#3)}{ and~(#2#1#3)}{, (#2#1#3)}{ and~(#2#1#3)}
 
 % When inserting items using "\cref", don't prefix the reference with "Item".
 \crefname{enumi}{}{}%
 
-\newcommand{\setupAssumption}[1][A]{
-    % Setup enumerations with the assumption environment to use enumerations 
-    % (A1), (A2), etc. If the optional argument is provided, 
-    % then the letter is modified.
-    \renewcommand*{\theenumi}{\textup{(#1\arabic{enumi})}}% From https://tex.stackexchange.com/a/11901/153678
-    \renewcommand*{\labelenumi}{\textup{(#1\arabic{enumi})}}%
+\newcommand{\setupAssumption}[1]{
+    % Setup enumerations to use enumeration labels like 
+    % "(A1)", "(A2)", etc., where the letter (e.g., "A") is given as the first argument.
+    % 
+    % Example Usage:
+    % \begin{enumerate}\setupAssumption{A}
+    %     \item The sky is blue.\label{item:blue skies}
+    %     \item The grass is green. \label{item:green grass}
+    %     \item California is on fire. \label{item:Califorina}
+    % \end{enumerate}
+    % 
+    % Change the way list items are displayed in the list.
+    \renewcommand*{\labelenumi}{$\mathrm{(#1\arabic{enumi})}$}%
+    % 
+    % Change the way list items are displayed when referenced by \ref and \cref.
+    % From: https://tex.stackexchange.com/a/11901/153678
+    \renewcommand*{\theenumi}{\textup{(#1\arabic{enumi})}}% 
 }
 
 
@@ -281,14 +361,61 @@
 % === REFERENCES ===
 % ==================
 
-% Setup references for presentations
-\usepackage[url = false,%
-            doi = false,%
-            isbn = false,%
-            natbib,%
-            style=ieee%
-            ]{biblatex}
-% Import the bibliography files in document_setup.tex using "\addbibresource{biblio.bib}"
+% Setup references.
+\makeatletter%
+\@ifclassloaded{acmart}{% if using ACM Article, then skip Bibliography setup.
+}{
+    \@ifclassloaded{ifacconf}{% if using ifacconf, then skip Bibliography setup.
+        \usepackage{natbib}% required for bibliography
+    }{
+        \@ifclassloaded{beamer}{
+            \usepackage[url = false,%
+                    doi = false,%
+                    isbn = false,%
+                    natbib,%
+                    style=authoryear%
+                    ]{biblatex}
+        }{
+            \usepackage[url = false,%
+                    doi = false,%
+                    isbn = false,%
+                    natbib,%
+                    style=ieee%
+                    ]{biblatex}
+            % Import the bibliography files in document_setup.tex using "\addbibresource{biblio.bib}"
+        }
+    }
+}
+
+\makeatletter%
+\@ifclassloaded{ieeeconf}{% if using ieeeconf
+    % Make the Bibliography match the style when BibTeX is used with the ieeeconf class.
+    \renewcommand*{\bibfont}{\normalfont\small}
+    \setlength{\biblabelsep}{0.07in}
+}{% if not using ieeeconf
+}%
+\makeatother%
+
+
+% Make the titles in the bibliograph hyperlinks to the DOI or URL page when available.
+% Source: https://tex.stackexchange.com/a/48409/153678
+\newbibmacro{string+doiurlisbn}[1]{%
+    \iffieldundef{doi}{% No DOI defined
+        \iffieldundef{url}{% No URL defined
+            #1%
+        }{% URL Defined
+            \href{\thefield{url}}{#1}%
+        }%
+    }{% DOI defined
+        \href{http://dx.doi.org/\thefield{doi}}{#1}%
+    }%
+}
+\DeclareFieldFormat{title}{\usebibmacro{string+doiurlisbn}{\mkbibemph{#1}}}
+\DeclareFieldFormat[article,incollection]{title}%
+    {\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}
+\DeclareFieldFormat[inproceedings]{title}%
+    {\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}
+
 
 % ============================================
 % === ENVIRONMENTS (Theorems, lemmas, etc) ===
@@ -320,6 +447,11 @@
 \makeatletter
 \renewcommand\th@plain{\slshape}
 \makeatother
+
+% Create a macro for inserting a custom shape the follows the placement rules of \qedhere. See https://tex.stackexchange.com/a/16457/153678
+\newcommand\xqed[1]{%
+  \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+  \quad\hbox{#1}}
 
 %%---------------------------------------------------%%
 %| Define environments that use the definition style |%
@@ -381,13 +513,19 @@
 \ifdefined\theorem\else
     \newtheorem{theorem}{Theorem}
 \fi
+\crefname{theorem}{Theorem}{Theorems}%
 
 %%% Define proposition environment %%%
-\newtheorem{proposition}{Proposition}
+\ifdefined\proposition\else
+    \newtheorem{proposition}{Proposition}
+\fi
+\crefname{proposition}{Proposition}{Propositions}%
+
+%%% Define lemma environment %%%
 \ifdefined\lemma\else
     \newtheorem{lemma}{Lemma}
-    \crefname{lemma}{Lemma}{Lemmas}%
 \fi
+\crefname{lemma}{Lemma}{Lemmas}%
 
 %%% Define corollary environment %%%
 \ifdefined\corollary\else
@@ -399,6 +537,18 @@
 \ifdefined\conjecture\else
     \newtheorem{conjecture}{Conjecture}
     \crefname{conjecture}{Conjecture}{Conjectures}%
+\fi
+
+%%% Define application environment %%%
+\ifdefined\application\else
+    \newtheorem{application}{Application}
+    \crefname{application}{Application}{Applications}%
+\fi
+
+%%% Define application environment %%%
+\ifdefined\exercise\else
+    \newtheorem{exercise}{Exercise}
+    \crefname{exercise}{Exercise}{Exercises}%
 \fi
 
 \ifcsname thechapter\endcsname
@@ -439,7 +589,8 @@
     \setbeamercolor{author in head/foot}{fg=lightblue}
     \setbeamertemplate{navigation symbols}{}
     \setbeamertemplate{theorems}[numbered]
-    \setbeamertemplate{frametitle}[default][center]
+    % \setbeamertemplate{frametitle}[default][center]
+    \setbeamertemplate{frametitle}{\color{black}\bfseries\insertframetitle\par\vskip-8pt\hrulefill}
     % ======== Table of Contents ========
     % Set the TOC colors
     \setbeamercolor{section in toc}{fg=structure}
@@ -456,8 +607,20 @@
     }%
     % 
     % Set the size of page numbers.
-    \setbeamerfont{footline}{size=\small}
+    \setbeamerfont{footline}{size=\scriptsize}
     \setbeamertemplate{footline}{
+        \leavevmode%
+        % \begin{beamercolorbox}[wd=0.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+        \quad 
+        {\usebeamercolor[fg]{author in head/foot}%
+         \usebeamerfont{author in head/foot}%
+         \authorBriefList%
+         }%
+        % \end{beamercolorbox}
+        \ ---\ %
+        % \begin{beamercolorbox}[wd=0.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+        {\usebeamerfont{title in head/foot}\insertshorttitle}
+        % \end{beamercolorbox}%
         \hfill%
         \usebeamercolor[fg]{page number in head/foot}%
         \usebeamerfont{page number in head/foot}%
@@ -482,7 +645,7 @@
 % Don't print section numbers
 % \setcounter{secnumdepth}{0}
 
-% Spaced example
+% Single-page example
 \newenvironment{spexample}[1][]{
 \par
 \vbox\bgroup
@@ -491,7 +654,7 @@
 \end{example}\egroup
 }
 
-% Spaced exercise
+% Single-page exercise
 \newenvironment{spexercise}[1][]{
 \par
 \vbox\bgroup\begin{exercise}[#1]
@@ -499,7 +662,7 @@
 \end{exercise}\egroup%
 }
 
-% Spaced definition
+% Single-page definition
 \newenvironment{spdefinition}[1][]{
 \par
 \vbox\bgroup
@@ -508,7 +671,7 @@
 \end{definition}\egroup
 }
 
-% Spaced theorem
+% Single-page theorem
 \newenvironment{sptheorem}[1][]{
 \par
 \vbox\bgroup
@@ -517,7 +680,7 @@
 \end{theorem}\egroup
 }
 
-% Spaced remark
+% Single-page remark
 \newenvironment{spremark}[1][]{
 \par
 \vbox\bgroup
@@ -526,7 +689,7 @@
 \end{remark}\egroup
 }
 
-% Spaced reminder
+% Single-page reminder
 \newenvironment{spreminder}[1][]{
 \par
 \vbox\bgroup
@@ -539,12 +702,14 @@
 %%%%%%%%% Macros for Defining Document Info %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newcommand{\setTitle}[1]{%
+\newcommand{\setTitle}[2][]{%
   % Create a macro named \pwintz@title.
   \makeatletter%
-  \expandafter\newcommand\csname pwintz@title\endcsname{#1}
+  \expandafter\newcommand\csname pwintz@title\endcsname{#2}
+  \expandafter\newcommand\csname pwintz@shortTitle\endcsname{#1}
   \makeatother
-  \title{#1}
+%   \title{#2}
+%   \ifcsdef{title}{\title{#2}}
 }
 
 \newcommand{\setSubtitle}[1]{%
@@ -561,7 +726,16 @@
 % Because this macro name has a number in it, it must be referenced using "\csname pwintz@author2\endcsname" (there must not be a space before \endcsname).
   \makeatletter%
   \expandafter\newcommand\csname pwintz@author#1\endcsname{#2}%
+%   \expandafter\providecommand\csname pwintz@shortauthor#1\endcsname{#2}%
   \expandafter\newcommand\csname pwintz@authorInstitute#1\endcsname{#3}%
+  \makeatother%
+}
+
+\newcommand{\setShortAuthorList}[1]{%
+% Define a macro named \pwintz@shortAuthorList that is inserted at places that use the short author.
+% For example, \setShortAuthor{Wintz, Sanflice} will show "Wintz, Sanfelice" in the footer of Beamer slides.
+  \makeatletter%
+  \expandafter\def\csname pwintz@shortAuthorList\endcsname{#1}%
   \makeatother%
 }
 
@@ -573,6 +747,9 @@
   \expandafter\newcommand\csname pwintz@authorEmail#1\endcsname{#2}%
   \makeatother%
 }
+
+% Use this command to insert the email addresses.
+\newcommand{\insertemailfromcs}[1]{\textup{\texttt{\href{mailto:\csname #1\endcsname}{\csname #1\endcsname}}}}
 
 \newcommand{\setInstitute}[2]{%
 % Define a macro named \pwintz@instituteX where X is the first argument for \setInstitute. 
@@ -598,12 +775,9 @@
   \makeatother
 }
 
-% Document Toggles (WIP)
-\newbool{showWorkingNotesInDraft}
-\newbool{showProofsInDraft}
-
 % Read Document Configurations (edited by user)
 \input{document_setup.tex}
+
 \newcommand{\authorBriefList}{
     \csname pwintz@author1\endcsname%
     \ifcsdef{pwintz@author4}{% If four+ authors, simply append "et al."
@@ -613,15 +787,15 @@
             , \csname pwintz@author2\endcsname%
         }{}%
         \ifcsdef{pwintz@author3}{% If defined
-            , \csname pwintz@author3\endcsname%
+            , \csname pwintz@sauthor3\endcsname%
         }{}%
     }%
 }
 \hypersetup{
     % Set the metadata for the produced PDF.
-    pdftitle={\expandafter\csname pwintz@title\endcsname},
+    pdftitle={\expandafter\csname pwintz@shortTitle\endcsname},
     pdfsubject={},
-    pdfauthor={\expandafter\csname authorBriefList\endcsname},
+    pdfauthor={\expandafter\csname pwintz@shortAuthorList\endcsname},
     pdfkeywords={}
 }
 
@@ -639,6 +813,18 @@
 
     % Display images regardless of "draft" mode.
     \setkeys{Gin}{draft=false} 
+}
+
+% Document Toggles (WIP)
+\newbool{showWorkingNotesInDraft}
+\newbool{showProofsInDraft}
+
+% Omit proofs from drafts if "showProofsInDraft" is true. 
+\ifdraft{
+    \ifbool{showProofsInDraft}{% If true, show proofs
+    }{% If false, hide proofs
+        \renewenvironment{proof}{\emph{Proof.} \workingnote{[Proof omitted from draft.]}\commentsection}{\endcommentsection\par\medskip}%
+    }
 }
 
 \ifdraft{
@@ -694,9 +880,9 @@
 % Support tracking changes and adding "todo" comments.
 \usepackage[ % import "changes" package
     % If any of the changes commands are already defined, then the option "commandnameprefix=ifneeded" 
-    % tells changes to append "ch" to the name of the changes command in order to avoid a name collision.
+    % tells changes to prepend "ch" to the name of the changes command in order to avoid a name collision.
     % Commonly, "\comment" will be changed to "\chcomment".
-    commandnameprefix=ifneeded, 
+    % commandnameprefix=ifneeded, 
     % Changes imports the "todo" package. The following options are passed to the "todo" package.
     todonotes={colorinlistoftodos,
                 prependcaption,
@@ -704,7 +890,8 @@
                 backgroundcolor=orange!10,
                 textcolor=black,
                 linecolor=orange,
-                bordercolor=orange}
-    % draft, % <- enable line to show annotations regardless of the document being in 'final' mode.
+                bordercolor=orange,
+                tickmarkheight=4pt},
+    draft, % <- enable line to show annotations regardless of the document being in 'final' mode.
     % final, % <- enable line to hide annotations regardless of the document being in 'draft' mode.
 ]{changes}

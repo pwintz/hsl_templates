@@ -3,7 +3,7 @@
 \RequirePackage{beamerbasethemes}[2004/10/07]
 \RequirePackage{pgf}
 
-
+% We would like to have normal text etc in sans-serif, but equations in serif.
 \usefonttheme[onlymath]{serif}
 
 %-------------------------------------------------------------------------------
@@ -44,7 +44,7 @@
 \setbeamercolor{item}{fg=wurblue} % Item bullets.
 \setbeamercolor{normal text}{fg=black}
 \setbeamercolor*{alerted text}{fg=wurblue}
-\setbeamercolor*{structure}{fg=black}
+\setbeamercolor*{structure}{fg=black} % Sets the color of the header line AND the titles in Theorems, Lemmas, etc.
 \setanysheetcolors
 \normalcolorhack
 }
@@ -65,6 +65,7 @@
 \normalcolorhack
 }
 
+\newcommand{\logobarcolor}{white}
 
 % Enforce blue-on-white when making handouts.
 
@@ -74,8 +75,8 @@
 %-------------------------------------------------------------------------------
 %                                                               font definitions
 
-\setbeamerfont{title}{size=\huge}
-\setbeamerfont{subtitle}{size=\LARGE}
+\setbeamerfont{title}{size=\large, series=\bfseries}
+\setbeamerfont{subtitle}{series=\bfseries}
 \setbeamerfont{author}{}
 \setbeamerfont{institution}{size=\small}
 
@@ -155,14 +156,14 @@
 \newlength\logobarheight\setlength\logobarheight{\barheight}
 \newlength\logosep\setlength\logosep{0.5\logobarheight}
 
-\pgfdeclareimage[height=0.6\logobarheight]{ucsb-logo}{ucsbwave-cmyk}
-\pgfdeclareimage[height=0.6\logobarheight]{mit-logo}{mit_logo5}
-\pgfdeclareimage[height=0.5\logobarheight]{ensmp-logo}{Logo-paristech}
+% \pgfdeclareimage[height=0.6\logobarheight]{ucsb-logo}{ucsbwave-cmyk}
+% \pgfdeclareimage[height=0.6\logobarheight]{mit-logo}{mit_logo5}
+% \pgfdeclareimage[height=0.5\logobarheight]{ensmp-logo}{Logo-paristech}
 
 % these are availabe to users for constructing their logo
-\def\ucsblogo{\pgfuseimage{ucsb-logo}}
-\def\mitlogo{\pgfuseimage{mit-logo}}
-\def\ensmplogo{\pgfuseimage{ensmp-logo}}
+% \def\ucsblogo{\pgfuseimage{ucsb-logo}}
+% \def\mitlogo{\pgfuseimage{mit-logo}}
+% \def\ensmplogo{\pgfuseimage{ensmp-logo}}
 %\def\nwologo{\hbox{\vbox to \logobarheight{\vfill\hbox{\pgfuseimage{NWO-logo}}\vfill}}}
 
 % Initially, have an empty logo bar
@@ -209,7 +210,7 @@
 \def\bluesheetfootline{
   \begin{pgfpicture}{0cm}{0cm}{\the\paperwidth}{\the\logobarheight}
     % Draw a white rectangle to mark the logo bar
-    \pgfsetfillcolor{white}
+    \pgfsetfillcolor{\logobarcolor}
     \pgfpathrectangle{\pgfpointorigin}{\pgfpoint{\the\paperwidth}{\the\logobarheight}}
     \pgfusepath{fill}
     % Make a TeX box containing the actual logo bar contents, and place it at the lower-left

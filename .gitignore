@@ -294,15 +294,11 @@ TSWLatexianTemp*
 *.glstex
 
 ### VisualStudioCode ###
-.vscode/*
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/ltex
-!.vscode/ltex.dictionary.*
-!.vscode/ltex.disabledRules.*
-!.vscode/ltex.hiddenFalsePositives.*
-!.vscode/settings.json
-!.vscode/extensions.json
+# .vscode/*
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/ltex
+# !.vscode/ltex.hiddenFalsePositives.*
 *.code-workspace
 
 ### VisualStudioCode Patch ###
@@ -323,3 +319,5 @@ intro_slide.png
 # Created by https://www.toptal.com/developers/gitignore/api/microsoftoffice
 # PowerPoint temporary
 ~$*.ppt*
+*SAVE-ERROR
+out_dir/
