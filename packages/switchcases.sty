@@ -1,0 +1,52 @@
+% Define 'switch' environment. 
+% See https://tex.stackexchange.com/a/187710/153678
+% Example of defining "\incolor" command that selects a color 
+% based on a given number:    
+% 
+%     \newcommand{\incolor}[2]{%
+%       \begin{switch}{#1}%
+%         \case{1}{\color{red}}%
+%         \case{2}{\color{blue}}%
+%         \case{3}{\color{green}}%
+%         \otherwise{\color{black}}%
+%         #2%
+%       \end{switch}%
+%     }
+%     \[
+%         \incolor{1}{hello}
+%         \incolor{2}{hello}
+%         \incolor{3}{hello}
+%         \incolor{4}{hello}
+%     \] 
+% 
+% Macros defined such as \incolor support nesting, so you may call 
+%   \incolor{1}{This is \incolor{2} allowed.}
+% 
+\usepackage{xifthen}
+\newenvironment{switch}[1]{%
+    \begingroup%
+        \def\casesmatched{false}% Track whether any of the cases were matched.
+        \def\ifequals{}% Dummy, so \renewcommand has something to overwrite...
+        \def\case{}% Dummy, so \renewcommand has something to overwrite...
+        \def\otherwise{}% Dummy, so \renewcommand has something to overwrite...
+        % 
+        \renewcommand{\ifequals}[3]{%
+            \ifthenelse{% If
+                \equal{##1}{##2}%
+            }{% Then
+                ##3%
+                \renewcommand{\casesmatched}{true}%
+            }{% Else
+            }%
+        }
+        \renewcommand{\case}{\ifequals{#1}}%
+        \renewcommand{\otherwise}[1]{%
+            \ifthenelse{% If 
+                \equal{\casesmatched}{false}%
+            }{% Then
+                ##1%
+            }{}% Else
+        }%
+}{% After environment, close group.
+    \endgroup%
+}

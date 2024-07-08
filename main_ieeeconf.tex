@@ -11,15 +11,6 @@
 \usepackage{pwintz_definitions}
 \usepackage{demo_setup} % TODO: Delete this.
 
-%%%
-%%% STEP 1
-%%%
-%%% Use the "hslTR" package. Make sure you have the
-%%% "hslTR.sty" file in the packages folder or your current directory.
-%%%
-%%%  HSL Technical Report PACKAGE
-\usepackage{hslTR}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% VERSION CONTROL COMMAND
 %%% For Conference, Change to "true"
@@ -52,9 +43,8 @@
   \newenvironment{reportonlyblock}{\commentsection}{\endcommentsection}
 }
 
+\input{document_configuration}
 \input{document_definitions}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For speed compilation purposes (process figures when needed)
@@ -75,58 +65,10 @@
             marginparwidth=0.6in]{geometry} 
 }{}
 
+\usepackage{universal_frontmatter_loader}
+\usepackage{workingNotes}
+
 \begin{document}
-
-% Populate poster title from value defined in document_setup.tex.
-\makeatletter
-\title{\pwintz@title}
-\makeatother
-
-\author{% 
-% Populate author information from definitions in document_setup.tex
-   % Insert first author, if defined.
-    \authorblockN{\csname pwintz@author1\endcsname}%
-    % Insert second author, if defined.
-    \ifcsdef{pwintz@author2}{% If defined
-        \and\authorblockN{\csname pwintz@author2\endcsname}%
-    }{}%
-    % Insert third author, if defined.
-    \ifcsdef{pwintz@author3}{% If defined
-        \and\authorblockN{\csname pwintz@author3\endcsname}%
-    }{}%
-    % Insert fourth author, if defined.
-    \ifcsdef{pwintz@author4}{% If defined
-        \and\authorblockN{\csname pwintz@author4\endcsname}%
-    }{}
-    \thanks{
-        \csname pwintz@author1\endcsname{} is with
-        \csname pwintz@longAffiliation1\endcsname{}
-        (\insertemailfromcs{pwintz@authorEmail1})%
-        %
-        \ifcsdef{pwintz@author2}{% If defined
-          ; \csname pwintz@author2\endcsname{} is with
-          \csname pwintz@longAffiliation2\endcsname{}
-          (\insertemailfromcs{pwintz@authorEmail2})%
-        }{}%
-        %
-        \ifcsdef{pwintz@author3}{% If defined
-          ; \csname pwintz@author3\endcsname{} is with 
-          \csname pwintz@longAffiliation3\endcsname{}
-          (\insertemailfromcs{pwintz@authorEmail3})%
-        }{}%
-        %
-        \ifcsdef{pwintz@author4}{% If defined
-          ; \csname pwintz@author4\endcsname{} is with 
-          \csname pwintz@longAffiliation4\endcsname{}
-          (\insertemailfromcs{pwintz@authorEmail4})%
-        }{}.
-    }
-    \thanks{
-        \acknowledgementBlurb{}
-    }
-}
-
-\maketitle
 
 % Uncomment to compile.
 \input{paper_body}

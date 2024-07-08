@@ -1,10 +1,6 @@
 % \update{Significant updates since the last draft are shown in blue.}
 % \confonly{Sections included only in the conference version are formatted like this.}
 % \reportonly{Sections included only in the report version are formatted like this.}
-
-\begin{abstract}%
-    \lipsum[1]
-\end{abstract}
  
 \ifdraft{%
 \reportonly{%
@@ -82,7 +78,7 @@ See \cref{fig:this is a figure}.
 \lipsum[7]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{[Section Heading]}
+\section{Section Heading}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % \label{sec:<insert label>} % TODO: Insert label
 
@@ -108,7 +104,14 @@ The following is clear from \cref{eq:my equation}:
 \nocite{salam}
 \nocite{ctan}
 \nocite{loh}
-\printbibliography
+
+\makeatletter%
+    \@ifpackageloaded{biblatex}{% If biblatex package...
+        \printbibliography%
+    }{
+        \bibliography{biblio.bib}%
+    }%
+\makeatother%
 
 \appendix
 \section{Appendix}

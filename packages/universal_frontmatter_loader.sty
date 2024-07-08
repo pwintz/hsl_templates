@@ -1,0 +1,414 @@
+% The purpose of this package is to read and display "front matter" text in a way that is agnostic to the document class. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%% Macros for Defining Document Info %%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\setTitle}[1]{%
+    % Create a macro named \pwintz@title.
+    \def\pwintz@title{#1}
+}
+
+\newcommand{\getTitle}{%
+  \ifcsdef{pwintz@title}{%
+    \csname pwintz@title\endcsname%
+  }{
+    \PackageError{universal_frontmatter_loader}{%
+      % Error message:
+      \textbackslash getTitle was called but \textbackslash pwintz@shortTitle has not been set using \textbackslash setTitle. 
+    }{}
+  }
+}
+
+\newcommand{\setShortTitle}[1]{%
+  % Create a macro named \pwintz@shortTitle.
+  \def\pwintz@shortTitle{#1}
+}
+
+\newcommand{\getShortTitle}{%
+  \ifcsdef{pwintz@shortTitle}{%
+    \pwintz@shortTitle%
+  }{
+    \ifcsdef{pwintz@title}{%
+      \pwintz@title%
+    }{
+      \PackageError{universal_frontmatter_loader}{%
+        % Error message:
+        \textbackslash getShortTitle was called but neither \textbackslash pwintz@shortTitle nor \textbackslash pwintz@shortTitle have been set. 
+      }{}
+    }
+  }
+}
+
+\newcommand{\setSubtitle}[1]{%
+  % Create a macro named \pwintz@subtitle.
+  \expandafter\newcommand\csname pwintz@subtitle\endcsname{#1}
+  % \ifcsdef{subtitle}{\subtitle{#1}}
+}
+
+\newcommand{\setAuthor}[3]{%
+% Define a macro named \pwintz@authorX where X is the first argument for \setAuthor. 
+% For example, \setAuthor2{John Smith} creates a macro named "\pwintz@author2".
+% Because this macro name has a number in it, it must be referenced using "\csname pwintz@author2\endcsname" (there must not be a space before \endcsname).
+  \expandafter\newcommand\csname pwintz@author#1\endcsname{#2}%
+%   \expandafter\providecommand\csname pwintz@shortauthor#1\endcsname{#2}%
+  \expandafter\newcommand\csname pwintz@authorInstitute#1\endcsname{#3}%
+}
+
+\newcommand{\setShortAuthorList}[1]{%
+% Define a macro named \pwintz@shortAuthorList that is inserted at places that use the short author.
+% For example, \setShortAuthor{Wintz, Sanflice} will show "Wintz, Sanfelice" in the footer of Beamer slides.
+  \expandafter\def\csname pwintz@shortAuthorList\endcsname{#1}%
+}
+
+\newcommand{\getShortAuthorList}{
+    \ifcsdef{pwintz@shortAuthorList}{%
+        % If pwintz@shortAuthorList has been set 
+        % via "\setShortAuthorList", then insert 
+        % the value that was defined there.
+        \csname pwintz@shortAuthorList\endcsname%
+    }{%
+        % Otherwise, generate the list manually.
+        \csname pwintz@author1\endcsname%
+        \ifcsdef{pwintz@author4}{% If four+ authors, simply append "et al."
+            \ et al.
+        }{% If less than four authors, appened all authors.
+            \ifcsdef{pwintz@author2}{% If defined
+                , \csname pwintz@author2\endcsname%
+            }{}%
+            \ifcsdef{pwintz@author3}{% If defined
+                , \csname pwintz@author3\endcsname%
+            }{}%
+        }%
+    }%
+}
+
+\newcommand{\setAuthorEmail}[2]{%
+% Define a macro named \pwintz@authorEmailX where X is the first argument for \setAuthorEmail. 
+% For example, \setAuthorEmail2{John Smith} creates a macro named "\pwintz@authorEmail2".
+% Because this macro name has a number in it, it must be referenced using "\csname pwintz@authorEmail2\endcsname" (there must not be a space before \endcsname).
+  \expandafter\newcommand\csname pwintz@authorEmail#1\endcsname{#2}%
+}
+
+\newcommand{\setInstitute}[2]{%
+% Define a macro named \pwintz@instituteX where X is the first argument for \setInstitute. 
+% For example, \setInstitute2{Harvard} creates a macro named \pwintz@institute2.
+  \expandafter\newcommand\csname pwintz@institute#1\endcsname{#2}
+}
+
+\newcommand{\getInstitute}[1]{%
+% Get the value of the institute set using \setInstitueN.
+  \csname pwintz@institute#1\endcsname
+}
+
+\newcommand{\setLongAffiliation}[2]{%
+% Define a macro named \pwintz@longAffiliationX where X is the first argument for \setLongAffiliation. 
+% For example, \setLongAffiliation2{Harvard} creates a macro named \pwintz@longAffiliation2.
+% The long affiliation for each author should be a sentence fragment that can replace "..." in "The author is with ..." (without trailing space).
+  \expandafter\newcommand\csname pwintz@longAffiliation#1\endcsname{#2}
+}
+
+\newcommand{\setAbstract}[1]{%
+  % Define a macro named \pwintz@abstract to store the abstract text. 
+  \newcommand{\pwintz@abstract}{#1}%
+}
+
+\newcommand{\setAcknowledgementBlurb}[1]{%
+  % Create a macro named \pwintz@acknowledgementBlurb.
+  \newcommand\pwintz@acknowledgementBlurb{#1}
+}
+
+\newcommand{\setKeywords}[1]{%
+  % Create a macro named \pwintz@keywords.
+  \newcommand\pwintz@keywords{#1}
+}
+
+\newcommand{\getAcknowledgementBlurb}[1]{%
+  \ifcsdef{pwintz@acknowledgementBlurb}{%
+    % If \pwintz@acknowledgementBlurb has been set, then insert its value.
+    \pwintz@acknowledgementBlurb{}%
+  }{}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Read Document Configurations (edited by user) %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{frontmatter.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Configure the document using the user-provided values %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\hypersetup{
+    % Set the metadata for the produced PDF.
+    pdftitle={\getShortTitle},
+    pdfsubject={},
+    pdfauthor={\getShortAuthorList},
+    pdfkeywords={}
+}
+
+% Use this command to insert the email addresses.
+\newcommand{\insertemailfromcs}[1]{\textup{\texttt{\href{mailto:\csname #1\endcsname}{\csname #1\endcsname}}}}
+
+\makeatletter
+\@ifclassloaded{ieeeconf}{% If using ieeeconf class...
+  \AtBeginDocument{
+    % Populate title from value defined in frontmatter.tex.
+    \makeatletter
+    \title{\pwintz@title}
+
+    \newcommand{\insertAuthor}[1]{%
+      % Insert Nth author, if defined.
+      % #1: Author index.
+      \ifcsdef{pwintz@author#1}{% If defined
+        \ifnum#1>1
+          % If not the first author, then use \and to connect the names.
+          \and
+        \fi
+        \authorblockN{\csname pwintz@author#1\endcsname}%
+      }{}%
+    }
+    \newcommand{\insertAuthorAffiliation}[1]{
+      % If the Nth author is defined, insert their affiliation.
+      % #1: Author index.
+      \ifcsdef{pwintz@author2}{% If defined
+        \ifnum#1>1
+          % If not the first author, then use ";" to connect the list items.
+          ;
+        \fi
+        \csname pwintz@author#1\endcsname{} is with
+        \csname pwintz@longAffiliation#1\endcsname{}
+        (\insertemailfromcs{pwintz@authorEmail#1})%
+      }{}%
+    }
+    \author{% 
+      % Populate author information from definitions in frontmatter.tex
+      \insertAuthor{1}%
+      \insertAuthor{2}%
+      \insertAuthor{3}%
+      \insertAuthor{4}%
+      \thanks{
+        \insertAuthorAffiliation1%
+        \insertAuthorAffiliation2%
+        \insertAuthorAffiliation3%
+        \insertAuthorAffiliation4.
+      }
+      \thanks{%
+        \getAcknowledgementBlurb{}%
+      }%
+    }
+    \AddToHook{begindocument/end}{%
+      \makeatletter
+      % Generate title page
+      \maketitle
+    
+      % Insert the abstract, if it has been defined.
+      \ifcsdef{pwintz@abstract}{%
+        \begin{abstract}%
+          \makeatletter%
+            \pwintz@abstract%
+          \makeatother%
+        \end{abstract}%
+      }{}%
+        
+      \makeatother
+    }
+    \makeatother
+  }
+}{}%
+
+\makeatletter
+\@ifclassloaded{acmart}{% if using ACM article class, 
+  \begin{abstract}
+    \pwintz@abstract
+  \end{abstract}
+
+  % Populate title from value defined in frontmatter.tex.
+  \title{\pwintz@title}
+
+  \newcommand{\pwintz@insertAuthor}[1]{
+    % #1: The position "X" of the author in the author list.
+    \ifcsdef{pwintz@author#1}{% If defined
+      \author{\csname pwintz@author#1\endcsname}%
+      % \affiliation{\csname pwintz@authorInstitute#1\endcsname}%
+      % \country{USA}
+      \email{\csname pwintz@authorEmail#1\endcsname}%
+    }{}%
+  }
+
+  \AddToHook{begindocument/end}{%
+    \pwintz@insertAuthor{1}
+    \pwintz@insertAuthor{2}
+    \pwintz@insertAuthor{3}
+    \pwintz@insertAuthor{4}
+
+    % Generate Title
+    \maketitle
+  }
+}{}
+
+\makeatletter
+
+\@ifpackageloaded{hslTR}{
+  \AtBeginDocument{
+    \makeatletter
+    % Populate title from value defined in frontmatter.tex.
+    \ititle{\pwintz@title}%
+    \iauthor{%
+      \csname pwintz@author1\endcsname%
+      % Insert second author, if defined.
+      \ifcsdef{pwintz@author2}{% If defined
+          \\ {\normalsize \csname pwintz@author2\endcsname}%
+      }{}%
+      % Insert third author, if defined.
+      \ifcsdef{pwintz@author3}{% If defined
+          \\ {\normalsize \csname pwintz@author3\endcsname}%
+      }{}%
+      % Insert fourth author, if defined.
+      \ifcsdef{pwintz@author4}{% If defined
+          \\ {\normalsize \csname pwintz@author4\endcsname}%
+      }{}
+    }
+    \makeatother
+
+    \makeititle
+
+    \begin{abstract}%
+        \makeatletter
+            \pwintz@abstract
+        \makeatother
+    \end{abstract}
+  }
+
+}{}
+
+\makeatletter
+
+\@ifclassloaded{beamer}{% If using beamer class...
+  \AtBeginDocument{
+    
+    \makeatletter
+    % Populate title using value defined in frontmatter.tex
+    \title{\pwintz@title}
+
+    % \newcommand
+    \newcommand{\pwintz@insertAuthor}[1]{%
+      % Insert Xth author, if defined.
+      \ifcsdef{pwintz@author#1}{% If defined
+          \csuse{pwintz@author#1}%
+          \ifcsdef{pwintz@institute2}{%
+            % If there are at least two institutes, then insert superscripts.
+            \textsuperscript{\csuse{pwintz@authorInstitute#1}}%
+          }{}
+          \hfill% 
+      }{}%
+    }
+    \author{% 
+      % Populate author information from definitions in frontmatter.tex
+      % Insert first author, if defined.
+      \hfill
+      \pwintz@insertAuthor1
+      \pwintz@insertAuthor2
+      \pwintz@insertAuthor3
+      \pwintz@insertAuthor4
+      % \csuse{pwintz@author1}%
+      % \ifcsdef{pwintz@institute2}{%
+      %   % If there are two (or more) institutes, then we add a supscript number to indicate which authors are at which institutes.
+      %   \textsuperscript{\csuse{pwintz@authorInstitute1}}%
+      % }{}%
+      % \hfill% 
+      % %
+      % % Insert second author, if defined.
+      % \ifcsdef{pwintz@author2}{% If defined
+      %     \csuse{pwintz@author2}%
+      %     \ifcsdef{pwintz@institute2}{%
+      %       % If there are at least two institutes, then insert superscripts.
+      %       \textsuperscript{\csuse{pwintz@authorInstitute2}}%
+      %     }{}
+      %     \hfill% 
+      % }{}%
+      % % Insert third author, if defined.
+      % \ifcsdef{pwintz@author3}{% If defined
+      %     \csuse{pwintz@author3}%
+      %     \ifcsdef{pwintz@institute2}{%
+      %       % If there are at least two institutes, then insert superscripts.
+      %       \textsuperscript{\csuse{pwintz@authorInstitute3}}%
+      %     }{}%
+      %     \hfill% 
+      % }{}%
+      % % Insert fourth author, if defined.
+      % \ifcsdef{pwintz@author4}{% If defined
+      %     \csuse{pwintz@author4}%
+      %     \ifcsdef{pwintz@institute2}{%
+      %       % If there are at least two institutes, then insert superscripts.
+      %       \textsuperscript{\csuse{pwintz@authorInstitute4}}%
+      %     }{}%
+      %     \hfill% 
+      % }{}
+      \makeatother
+    }
+      
+    \institute{% Populate institutions that are defined in frontmatter.tex
+      \ifcsdef{pwintz@institute1}{% If defined
+        \ifcsdef{pwintz@institute2}{% 
+          % If there are two (or more) institutes, then we add a supscript number to indicate which authors are at which institutes.
+            \textsuperscript{1}%
+        }{}% Else nothing
+        \csname pwintz@institute1\endcsname%
+      }{}% Else nothing
+      \ifcsdef{pwintz@institute2}{% If defined
+        \\ \textsuperscript{2}\csname pwintz@institute2\endcsname%
+      }{}% Else nothing
+      \ifcsdef{pwintz@institute3}{% If defined
+        \\ \textsuperscript{3}\csname pwintz@institute3\endcsname%
+      }{}% Else nothing
+      \ifcsdef{pwintz@institute3}{; }{}% Add "; " if there is another institute
+      \ifcsdef{pwintz@institute4}{% If defined
+        \\ \textsuperscript{4}\csname pwintz@institute3\endcsname%
+      }{}% Else nothing
+    } 
+  }  
+  \AddToHook{begindocument/end}{%
+    % TITLE FRAME
+    \begin{frame}[plain]
+      % Set the title and an (optional) subtitle in frontmatter.tex.
+      \maketitle
+      \includegraphics[height = 11mm,align=c]{UCSC_BaskinEng_Logo_wide.eps}
+      \hfill 
+      \includegraphics[height = 13.5mm,align=c]{HSLlogo.eps}
+      \hspace{25pt}
+    \end{frame}
+  }
+  \makeatother
+}{}%
+
+\makeatletter
+\@ifclassloaded{ifacconf}{% If using ifacconf class...
+  \AddToHook{begindocument/end}{%
+    \begin{frontmatter}
+      \makeatletter
+      % Title, preferably not more than 10 words.
+      \title{\pwintz@title{}\thanksref{acknowledgements}} 
+      
+      \thanks[acknowledgements]{\getAcknowledgementBlurb}
+      
+      \author[First]{\csname pwintz@author1\endcsname}\quad
+      \author[Second]{\csname pwintz@author2\endcsname} 
+      
+      \address[First]{\csname pwintz@longAffiliation1\endcsname{} \textup{(\insertemailfromcs{pwintz@authorEmail1})}}
+      \address[Second]{\csname pwintz@longAffiliation2\endcsname{} \textup{(\insertemailfromcs{pwintz@authorEmail2})}}
+      
+      \begin{abstract}
+        \pwintz@abstract
+      \end{abstract}
+      
+      \begin{keyword}
+        \pwintz@keywords
+      \end{keyword}
+      \maketitle
+    \end{frontmatter}
+  }
+}{}%
+
+
+\makeatother

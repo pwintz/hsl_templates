@@ -15,17 +15,26 @@
 \usepackage{graphicx}      % include this line if your document contains figures
 \usepackage{natbib}        % required for bibliography
 
+% Change the search path to include "./packages/".
+\makeatletter
+\def\input@path{{./packages/}}
+\makeatother
+
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
+\usepackage{demo_setup} % TODO: Delete this.
+\input{document_configuration}
 \input{document_definitions} 
+
 
 % Create \ifdraft{}{} conditional 
 % that switches based on whether "draft" 
 % is passed to document class.
 \usepackage{ifdraft}
 
-% Make the columns on the last page even.
-\usepackage{flushend}
+\ifdraft{}{% If not "draft", then make the columns on the last page even.
+	\usepackage{flushend}
+}
 
 \newbool{conf}
 \setbool{conf}{true}
@@ -72,35 +81,11 @@
 % Make the PDF version compliant with the submission requirements for ADHS.
 \pdfminorversion=4
 
+\usepackage{universal_frontmatter_loader}
+
 %===============================================================================
 \begin{document}
 
-	\begin{frontmatter}
-
-		\makeatletter
-		% Title, preferably not more than 10 words.
-		\title{\pwintz@title{}\thanksref{footnoteinfo}} 
-		
-		\thanks[footnoteinfo]{\acknowledgementBlurb}
-		
-		\author[First]{\csname pwintz@author1\endcsname}\quad
-		\author[Second]{\csname pwintz@author2\endcsname} 
-		
-		\address[First]{\csname pwintz@longAffiliation1\endcsname{} \textup{(\insertemailfromcs{pwintz@authorEmail1})}}
-		\address[Second]{\csname pwintz@longAffiliation2\endcsname{} \textup{(\insertemailfromcs{pwintz@authorEmail2})}}
-		
-		\begin{abstract}
-			\input{abstract}
-		\end{abstract}
-		\makeatother
-		
-		\begin{keyword}
-			Stability and stabilization of hybrid systems, Stability of nonlinear systems
-		\end{keyword}
-	
-	\end{frontmatter}
-	%===============================================================================
-
-	\input{adhs24_body}
+	\input{paper_body}
 
 \end{document} 

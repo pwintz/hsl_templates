@@ -10,7 +10,11 @@
 \usepackage{ifdraft} 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
-\usepackage{amssymb}
+\@ifclassloaded{acmart}{% If using amcart class...
+}{% If using amcart class is not loaded...
+    \usepackage{amssymb}
+}%
+
 \usepackage{amsfonts}
 \usepackage{mathrsfs} % Enables \mathscr{}
 
@@ -29,16 +33,12 @@
 \usepackage{float}
 % \usepackage[bottom]{footmisc} % Forces footnotes to be at the very bottom of the page. https://tex.stackexchange.com/a/9427/153678
 
-% Force footnotes to be at the bottom of the page.
-\usepackage[bottom]{footmisc}
 
 % ==================
 % === Formatting ===
 % ==================
-\usepackage{markdown}
-\usepackage{bm} % Allows bold Greek letters.
+% \usepackage{markdown}
 
-\makeatletter%
 \@ifclassloaded{beamer}{
     % If using Beamer class, then don't load enumitem since they are incompatitble.
 }{% If not beamer, then load enumitem.
@@ -50,7 +50,6 @@
         ]{enumitem} 
     \setlist[1]{labelindent=\parindent, leftmargin=*}% < Usually a good idea
 }
-\makeatother%
 
 % Define Colors
 \usepackage{xcolor}
@@ -69,12 +68,17 @@
 \usepackage{xspace} 
 
 % Format paragraphs. 
-\makeatletter%
 \@ifclassloaded{article}{%
     \setlength{\parindent}{0em}
     \setlength{\parskip}{0.8em}
 }
-\makeatother
+
+\usepackage{ifdraft} 
+\ifdraft{
+    % In draft-mode, double-space lines to allow space for comments.
+    \usepackage{setspace}
+    \doublespacing
+}
 
 %%%% Fix Spacing Around "\left(\right)" %%%
 \usepackage{mleftright} 
@@ -108,7 +112,6 @@
 }
 
 
-\makeatletter%
 \@ifclassloaded{acmart}{% if using ACM article class, microtype is enabled by the class(?).
 }{
     % Microtype plays with ever-so-slightly shrinking and stretching of the fonts and with the extent to which text protrudes into the margins in a way that yields results that look better, that have fewer instances of hyphenation, and fewer overfull hboxes.
@@ -119,7 +122,6 @@
         \usepackage[stretch=10]{microtype}
     }
 }
-\makeatother
 
 % === END OF SPACING ===
 
@@ -151,34 +153,7 @@
 \usepackage{etoolbox} 
 \newtoggle{solutions}
 
-% Define 'switch' environment. 
-% See https://tex.stackexchange.com/a/187710/153678
-% Example of defining "\incolor" command:    
-%      \newcommand{\incolor}[2]{%
-%      \begin{switch}{#1}%
-%          \case{1}{\color{red}}%
-%          \case{2}{\color{blue}}%
-%          \case{3}{\color{green}}%
-%          \otherwise{\color{black}}%
-%          #2%
-%      \end{switch}%
-%      }
-\usepackage{xifthen}
-\newcommand{\ifequals}[3]{\ifthenelse{\equal{#1}{#2}}{%
-    #3%
-    \renewcommand{\casesmatched}{true}%
-}{}}
-\newcommand{\casesmatched}{}% Dummy, so \renewcommand has something to overwrite...
-\newcommand{\case}[2]{#1 #2}% Dummy, so \renewcommand has something to overwrite...
-\newenvironment{switch}[1]{%
-    \renewcommand{\casesmatched}{false}%
-    \renewcommand{\case}{\ifequals{#1}}%
-    \renewcommand{\otherwise}[1]{%
-        \ifthenelse{\equal{\casesmatched}{false}}{%
-            ##1%
-        }{}%
-    }%
-}{}
+\usepackage{switchcases}
 
 % ============================
 % === Figures and Graphics ===
@@ -194,14 +169,12 @@
 % Allows removal of "Figure 1:" in caption when "\caption*{}" is used. 
 \captionsetup{belowskip=-7pt plus 3pt, aboveskip=4pt,font={small}}
 
-\makeatletter%
 \@ifclassloaded{ieeeconf}{% if using ieeeconf
     % Adjust the size to match the ieeeconf style.
     \captionsetup{font={small}}
 }{% if not using ieeeconf
 }%
 
-\makeatother%
 %%%% Support subfigures %%%%
 % The package 'subfigure' is deprecated. 
 % Now, either 'subfig' or 'subcaption'is  recommend.
@@ -220,7 +193,9 @@
 % \end{subfigure}
 % \end{figure}
 
-% \usepackage{subcaption}
+\usepackage{subcaption}
+\captionsetup[subfigure]{subrefformat=simple,labelformat=simple}
+    \renewcommand\thesubfigure{(\alph{subfigure})}
 %%% Example of how to use 'subcaption' package %%%
 % \begin{figure*} % Star makes multi-column figure. 
 %     \centering
@@ -269,22 +244,17 @@
 % Allows URLs to break at the end of a line.
 \usepackage{xurl} 
 
-\makeatletter%
 \@ifclassloaded{ifacconf}{% if using ifacconf
     % Do some hack-y thing to make hyperref work in ifacconf.
     % See https://tex.stackexchange.com/a/463637/153678
     
     % Do some hack-y thing to make hyperref work.
-    \makeatletter
     \let\old@ssect\@ssect % Store how ifacconf defines \@ssect
-    \makeatother
 }{% if not using ifacconf
 }%
-\makeatother%
-
 
 % Enable hyperlinks
-\usepackage[]{hyperref}
+\usepackage{hyperref}
 \hypersetup{
     final,                   % Include links even if document is in 'draft' mode.
     hidelinks,               % Prevent boxes from being drawn around links in some editors.
@@ -297,19 +267,15 @@
     citecolor=black!30!blue, % In-line citations  
 }  
 
-\makeatletter%
 \@ifclassloaded{ifacconf}{% if using ifacconf
     % Do some hack-y thing to make hyperref work in ifacconf.
     % See https://tex.stackexchange.com/a/463637/153678
-    \makeatletter
     \def\@ssect#1#2#3#4#5#6{%
     \NR@gettitle{#6}% Insert key \nameref title grab
     \old@ssect{#1}{#2}{#3}{#4}{#5}{#6}% Restore ifacconf's \@ssect
     }
-    \makeatother
 }{% if not using ifacconf
 }%
-\makeatother%
 
 % % % Configure PDF strings to replace certain commands with PDF-strings friendly symbols
 % % \pdfstringdefDisableCommands{%
@@ -349,7 +315,7 @@
     % \end{enumerate}
     % 
     % Change the way list items are displayed in the list.
-    \renewcommand*{\labelenumi}{$\mathrm{(#1\arabic{enumi})}$}%
+    \renewcommand*{\labelenumi}{\textup{(#1\arabic{enumi})}}%
     % 
     % Change the way list items are displayed when referenced by \ref and \cref.
     % From: https://tex.stackexchange.com/a/11901/153678
@@ -362,7 +328,6 @@
 % ==================
 
 % Setup references.
-\makeatletter%
 \@ifclassloaded{acmart}{% if using ACM Article, then skip Bibliography setup.
 }{
     \@ifclassloaded{ifacconf}{% if using ifacconf, then skip Bibliography setup.
@@ -382,24 +347,15 @@
                     natbib,%
                     style=ieee%
                     ]{biblatex}
-            % Import the bibliography files in document_setup.tex using "\addbibresource{biblio.bib}"
+            % Import the bibliography files in frontmatter.tex using "\addbibresource{biblio.bib}"
         }
     }
 }
 
-\makeatletter%
-\@ifclassloaded{ieeeconf}{% if using ieeeconf
-    % Make the Bibliography match the style when BibTeX is used with the ieeeconf class.
-    \renewcommand*{\bibfont}{\normalfont\small}
-    \setlength{\biblabelsep}{0.07in}
-}{% if not using ieeeconf
-}%
-\makeatother%
-
-
-% Make the titles in the bibliograph hyperlinks to the DOI or URL page when available.
-% Source: https://tex.stackexchange.com/a/48409/153678
-\newbibmacro{string+doiurlisbn}[1]{%
+\@ifpackageloaded{biblatex}{% If biblatex package...
+    % Make the titles in the bibliograph hyperlinks to the DOI or URL page when available.
+    % Source: https://tex.stackexchange.com/a/48409/153678
+    \newbibmacro{string+doiurlisbn}[1]{%
     \iffieldundef{doi}{% No DOI defined
         \iffieldundef{url}{% No URL defined
             #1%
@@ -409,19 +365,27 @@
     }{% DOI defined
         \href{http://dx.doi.org/\thefield{doi}}{#1}%
     }%
-}
-\DeclareFieldFormat{title}{\usebibmacro{string+doiurlisbn}{\mkbibemph{#1}}}
-\DeclareFieldFormat[article,incollection]{title}%
+    }
+    \DeclareFieldFormat{title}{\usebibmacro{string+doiurlisbn}{\mkbibemph{#1}}}
+    \DeclareFieldFormat[article,incollection]{title}%
     {\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}
-\DeclareFieldFormat[inproceedings]{title}%
+    \DeclareFieldFormat[inproceedings]{title}%
     {\usebibmacro{string+doiurlisbn}{\mkbibquote{#1}}}
+}{}%
+
+
+\@ifclassloaded{ieeeconf}{% if using ieeeconf
+    % Make the Bibliography match the style when BibTeX is used with the ieeeconf class.
+    \renewcommand*{\bibfont}{\normalfont\small}
+    \setlength{\biblabelsep}{0.07in}
+}{% if not using ieeeconf
+}%
 
 
 % ============================================
 % === ENVIRONMENTS (Theorems, lemmas, etc) ===
 % ============================================
 
-\makeatletter%
 \@ifclassloaded{ieeeconf}{% if using ieeeconf
     \IEEEoverridecommandlockouts
     \overrideIEEEmargins
@@ -430,23 +394,24 @@
     % The amsthm package provides {theorem}, {lemma} and {proof} environments
     \usepackage[toc,page]{appendix}
 }
-\makeatother%
 
 % Load amsthm package.
-\makeatletter%
 \@ifclassloaded{ieeeconf}{% if using ieeeconf
     % The following "\relax" commands prevent an error that says, "Command \proof already defined," when we load amsthm, Load amsthm package.
     \let\proof\relax 
     \let\endproof\relax
 }{}
-\makeatother%
-\usepackage{amsthm}
+
+\@ifclassloaded{ifacconf}{% if using ifacconf, 
+    % then don't try loading amsthm because it is incompatible.
+    \newcommand{\qedhere}{}
+}{
+    \usepackage{amsthm}
+}
 
 % Set the text style for theorems and the like to slanted instead of italics.
 % I find this makes the text easier to read.
-\makeatletter
 \renewcommand\th@plain{\slshape}
-\makeatother
 
 % Create a macro for inserting a custom shape the follows the placement rules of \qedhere. See https://tex.stackexchange.com/a/16457/153678
 \newcommand\xqed[1]{%
@@ -568,7 +533,6 @@
 % =================================
 % === BEAMER PRESENTATION STYLE ===
 % =================================
-\makeatletter%
 \@ifclassloaded{beamer}{% 
     % Hide Roman numerals from continued frames with breaks
     \setbeamertemplate{frametitle continuation}{}
@@ -581,6 +545,10 @@
     \setbeamercolor{block body alerted}{bg=blue!3!white}
     \setbeamerfont{block title}{size={}}
     \setbeamertemplate{bibliography item}{\insertbiblabel}
+    
+    % Force footnotes to be at the bottom of the page.
+    \usepackage[bottom]{footmisc}
+
     % We would like to have normal text etc in sans-serif, but equations in serif.
     \usefonttheme[onlymath]{serif}
     
@@ -591,6 +559,7 @@
     \setbeamertemplate{theorems}[numbered]
     % \setbeamertemplate{frametitle}[default][center]
     \setbeamertemplate{frametitle}{\color{black}\bfseries\insertframetitle\par\vskip-8pt\hrulefill}
+
     % ======== Table of Contents ========
     % Set the TOC colors
     \setbeamercolor{section in toc}{fg=structure}
@@ -614,12 +583,12 @@
         \quad 
         {\usebeamercolor[fg]{author in head/foot}%
          \usebeamerfont{author in head/foot}%
-         \authorBriefList%
+         \getShortAuthorList%
          }%
         % \end{beamercolorbox}
         \ ---\ %
         % \begin{beamercolorbox}[wd=0.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-        {\usebeamerfont{title in head/foot}\insertshorttitle}
+        {\usebeamerfont{title in head/foot}\getShortTitle}
         % \end{beamercolorbox}%
         \hfill%
         \usebeamercolor[fg]{page number in head/foot}%
@@ -628,7 +597,6 @@
         \usebeamertemplate*{page number in head/foot}\kern1em\vskip6pt%
     }
 }
-\makeatother%
 
 % ======================================
 % === ENVIRONMENTS FOR LECTURE NOTES ===
@@ -691,148 +659,23 @@
 
 % Single-page reminder
 \newenvironment{spreminder}[1][]{
-\par
-\vbox\bgroup
-\begin{reminder}[#1]
+    \par
+    \vbox\bgroup
+    \begin{reminder}[#1]
 }{
-\end{reminder}\egroup
+    \end{reminder}\egroup
 }
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%% Macros for Defining Document Info %%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\newcommand{\setTitle}[2][]{%
-  % Create a macro named \pwintz@title.
-  \makeatletter%
-  \expandafter\newcommand\csname pwintz@title\endcsname{#2}
-  \expandafter\newcommand\csname pwintz@shortTitle\endcsname{#1}
-  \makeatother
-%   \title{#2}
-%   \ifcsdef{title}{\title{#2}}
-}
-
-\newcommand{\setSubtitle}[1]{%
-  % Create a macro named \pwintz@subtitle.
-  \makeatletter%
-  \expandafter\newcommand\csname pwintz@subtitle\endcsname{#1}
-  \makeatother
-  \ifcsdef{subtitle}{\subtitle{#1}}
-}
-
-\newcommand{\setAuthor}[3]{%
-% Define a macro named \pwintz@authorX where X is the first argument for \setAuthor. 
-% For example, \setAuthor2{John Smith} creates a macro named "\pwintz@author2".
-% Because this macro name has a number in it, it must be referenced using "\csname pwintz@author2\endcsname" (there must not be a space before \endcsname).
-  \makeatletter%
-  \expandafter\newcommand\csname pwintz@author#1\endcsname{#2}%
-%   \expandafter\providecommand\csname pwintz@shortauthor#1\endcsname{#2}%
-  \expandafter\newcommand\csname pwintz@authorInstitute#1\endcsname{#3}%
-  \makeatother%
-}
-
-\newcommand{\setShortAuthorList}[1]{%
-% Define a macro named \pwintz@shortAuthorList that is inserted at places that use the short author.
-% For example, \setShortAuthor{Wintz, Sanflice} will show "Wintz, Sanfelice" in the footer of Beamer slides.
-  \makeatletter%
-  \expandafter\def\csname pwintz@shortAuthorList\endcsname{#1}%
-  \makeatother%
-}
-
-\newcommand{\setAuthorEmail}[2]{%
-% Define a macro named \pwintz@authorEmailX where X is the first argument for \setAuthorEmail. 
-% For example, \setAuthorEmail2{John Smith} creates a macro named "\pwintz@authorEmail2".
-% Because this macro name has a number in it, it must be referenced using "\csname pwintz@authorEmail2\endcsname" (there must not be a space before \endcsname).
-  \makeatletter%
-  \expandafter\newcommand\csname pwintz@authorEmail#1\endcsname{#2}%
-  \makeatother%
-}
-
-% Use this command to insert the email addresses.
-\newcommand{\insertemailfromcs}[1]{\textup{\texttt{\href{mailto:\csname #1\endcsname}{\csname #1\endcsname}}}}
-
-\newcommand{\setInstitute}[2]{%
-% Define a macro named \pwintz@instituteX where X is the first argument for \setInstitute. 
-% For example, \setInstitute2{Harvard} creates a macro named \pwintz@institute2.
-  \makeatletter%
-  \expandafter\newcommand\csname pwintz@institute#1\endcsname{#2}
-  \makeatother
-}
-
-\newcommand{\setLongAffiliation}[2]{%
-% Define a macro named \pwintz@longAffiliationX where X is the first argument for \setLongAffiliation. 
-% For example, \setLongAffiliation2{Harvard} creates a macro named \pwintz@longAffiliation2.
-% The long affiliation for each author should be a sentence fragment that can replace "..." in "The author is with ..." (without trailing space).
-  \makeatletter%
-  \expandafter\newcommand\csname pwintz@longAffiliation#1\endcsname{#2}
-  \makeatother
-}
-
-\newcommand{\setAcknowledgementBlurb}[1]{%
-  % Create a macro named \acknowledgementBlurb.
-  \makeatletter%
-  \expandafter\newcommand\csname acknowledgementBlurb\endcsname{#1}
-  \makeatother
-}
-
-% Read Document Configurations (edited by user)
-\input{document_setup.tex}
-
-\newcommand{\authorBriefList}{
-    \csname pwintz@author1\endcsname%
-    \ifcsdef{pwintz@author4}{% If four+ authors, simply append "et al."
-        \ et al.
-    }{% If less than four authors, appened all authors.
-        \ifcsdef{pwintz@author2}{% If defined
-            , \csname pwintz@author2\endcsname%
-        }{}%
-        \ifcsdef{pwintz@author3}{% If defined
-            , \csname pwintz@sauthor3\endcsname%
-        }{}%
-    }%
-}
-\hypersetup{
-    % Set the metadata for the produced PDF.
-    pdftitle={\expandafter\csname pwintz@shortTitle\endcsname},
-    pdfsubject={},
-    pdfauthor={\expandafter\csname pwintz@shortAuthorList\endcsname},
-    pdfkeywords={}
-}
-
 
 % ====================================
 % === DRAFTS and EDITORIAL MARKUPS ===
 % ====================================
 
-\definecolor{workingnote}{rgb}{0.8, 0.3, 0.7}
+\usepackage{workingNotes}
 
+\usepackage{ifdraft} 
 \ifdraft{
-    % Double-space lines to allow space for comments.
-    % \usepackage{setspace}
-    % \doublespacing
-
     % Display images regardless of "draft" mode.
     \setkeys{Gin}{draft=false} 
-}
-
-% Document Toggles (WIP)
-\newbool{showWorkingNotesInDraft}
-\newbool{showProofsInDraft}
-
-% Omit proofs from drafts if "showProofsInDraft" is true. 
-\ifdraft{
-    \ifbool{showProofsInDraft}{% If true, show proofs
-    }{% If false, hide proofs
-        \renewenvironment{proof}{\emph{Proof.} \workingnote{[Proof omitted from draft.]}\commentsection}{\endcommentsection\par\medskip}%
-    }
-}
-
-\ifdraft{
-    \ifbool{showWorkingNotesInDraft}%
-    {\newcommand{\workingnote}[1]{{\color{workingnote} #1}}}
-    {\newcommand{\workingnote}[1]{}}
-}{ 
-    \newcommand{\workingnote}[1]{}
 }
 
 \ifdraft{
@@ -842,6 +685,7 @@
 }
 
 % Progress tracking
+\usepackage{ifdraft} 
 \ifdraft{
     \newcommand{\done}{\ensuremath{\checkmark}} % Variant: \surd
     \newcommand{\undone}{\ensuremath{\square}}
@@ -870,12 +714,10 @@
 % Redefine "comment" environment (from "verbatim" package) 
 % to "commentsection" so that \comments{} can be defined 
 % by the `changes` package.
-\makeatletter
 \let\commentsection\comment
 \let\endcommentsection\endcomment
-\let\comment\@undefined
-\let\endcomment\@undefined
-\makeatother
+\let\comment\undefined
+\let\endcomment\undefined
 
 % Support tracking changes and adding "todo" comments.
 \usepackage[ % import "changes" package
@@ -895,3 +737,15 @@
     draft, % <- enable line to show annotations regardless of the document being in 'final' mode.
     % final, % <- enable line to hide annotations regardless of the document being in 'draft' mode.
 ]{changes}
+
+
+% ================================
+% === COMPILATION OPTIMIZATION ===
+% ================================
+\usepackage{ifdraft} 
+\ifdraft{
+    % When in draft mode, skip PDF compression to reduce compilation times (at the cost of larger output files).
+    \pdfcompresslevel=0%
+    \pdfobjcompresslevel=0%
+}{%if not draft, then use compression.
+}

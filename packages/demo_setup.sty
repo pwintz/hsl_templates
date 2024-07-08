@@ -3,6 +3,7 @@
 % Add package for generating Lorem Ipsum dummy text (https://ctan.org/pkg/lipsum?lang=en)
 \usepackage{lipsum}
 
-% Add a fake bibliography. biblatex-examples.bib is provided by BibLaTeX.
-\addbibresource{biblatex-examples.bib}
-
+\@ifpackageloaded{biblatex}{% If biblatex package...
+  % Add a fake bibliography. biblatex-examples.bib is provided by BibLaTeX.
+  \addbibresource{biblatex-examples.bib}
+}{}%

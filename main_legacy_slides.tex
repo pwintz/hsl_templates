@@ -5,6 +5,10 @@
 %\documentclass[notes=hide,handout]{beamer}
 %\pgfpagesuselayout{4 on 1}[letterpaper,border shrink=5mm] 
 
+\makeatletter
+\def\input@path{{./packages/}}
+\makeatother 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% PACKAGES %%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -18,12 +22,12 @@
 \usepackage{colortbl}
 \usepackage{graphics,graphicx,amssymb}
 \usepackage{amsxtra}
-\usepackage{epsfig}
-\usepackage{movie15}
+% \usepackage{epsfig}
+% \usepackage{movie15}
 \usepackage{pdfpages}
 \usepackage{pgfpages}
 \usepackage{tikz}
-\usepackage{pgflibraryshapes}
+% \usepackage{pgflibraryshapes}
 \usepackage{lipsum}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -33,7 +37,7 @@
 \usepackage{pwintz_configuration}
 % \usepackage{pwintz_definitions}
 \usepackage{rgsMacros}
-\usepackage{rgsBeamerv01}
+% \usepackage{rgsBeamerv01}
 
 \renewcommand{\em}{\it \color{blue}}
 
@@ -59,7 +63,6 @@
 \renewcommand{\K}{{\cal K}}
 \renewcommand{\U}{{\cal U}}
 
-%\newcommand{\location}{\ - CDC2008\ }
 \newcommand{\location}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -69,41 +72,39 @@
 \usetheme{rgsv02nopic}
 %\pgfpagesuselayout{4 on 1}[letterpaper,border shrink=5mm] 
 
-\mode <all>
+\mode<all>
 \graphicspath{{images}}
 
 \makeatletter
-% Populate title using value defined in document_setup.tex
+% Populate title using value defined in frontmatter.tex
 \title{\pwintz@title}
 \subtitle{\pwintz@subtitle}
 
-% \title{\LARGE Title}
 \author{\csname pwintz@author1\endcsname}
-\institute{Hybrid Systems Lab\\ University of California\\ Department of Computer Engineering\\ Santa Cruz, CA %\\
-%\vspace{0.1in}{Andrew R. Teel (UCSB) and Rafal Goebel (LUC)}
+\institute{%
+    Hybrid Systems Lab\\ 
+    University of California\\ 
+    Department of Computer Engineering\\ 
+    Santa Cruz, CA
 }
 \makeatother
 
 \def\cmd#1{\texttt{\textbackslash #1}}
 \def\env#1{\texttt{#1}}
 
-% Temporarily out
-%\addlogo{\ucsblogo}
-%\addlogo{\mitlogo}
-%\addlogo{\ensmplogo}
-
 % Use this line to get some text in the logo bar as well
-\logobartext{\csname pwintz@author1\endcsname{} --- University of California}
+\logobartext{\getShortAuthorList{} --- \getShortTitle{}}
 
+% Hide the navigation buttons from the footer.
 \setbeamertemplate{navigation symbols}{}
 
-% \setwhitesheetcolors
+\usepackage{universal_frontmatter_loader}
 
 \begin{document}
 \makeatletter
 
-%-------------------------------------------------------------------------------
-%                                                                     title page
+%------------------------------------------
+%                                title page
 
 \begin{frame}
     \setbluesheetcolors

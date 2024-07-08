@@ -1,8 +1,8 @@
 % Disable LTeX for this file (https://valentjn.github.io/ltex/advanced-usage.html#magic-comments)
 % LTeX: enabled=false
-\documentclass[11pt,final]{article}
+\documentclass[10pt,final]{article}
 
-% % Change the search path to include "./packages/".
+% Change the search path to include "./packages/".
 \makeatletter
 \def\input@path{{./packages/}}
 \makeatother
@@ -10,6 +10,7 @@
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
 
+\input{document_configuration}
 \input{document_definitions}
 \usepackage{demo_setup} % TODO: Delete this.
 
@@ -21,7 +22,7 @@
 %%%  HSL LAB PACKAGE -- HSL Technical Report PACKAGE - --
 \usepackage{hslTR}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% VERSION CONTROL COMMAND
 %%% For Conference, Change to "true"
 %%% For Report, Change to "false"
@@ -64,45 +65,24 @@
             marginparwidth=34mm]{geometry} 
 }{}
 
-\begin{document}
-
+\usepackage{universal_frontmatter_loader}
 
 %%% STEP 2
 %%%
-%%% Include the following code after "\begin{document}".
+%%% Include the following code before "\begin{document}".
 %%% Make sure you set the following:
 %%%
 %%% \ititle{}  : title of the paper
 %%% \iauthor{} : authors of the paper
 %%% \iyear{}   : year
-%%% \iredno{}  : report number (make sure you get a unique report
-%%%             number)
+%%% \irefnr{}  : report number (make sure you get a unique report
+%%%              number)
 %%%
-
-% Populate title from value defined in document_setup.tex.
-\makeatletter
-\ititle{\pwintz@title}
-\makeatother
-
-\iauthor{
-  \csname pwintz@author1\endcsname%
-  % Insert second author, if defined.
-  \ifcsdef{pwintz@author2}{% If defined
-      \\ {\normalsize \csname pwintz@author2\endcsname}%
-  }{}%
-  % Insert third author, if defined.
-  \ifcsdef{pwintz@author3}{% If defined
-      \\ {\normalsize \csname pwintz@author3\endcsname}%
-  }{}%
-  % Insert fourth author, if defined.
-  \ifcsdef{pwintz@author4}{% If defined
-      \\ {\normalsize \csname pwintz@author4\endcsname}%
-  }{}
-}
 \idate{\today{}} 
-\iyear{UPDATE ME}% TODO
-\irefnr{UPDATE ME}% TODO
-\makeititle
+\iyear{UPDATE}% TODO
+\irefnr{UPDATE}% TODO
+
+\begin{document}
 
 \input{paper_body}
 

@@ -26,6 +26,7 @@
 
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
+\input{document_configuration}
 \input{document_definitions}
 
 \graphicspath{{images/}{../images/}}
@@ -78,9 +79,9 @@
 %------------------------------------------------------------------
 
 \makeatletter
-\title{\pwintz@title}% Poster title is defined in document_setup.tex
+\title{\pwintz@title}% Poster title is defined in frontmatter.tex
 \makeatother
-\author{% Populate author information from defnitions in document_setup.tex
+\author{% Populate author information from defnitions in frontmatter.tex
    % Insert first author, if defined.
    \ifcsdef{pwintz@author1}{% If defined
         \csname pwintz@author1\endcsname%
@@ -107,7 +108,7 @@
     }{}
 }
 
-\institute{ % Populate institutions that are defined in document_setup.tex
+\institute{ % Populate institutions that are defined in frontmatter.tex
     \ifcsdef{pwintz@institute1}{% If defined
         \textsuperscript{1}\csname pwintz@institute1\endcsname%
     }{}% Else nothing

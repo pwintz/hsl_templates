@@ -1,0 +1,53 @@
+
+
+% \NeedsTeXFormat{LaTeX2e}
+% \ProvidesPackage{workingnotes}
+% [2024/01/21 Paul Wintz Configuration Package]
+
+% \usepackage{ifthen}
+% \newboolean{workingnotes@showInDraft}
+% \setboolean{workingnotes@showInDraft}{true}
+% \DeclareOption{inDraft}{\setboolean{workingnotes@showInDraft}{true}}
+
+\newbool{showInDraft}
+
+\definecolor{workingnote}{rgb}{0.8, 0.3, 0.7}
+
+\usepackage{ifdraft}
+
+\ifdraft{
+    \ifbool{showInDraft}%
+    {\newcommand{\workingnote}[1]{{\color{workingnote} #1}}}
+    {\newcommand{\workingnote}[1]{}}
+    % \newenvironment{workingNoteEnv}{working note}{ end working note}
+
+}{ 
+    \newcommand{\workingnote}[1]{}
+    % \newenvironment{workingNoteEnv}{working note hidden}{ end hidden working note}
+}
+
+% % Progress tracking
+% \ifdraft{
+%     \newcommand{\done}{\ensuremath{\checkmark}} % Variant: \surd
+%     \newcommand{\undone}{\ensuremath{\square}}
+%     \newcommand{\doneish}{\done-ish}
+%     \newcommand{\citationneeded}{${}^{\color{darkred}\textup{\textsc{[Citation needed]}}}$}
+%     \newcommand{\removebeforeflight}{${}^{\color{darkred}\textup{\textsc{[Remove before flight]}}}$}
+%     \newcommand{\restorebeforeflight}[1]{${}^{\color{darkred}\textup{[\textsc{Restore before flight}: {#1}]}}$}
+    
+%     \ifbool{showInDraft}{
+%         \newcommand{\checkbeforeflight}[1]{${}^{\color{darkred}\textup{[\textsc{Check before flight}: #1]}}$}
+%     }{
+%         \newcommand{\checkbeforeflight}[1]{}
+%     }
+% }{
+%     \newcommand{\done}{}
+%     \newcommand{\undone}{}
+%     \newcommand{\doneish}{}
+
+%     \newcommand{\citationneeded}{}
+%     % \newcommand{\removebeforeflight}{${}^{\color{darkred}\textup{\textsc{[Remove before flight!!!!!!!!!!]}}}$}
+%     % \newcommand{\restorebeforeflight}[1]{${}^{\color{darkred}\textup{[Restore before flight!!!!!!!: \textsc{#1}]}}$}
+%     % \newcommand{\removebeforeflight}{\message{LaTeX Warning: Remove Before Flight command included in 'final' document.}}
+%     % \newcommand{\restorebeforeflight}[1]{\message{LaTeX Warning: Restore Before Flight command included in 'final' document.}}
+% }

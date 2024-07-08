@@ -32,12 +32,6 @@
         "\\newbool{}": "ignore",  
         "\\setbool{}": "ignore",
         "\\setbool{}{}": "ignore",
-        // Cross Referencing
-        "\\crefformat{}{}": "ignore",  
-        "\\Crefformat{}{}": "ignore", 
-        "\\crefmultiformat{}{}{}{}{}": "ignore",  
-        "\\Crefmultiformat{}{}{}{}{}": "ignore",  
-        "\\crtcrefreference{}": "dummy",  
         // Beamer
         "\\setbeamertemplate{}[]{}": "ignore", 
         "\\setbeamercolor{}{}": "ignore",  
@@ -191,5 +185,10 @@
     "pasteImage.showFilePathConfirmInputBox": true,
     "pasteImage.defaultName": "${currentFileNameWithoutExt}-HH-mm-ss",
     "pasteImage.path": "${currentFileDir}/pasted-images",
-    "latex-workshop.latex.outDir": "%DIR%/out_dir"
+    "latex-workshop.latex.outDir": "%DIR%/out_dir",
+    "files.associations": {
+        "*.sty": "latex",
+        "*.cls": "latex"
+    },
+    "files.defaultLanguage": "latex"
 }

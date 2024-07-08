@@ -1,52 +1,3 @@
-% Enter the title of your work. Replace spaces with "~" to prevent line breaks between particular words. 
-\setTitle{This is my title}
-\setSubtitle{This is my (optional) subtitle}
-
-%  ==== Define the authors for this project ==== 
-% Each author is defined using 
-%    \setAuthorN{name}{institution}
-% where 
-%  - N \in {1,2,3,4} is a unique author-index
-%  - 'name' is the author's name
-%  - 'institution' is the institution-index for the author's institution.
-% Up to four authors are supported, currently.
-
-% Author 1 info (required)
-\setAuthor1{Paul V.\ Smith}{1}
-\setAuthorEmail1{psmith@ucsc.edu}
-\setLongAffiliation1{the Department of Applied Mathematics, University of California, Santa Cruz, CA 95064}
-
-% Author 2 info (optional)
-\setAuthor2{Small D.\ Smith}{1}
-\setAuthorEmail2{ssmith@ucsc.edu}
-\setLongAffiliation2{the Department of Unapplied Mathematics, University of California, Santa Cruz, CA 95064}
-
-% Author 3 info (optional)
-\setAuthor3{Tall C.\ Smith}{1}
-\setAuthorEmail3{tsmith@ucsc.edu}
-\setLongAffiliation3{the Department of Reapplied Mathematics, University of California, Santa Cruz, CA 95064}
-
-% Author 4 info (optional)
-\setAuthor4{Pterodactyl Z.\ Smith}{2}
-\setAuthorEmail4{psmith@pangaea.edu}
-\setLongAffiliation4{the Department of Prehistoric Mathematics, University of California, Santa Cruz, CA 95064}
-
-% Define institutions using 
-%    \setInstituteN{name}
-%  - N \in {1,2,3,4} is a unique institution-index
-%  - 'name' is the institution's name
-% Up to four institutes are supported, currently
-\setInstitute1{University of California, Santa Cruz}
-\setInstitute2{University of Pangaea}
-
-% Enter acknowledgements, such as the sources of funding for your project.
-% - The abbreviation of numbers (plural) is "nos." 
-% - When writing a period that does not end sentence (e.g., after "nos."), follow it with "\ " to create a space of the correct width. 
-\setAcknowledgementBlurb{
-    This research was supported by NSF grant nos.\ CNS-2039054 and CNS-2111688; by AFOSR grant nos.\ FA9550-19-1-0169, FA9550-20-1-0238, FA9550-23-1-0145, and FA9550-23-1-0313; by AFRL grant nos.\ FA8651-22-1-0017 and FA8651-23-1-0004; by ARO grant no.\ W911NF-20-1-0253; and by DOD grant no.\ W911NF-23-1-0158.
-}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%% DOCUMENT PACKAGES %%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -96,8 +47,13 @@
 %%%%%%%%%%%%% References %%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Import the bibliography files (BibLaTeX)
-\addbibresource{biblio.bib} % Add in biblio.bib for most citations.
+\makeatletter
+    \@ifpackageloaded{biblatex}{% If biblatex package...
+        % Import the bibliography files (BibLaTeX)
+        \addbibresource{biblio.bib} % Add in biblio.bib for most citations.
+    }{}%
+\makeatother
+
 % Add in biblio_report.bib for citing the report from the conference version.
 % \addbibresource{biblio_report.bib} 
 

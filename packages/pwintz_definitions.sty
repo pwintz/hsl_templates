@@ -7,12 +7,12 @@
 
 % Import packages that provide symbols used below.
 \usepackage{amsmath}
-\makeatletter%
 \@ifclassloaded{acmart}{% if using ACM article class, amssymb is already loaded.
 }{
-    \RequirePackage{amssymb}
+    % if using ACM article class, loading assymbbbm and bbm causes problems, so we don't use them.
+    \usepackage{amssymb}
+    \usepackage{bbm}
 }
-\usepackage{bbm}
 \usepackage{xspace}
 
 % Add commands for changing the relative size of symbols in math mode. 
@@ -129,7 +129,7 @@
 % **** COMPLEX NUMBERS **** 
 \newcommand{\real}{\,\mathfrak{Re}}
 \newcommand{\imag}{\,\mathfrak{Im}}
-\newcommand{\conj}[1]{\overline{#1}}
+\providecommand{\conj}[1]{\overline{#1}}
 % 
 % ===== Caligraphy letters =====
 \newcommand{\calA}{{\mathcal{A}}}
@@ -230,6 +230,8 @@
 % To insert a set {A | B} (using set builder notation), 
 % type "\setdef{A \suchthat B}". The heights of the braces and 
 % center bar will adjust automatically to the height of the contents.
+\providecommand\OR{\textup{ or }}%
+\providecommand\AND{,\ }%  
 \newcommand*{\setdef}[1]{
     \begingroup
         \def\OR{\textup{ or }}%
@@ -237,7 +239,15 @@
         \left\{#1 \right\}%
     \endgroup
 } 
-\newcommand{\suchthat}{\mathrel{}\ifnum\currentgrouptype=16 \middle\fi|\mathrel{}}
+\newcommand{\suchthat}{%
+    \ifnum\currentgrouptype=16
+        % If the command is used between "\left" and "\right", then
+        % use "\middle" to make "|" match the height of the delimiters.
+        \mathrel{}\middle|\mathrel{}
+    \else
+        \mathrel{|}
+    \fi
+}
 \newcommand*{\closure}[1]{\overline{#1}}
 \newcommand{\interior}{\operatorname{int}}
 \newcommand{\exterior}{\operatorname{ext}}
@@ -333,13 +343,13 @@
 \newcommand{\<}{}% Blank definition so that we can redefine.
 \newcommand{\none}{}% Blank definition so that we can redefine.
 
-\newcounter{variablenumber}
+% \newcounter{variableindex}
 \newcommand{\linearsystem}[1]{
     \arraycolsep=2pt        % Adjust the column separation. 
     \begingroup % Restrict the scope of our redefinitions.
         % Redefine
-        \setcounter{variablenumber}{1}
-        % \def\insertVariable{x_{\thevariablenumber}\stepcounter{variablenumber}}
+        % \setcounter{variableindex}{1}
+        % \def\insertVariable{x_{\thevariableindex}\stepcounter{variableindex}}
         \def\insertVariable{}
         \renewcommand{\+}{\insertVariable & + &}
         \renewcommand{\-}{\insertVariable & - &}
@@ -365,7 +375,7 @@
         % \let\builtinhalign\halign
         % \def\halign{%
         %     \let\builtinlinebreak\\
-        %     \renewcommand{\\}{\builtinlinebreak Hello!\setcounter{variablenumber}{0}}
+        %     \renewcommand{\\}{\builtinlinebreak Hello!\setcounter{variableindex}{0}}
         %     \builtinhalign
         % }
         \let\builtinlinebreak\\
@@ -379,7 +389,7 @@
 % **** VECTOR AND MATRIX FUNCTIONS **** 
 % Define "\innerproduct" and an abbreviation "\ip" such the code 
 % \ip{a}{b} generate <a, b> with correct spacing and height scaling.
-% Use a star to prevent the angle brackets from growing with the contents. 
+% Use a star to make the angle brackets match the height of its contents. 
 \DeclarePairedDelimiterX{\innerproduct}[2]{\langle}{\rangle}{#1,\:#2}
 \DeclarePairedDelimiterX{\ip}[2]{\langle}{\rangle}{#1,\:#2}
 
@@ -530,7 +540,7 @@
 % ===== Vector derivates =====
 \newcommand{\del}{\nabla}
 \newcommand{\grad}{\nabla}
-\newcommand{\laplace}{\del^2}
+\providecommand{\laplace}{\del^2}
 \newcommand{\hessian}{\del^2}
 % For a function 
 %     f(x) = (f_1(x_1, x_2, ... x_n), ... f_n(x_1, x_2, ... x_n)), 

@@ -83,9 +83,15 @@ semialgebraic
 nonlinearities
 Jacobians
 Riccati
+Clohessy
 prover
 Prover
+HybridSal
+IZZ
+non-IZZ
+DynamoRIO
 microarchitectural
+HyTech
 infimal
 undelayed
 caligraph-A
@@ -101,7 +107,8 @@ monotonicity
 AFRL
 ARO
 AFOSR
-AFRL
+transversing
+Supremal
 undelayed
 Chebyshev
 PDE
@@ -124,3 +131,4 @@ Diagonalize
 Orthogonalization
 Cholesky
 linearizable
+IFAC
