@@ -3,20 +3,24 @@
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{pwintz_configuration}
-[2024/01/21 Paul Wintz Configuration Package]
+[2024-01-21 Paul Wintz Configuration Package]
 
 
 % Create \ifdraft{}{} conditional that switches based on whether "draft" is passed to document class.
 \usepackage{ifdraft} 
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath}
-\@ifclassloaded{acmart}{% If using amcart class...
-}{% If using amcart class is not loaded...
+\@ifclassloaded{acmart}{% If using acmart class...
+}{% If not using acmart class...
     \usepackage{amssymb}
 }%
 
 \usepackage{amsfonts}
 \usepackage{mathrsfs} % Enables \mathscr{}
+
+% My own packages.
+\usepackage{section_patch}
+\usepackage{autocases}
 
 % Warn if using out-of-date TeX features. 
 % https://tex.stackexchange.com/a/589/153678
@@ -57,6 +61,9 @@
 \definecolor{darkgreen}{rgb}{0.0, 0.5, 0.0}
 \definecolor{darkblue}{rgb}{0.169, 0.243, 0.714}% Hex: 2b3eb6ff
 \definecolor{orange}{rgb}{1, 0.652, 0}
+
+\colorlet{deleted}{darkred}
+\colorlet{added}{darkblue}
 
 \usepackage{tcolorbox}
 
@@ -263,7 +270,6 @@
     linkcolor=black,         % TOC, links to labeled equations and environments
     filecolor=magenta,      
     urlcolor=black!30!blue,  % URLS including links in references  
-    anchorcolor=blue,        % I'm not sure what this does.
     citecolor=black!30!blue, % In-line citations  
 }  
 
@@ -411,12 +417,89 @@
 
 % Set the text style for theorems and the like to slanted instead of italics.
 % I find this makes the text easier to read.
-\renewcommand\th@plain{\slshape}
+%\renewcommand\th@plain{\slshape}
 
 % Create a macro for inserting a custom shape the follows the placement rules of \qedhere. See https://tex.stackexchange.com/a/16457/153678
-\newcommand\xqed[1]{%
-  \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
-  \quad\hbox{#1}}
+%\newcommand\xqed[1]{%
+%  \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+%  \quad\hbox{#1}}
+
+% Define a macro for changing the QED symbol at the
+% end of environments. This command allows for the
+% use of \qedhere to insert the QED into, e.g., 
+% equations or lists. 
+\newcommand{\setEnvironmentQed}[2]{
+  % #1: Environment name
+  % #2: QED Symbol. Must be OK in text or math mode. 
+  %     Use \ensuremath, if math is desired.
+  \AtBeginEnvironment{#1}{%
+    \pushQED{\qed}\renewcommand{\qedsymbol}{#2}%
+  }
+  \AtEndEnvironment{#1}{\popQED}
+}
+
+% Create a new macro analogous to "\providecommand", which 
+% defines the given amsthm theorem-like environment only if 
+% it does not already exist.
+\newcommand{\providetheorem}[2]{
+  % #1: Environment name.
+  % #2: Display name
+  \ifcsdef{#1}{
+    % The #1 environment is already defined. 
+    \ifcsdef{end#1}{}{
+      \PackageError{providetheorem}{%
+        % Error message:
+        The command "#1" was already defined, but "#1end" was 
+        undefined, indicating that "#1" is not an environment.
+      }{}
+    }
+  }{
+    % The #1 environment is not defined, yet, so we define it.
+    \newtheorem{#1}{#2}
+  }
+}
+
+% Create a new amsthm theorem style that uses slanted text 
+% instead of italics. I find this makes the text easier to read.
+% See https://tex.stackexchange.com/a/417959/153678.
+% \usepackage{amssymb} % Provides \slshape
+\newtheoremstyle{sltheorem}
+                {}          % Space above
+                {}          % Space below
+                {\slshape}  % Body font
+                {}          % Indent amount
+                {\bfseries} % Head font
+                {.}         % Punctuation after head
+                { }         % Space after theorem head
+                {}          % Theorem head spec
+
+%%--------------------------------------------------%%
+%| Define environments that use the sltheorem style |%
+%%--------------------------------------------------%%
+\theoremstyle{sltheorem}%
+
+%%% Define theorem environment %%%
+\providetheorem{theorem}{Theorem}
+\crefname{theorem}{Theorem}{Theorems}%
+
+% Provide an unnumbered version.
+\newtheorem*{theorem*}{Theorem}
+
+%%% Define proposition environment %%%
+\providetheorem{proposition}{Proposition}
+\crefname{proposition}{Proposition}{Propositions}%
+
+%%% Define lemma environment %%%
+\providetheorem{lemma}{Lemma}
+\crefname{lemma}{Lemma}{Lemmas}%
+
+%%% Define corollary environment %%%
+\providetheorem{corollary}{Corollary}
+\crefname{corollary}{Corollary}{Corollaries}%
+
+%%% Define conjecture environment %%%
+\providetheorem{conjecture}{Conjecture}
+\crefname{conjecture}{Conjecture}{Conjectures}%
 
 %%---------------------------------------------------%%
 %| Define environments that use the definition style |%
@@ -424,29 +507,27 @@
 \theoremstyle{definition}%
 
 %%% Define definition environment %%%
-\ifdefined\definition\else
-    \newtheorem{definition}{Definition}
-\fi
-% Add a mark at the end of each example.
-\AtBeginEnvironment{definition}{%
-  \pushQED{\qed}\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
-}
-\AtEndEnvironment{definition}{\popQED\endexample}
+\providetheorem{definition}{Definition}
+\crefname{definition}{Definition}{Definitions}%
 
 %%% Define problem environment %%%
-\ifdefined\problem\else
-    \newtheorem{problem}{Problem}
-    \crefname{problem}{Problem}{Problems}%
-\fi
+\providetheorem{problem}{Problem}
+\crefname{problem}{Problem}{Problems}%
+
+%%% Define example environment %%%
+\providetheorem{example}{Example}
+
+% Add a mark at the end of each example.
+\setEnvironmentQed{example}{\ensuremath{\blacksquare}}
 
 %%% Define assumption environment %%%
-\newtheorem{assumption}{Assumption}% Use singular even when there are multiple assumptions in a particular block.
+% Note: We use singular "Assumption" even when there are 
+% multiple assumptions within a particular block.
+\providetheorem{assumption}{Assumption}
 \crefname{assumption}{Assumption}{Assumptions}
-% Add a mark at the end of each example.
-\AtBeginEnvironment{assumption}{%
-  \pushQED{\qed}\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
-}
-\AtEndEnvironment{assumption}{\popQED\endexample}
+
+% Add a mark at the end of each assumption.
+\setEnvironmentQed{assumption}{\ensuremath{\blacksquare}}
 
 %%-----------------------------------------------%%
 %| Define environments that use the remark style |%
@@ -454,67 +535,8 @@
 \theoremstyle{remark}%
 
 %%% Define remark environment %%%
-\ifdefined\remark\else
-    \newtheorem{remark}{Remark}
-\fi
+\providetheorem{remark}{Remark}
 
-%%% Define example environment %%%
-\ifdefined\example\else
-    \newtheorem{example}{Example}
-\fi
-% Add a mark at the end of each example.
-\AtBeginEnvironment{example}{%
-  \pushQED{\qed}\renewcommand{\qedsymbol}{\ensuremath{\blacksquare}}%
-}
-\AtEndEnvironment{example}{\popQED\endexample}
-
-
-%%----------------------------------------------%%
-%| Define environments that use the plain style |%
-%%----------------------------------------------%%
-\theoremstyle{plain}%
-
-%%% Define theorem environment %%%
-\ifdefined\theorem\else
-    \newtheorem{theorem}{Theorem}
-\fi
-\crefname{theorem}{Theorem}{Theorems}%
-
-%%% Define proposition environment %%%
-\ifdefined\proposition\else
-    \newtheorem{proposition}{Proposition}
-\fi
-\crefname{proposition}{Proposition}{Propositions}%
-
-%%% Define lemma environment %%%
-\ifdefined\lemma\else
-    \newtheorem{lemma}{Lemma}
-\fi
-\crefname{lemma}{Lemma}{Lemmas}%
-
-%%% Define corollary environment %%%
-\ifdefined\corollary\else
-    \newtheorem{corollary}{Corollary}
-    \crefname{corollary}{Corollary}{Corollaries}%
-\fi
-
-%%% Define conjecture environment %%%
-\ifdefined\conjecture\else
-    \newtheorem{conjecture}{Conjecture}
-    \crefname{conjecture}{Conjecture}{Conjectures}%
-\fi
-
-%%% Define application environment %%%
-\ifdefined\application\else
-    \newtheorem{application}{Application}
-    \crefname{application}{Application}{Applications}%
-\fi
-
-%%% Define application environment %%%
-\ifdefined\exercise\else
-    \newtheorem{exercise}{Exercise}
-    \crefname{exercise}{Exercise}{Exercises}%
-\fi
 
 \ifcsname thechapter\endcsname
     % Update numbering to use chapters.
@@ -527,7 +549,6 @@
     \numberwithin{lemma}{chapter}
     \numberwithin{corollary}{chapter}
     \numberwithin{conjecture}{chapter}
-    \numberwithin{application}{chapter}
 \fi
 
 % =================================

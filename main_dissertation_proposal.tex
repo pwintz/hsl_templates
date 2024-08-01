@@ -1,0 +1,98 @@
+% uctest.tex 11/3/94
+%% Copyright (C) 1988-2004 Daniel Gildea, BBF, Ethan Munson.
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2003/12/01 or later.
+%
+% This work has the LPPL maintenance status "maintained".
+% 
+% The Current Maintainer of this work is Daniel Gildea.
+
+\documentclass[11pt]{ucthesis}
+
+% % Change the search path to include "./packages/".
+\makeatletter
+\def\input@path{{./packages/}}
+\makeatother
+
+\usepackage{pwintz_configuration}
+\usepackage{pwintz_definitions}
+\usepackage{demo_setup} % TODO: Delete this.
+\input{document_definitions}
+
+\newcommand{\confonly}[1]{}
+\newcommand{\reportonly}[1]{#1}
+
+\usepackage{universal_frontmatter_loader}
+
+\begin{document}
+
+%%%%%%%% USER DEFINED %%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Declarations for Front Matter
+
+\title{Hybrid System Properties and Switching}
+\author{Paul K.\ Wintz}
+\degreeyear{2023}
+\degreemonth{May}
+\degree{\textsc{Doctor of Philosophy}}
+\chair{Professor Qi Gong}
+\committeememberone{Professor Ricardo Sanfelice}
+\committeemembertwo{Professor Daniele Venturi}
+\committeememberthree{Associate Adjunct Professor Alessandro Pinto}
+\numberofmembers{4} %% (including chair) possible: 3, 4, 5, 6
+\deanlineone{}
+\deanlinetwo{}
+\deanlinethree{}
+\field{Applied Mathematics}
+\campus{Santa Cruz}
+
+\begin{frontmatter}
+
+\maketitle
+% \copyrightpage 
+
+\tableofcontents
+\listoffigures
+%\listoftables
+
+\begin{abstract}
+\input{chapters/abstract.tex}
+\end{abstract}
+
+%\begin{dedication}
+%\null\vfil
+%{\large
+%\begin{center}
+% XXX,\\\vspace{12pt}
+% XXX,\\\vspace{12pt}
+% XXX
+%\end{center}}
+%\vfil\null
+%\end{dedication}
+
+%\begin{acknowledgements}
+% XXX
+%\end{acknowledgements}
+
+\end{frontmatter}
+
+\chapter{Introduction} \label{sec:Introduction}
+\input{chapters/introduction.tex}
+
+\appendix
+
+\chapter{Proofs} \label{sec:AppendixA}
+% \input{chapters/appendixA.tex}
+
+\nocite{goebel_hybrid_2012}
+\printbibliography{}
+
+\end{document}
