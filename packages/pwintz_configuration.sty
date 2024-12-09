@@ -554,70 +554,7 @@
 % =================================
 % === BEAMER PRESENTATION STYLE ===
 % =================================
-\@ifclassloaded{beamer}{% 
-    % Hide Roman numerals from continued frames with breaks
-    \setbeamertemplate{frametitle continuation}{}
-
-    % Define Beamer colors.
-    \definecolor{lightblue}{RGB}{60,60,200}
-    \setbeamercolor{block title}{bg=lightblue!10!white}
-    \setbeamercolor{block body}{bg=lightblue!5!white}
-    \setbeamercolor{block title alerted}{bg=blue!10!white}
-    \setbeamercolor{block body alerted}{bg=blue!3!white}
-    \setbeamerfont{block title}{size={}}
-    \setbeamertemplate{bibliography item}{\insertbiblabel}
-    
-    % Force footnotes to be at the bottom of the page.
-    \usepackage[bottom]{footmisc}
-
-    % We would like to have normal text etc in sans-serif, but equations in serif.
-    \usefonttheme[onlymath]{serif}
-    
-    \setbeamerfont{footnote}{size=\tiny}
-    \setbeamercolor{page number in head/foot}{fg=lightblue}
-    \setbeamercolor{author in head/foot}{fg=lightblue}
-    \setbeamertemplate{navigation symbols}{}
-    \setbeamertemplate{theorems}[numbered]
-    % \setbeamertemplate{frametitle}[default][center]
-    \setbeamertemplate{frametitle}{\color{black}\bfseries\insertframetitle\par\vskip-8pt\hrulefill}
-
-    % ======== Table of Contents ========
-    % Set the TOC colors
-    \setbeamercolor{section in toc}{fg=structure}
-    \setbeamercolor{subsection in toc}{fg=structure}
-    % Define Table of Contents slide at the beginning of each section.
-    \AtBeginSection[]{%
-    \begin{frame}<beamer>
-        \frametitle{Outline}
-        % Use 'show'/'hide' to show/hide subsections, and 'shaded' to gray them out. 
-        \tableofcontents[currentsection,
-                         currentsubsection,
-                         subsectionstyle=show/show/shaded]
-    \end{frame}
-    }%
-    % 
-    % Set the size of page numbers.
-    \setbeamerfont{footline}{size=\scriptsize}
-    \setbeamertemplate{footline}{
-        \leavevmode%
-        % \begin{beamercolorbox}[wd=0.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-        \quad 
-        {\usebeamercolor[fg]{author in head/foot}%
-         \usebeamerfont{author in head/foot}%
-         \getShortAuthorList%
-         }%
-        % \end{beamercolorbox}
-        \ ---\ %
-        % \begin{beamercolorbox}[wd=0.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-        {\usebeamerfont{title in head/foot}\getShortTitle}
-        % \end{beamercolorbox}%
-        \hfill%
-        \usebeamercolor[fg]{page number in head/foot}%
-        \usebeamerfont{page number in head/foot}%
-        \setbeamertemplate{page number in head/foot}[framenumber]%
-        \usebeamertemplate*{page number in head/foot}\kern1em\vskip6pt%
-    }
-}
+% Defined in beamerthemepwintz_slides.sty
 
 % ======================================
 % === ENVIRONMENTS FOR LECTURE NOTES ===

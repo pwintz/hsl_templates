@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="hybrid_solution.svg"
+   inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer1.png"
+   inkscape:export-xdpi="310.82401"
+   inkscape:export-ydpi="310.82401"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="2"
+     inkscape:cx="352.5"
+     inkscape:cy="453.75"
+     inkscape:window-width="1920"
+     inkscape:window-height="991"
+     inkscape:window-x="-9"
+     inkscape:window-y="-9"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="marker15130"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DotL"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(7.4, 1)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "
+         id="path14881" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow2Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow2Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(1.1) rotate(180) translate(1,0)"
+         d="M 8.7185878,4.0337352 L -2.2072895,0.016013256 L 8.7185884,-4.0017078 C 6.9730900,-1.6296469 6.9831476,1.6157441 8.7185878,4.0337352 z "
+         style="fill-rule:evenodd;fill:context-stroke;stroke-width:0.62500000;stroke-linejoin:round;"
+         id="path14841" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="marker22715"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path22713" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="marker22705"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) rotate(180) translate(10,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path22703" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Mend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) rotate(180) translate(10,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path21829" />
+    </marker>
+    <marker
+       style="overflow:visible;"
+       id="Arrow1Lend"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Lend"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) rotate(180) translate(12.5,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt;"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path21823" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="marker22432"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DotS"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) translate(7.4, 1)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "
+         id="path22430" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotS"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DotS"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.2) translate(7.4, 1)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "
+         id="path21887" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotM"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DotM"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) translate(7.4, 1)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "
+         id="path21884" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="DotL"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="DotL"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.8) translate(7.4, 1)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M -2.5,-1.0 C -2.5,1.7600000 -4.7400000,4.0 -7.5,4.0 C -10.260000,4.0 -12.5,1.7600000 -12.5,-1.0 C -12.5,-3.7600000 -10.260000,-6.0 -7.5,-6.0 C -4.7400000,-6.0 -2.5,-3.7600000 -2.5,-1.0 z "
+         id="path21881" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="Arrow1Mstart"
+       refX="0.0"
+       refY="0.0"
+       orient="auto"
+       inkscape:stockid="Arrow1Mstart"
+       inkscape:isstock="true">
+      <path
+         transform="scale(0.4) translate(10,0)"
+         style="fill-rule:evenodd;fill:context-stroke;stroke:context-stroke;stroke-width:1.0pt"
+         d="M 0.0,0.0 L 5.0,-5.0 L -12.5,0.0 L 5.0,5.0 L 0.0,0.0 z "
+         id="path21826" />
+    </marker>
+    <rect
+       x="483.30709"
+       y="339.74409"
+       width="103.93701"
+       height="50.019685"
+       id="rect9152" />
+    <rect
+       x="195.5315"
+       y="370.9252"
+       width="63.01181"
+       height="47.42126"
+       id="rect2436" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <rect
+       style="opacity:1;fill:#ffffff;stroke:none;stroke-width:0.352777;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-dasharray:0.352777, 0.352777;stroke-dashoffset:0;fill-opacity:1"
+       id="rect15550"
+       width="107.28854"
+       height="59.398964"
+       x="45.376041"
+       y="95.382294"
+       inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+       inkscape:export-xdpi="310.82401"
+       inkscape:export-ydpi="310.82401" />
+    <g
+       id="g14812"
+       inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+       inkscape:export-xdpi="310.82401"
+       inkscape:export-ydpi="310.82401">
+      <g
+         id="g16996">
+        <path
+           style="fill:#2b3eb6;fill-opacity:0.0636551;stroke:#001f00;stroke-width:0.493889;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+           d="m 46.082539,133.1239 c 1.629692,19.12338 52.005233,30.85278 61.628791,11.7492 19.04815,-37.8122 -5.38237,-55.416762 -34.98504,-46.50639 -12.011379,3.61541 -28.273443,15.6338 -26.643751,34.75719 z"
+           id="path857"
+           sodipodi:nodetypes="zssz"
+           inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+           inkscape:export-xdpi="310.82401"
+           inkscape:export-ydpi="310.82401" />
+        <text
+           xml:space="preserve"
+           transform="matrix(0.26458333,0,0,0.26458333,16.444792,1.9270833)"
+           id="text2434"
+           style="font-size:40px;line-height:1.25;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';white-space:pre;shape-inside:url(#rect2436);fill:#2b3eb6;fill-opacity:1;stroke:none;stroke-opacity:1"><tspan
+             x="195.53125"
+             y="407.69455"
+             id="tspan17060"><tspan
+               style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic'"
+               id="tspan17058">C</tspan></tspan></text>
+      </g>
+    </g>
+    <g
+       id="g14818"
+       inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+       inkscape:export-xdpi="310.82401"
+       inkscape:export-ydpi="310.82401">
+      <path
+         style="fill:#c20000;fill-opacity:0.0759754;stroke:#001f00;stroke-width:0.493889;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+         d="m 127.10717,101.9512 c -32.637453,-3.044262 -44.637761,16.15714 -40.146186,36.01537 4.491577,19.85821 31.774146,13.25065 55.856826,0.13074 12.40073,-6.75575 16.92681,-33.10186 -15.71064,-36.14611 z"
+         id="path859"
+         sodipodi:nodetypes="zssz" />
+      <text
+         xml:space="preserve"
+         transform="matrix(0.26458333,0,0,0.26458333,6.209375,20.183333)"
+         id="text9150"
+         style="font-size:40px;line-height:1.25;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';white-space:pre;shape-inside:url(#rect9152);fill:#c20000;fill-opacity:1"><tspan
+           x="483.30664"
+           y="376.51291"
+           id="tspan17064"><tspan
+             style="font-style:italic;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman,  Italic'"
+             id="tspan17062">D</tspan></tspan></text>
+    </g>
+    <g
+       id="g38697"
+       inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+       inkscape:export-xdpi="310.82401"
+       inkscape:export-ydpi="310.82401">
+      <path
+         style="fill:none;stroke:#2b3eb6;stroke-width:0.352778;stroke-linecap:round;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#DotS);marker-mid:url(#Arrow1Mend)"
+         d="m 58.093749,125.38281 c 7.093575,-6.52272 13.148843,-9.49044 21.591802,-10.61912 8.967791,-1.89592 15.429864,-1.03381 24.389709,0.10432"
+         id="path20546"
+         sodipodi:nodetypes="ccc" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:1.25;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';fill:#2b3eb6;fill-opacity:1;stroke-width:0.264583"
+         x="74.441803"
+         y="119.82495"
+         id="text29564"><tspan
+           sodipodi:role="line"
+           id="tspan29562"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#2b3eb6;fill-opacity:1;stroke-width:0.264583"
+           x="74.441803"
+           y="119.82495">Flow</tspan></text>
+    </g>
+    <g
+       id="g38702"
+       inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+       inkscape:export-xdpi="310.82401"
+       inkscape:export-ydpi="310.82401">
+      <path
+         style="fill:none;stroke:#2b3eb6;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-mid:url(#Arrow1Mend)"
+         d="m 70.331627,139.67968 c 0.392235,5.72662 8.332002,7.04277 16.847927,6.78153 10.142232,-0.31113 21.101696,-2.85965 21.101696,-2.85965"
+         id="path20585"
+         sodipodi:nodetypes="csc" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:1.25;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';fill:#2b3eb6;fill-opacity:1;stroke-width:0.264583"
+         x="86.055725"
+         y="151.01093"
+         id="text36602"><tspan
+           sodipodi:role="line"
+           id="tspan36600"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#2b3eb6;fill-opacity:1;stroke-width:0.264583"
+           x="86.055725"
+           y="151.01093">Flow</tspan></text>
+    </g>
+    <g
+       id="g38717"
+       inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+       inkscape:export-xdpi="310.82401"
+       inkscape:export-ydpi="310.82401">
+      <path
+         style="fill:none;stroke:#c20000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.705556, 0.352778;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker22432);marker-mid:url(#Arrow1Mend);marker-end:url(#marker22432)"
+         d="M 104.07526,114.86801 87.450613,127.51016 70.331627,139.67968"
+         id="path23130"
+         sodipodi:nodetypes="ccc" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:1.25;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';fill:#2b3eb6;fill-opacity:1;stroke-width:0.264583"
+         x="87.64859"
+         y="131.49127"
+         id="text36606"><tspan
+           sodipodi:role="line"
+           id="tspan36604"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#c20000;fill-opacity:1;stroke-width:0.264583"
+           x="87.64859"
+           y="131.49127">Jump</tspan></text>
+    </g>
+    <g
+       id="g38707"
+       inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+       inkscape:export-xdpi="310.82401"
+       inkscape:export-ydpi="310.82401">
+      <path
+         style="fill:none;stroke:#c20000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.705556, 0.352778;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker22432);marker-mid:url(#Arrow1Mend);marker-end:url(#marker22432)"
+         d="m 108.28125,143.60156 17.30288,-4.49783 15.09556,-3.92405"
+         id="path20758"
+         sodipodi:nodetypes="ccc" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:1.25;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';fill:#2b3eb6;fill-opacity:1;stroke-width:0.264583"
+         x="120.25313"
+         y="136.65727"
+         id="text38084"><tspan
+           sodipodi:role="line"
+           id="tspan38082"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#c20000;fill-opacity:1;stroke-width:0.264583"
+           x="120.25313"
+           y="136.65727">Jump</tspan></text>
+    </g>
+    <g
+       id="g38712"
+       inkscape:export-filename="C:\Users\pwintz\latex\phd_advancement\images\hybrid_solution_layer6.png"
+       inkscape:export-xdpi="310.82401"
+       inkscape:export-ydpi="310.82401">
+      <path
+         style="fill:none;stroke:#c20000;stroke-width:0.352778;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:0.705556, 0.352778;stroke-dashoffset:0;stroke-opacity:1;marker-start:url(#marker22432);marker-mid:url(#Arrow1Mend);marker-end:url(#marker22432)"
+         d="m 140.67969,135.17968 3.42098,8.39286 2.30255,5.32381"
+         id="path24543"
+         sodipodi:nodetypes="ccc" />
+      <text
+         xml:space="preserve"
+         style="font-size:3.52778px;line-height:1.25;font-family:'Bauhaus 93';-inkscape-font-specification:'Bauhaus 93, ';fill:#2b3eb6;fill-opacity:1;stroke-width:0.264583"
+         x="135.22479"
+         y="145.65698"
+         id="text38088"><tspan
+           sodipodi:role="line"
+           id="tspan38086"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:3.52778px;font-family:'Times New Roman';-inkscape-font-specification:'Times New Roman, ';fill:#c20000;fill-opacity:1;stroke-width:0.264583"
+           x="135.22479"
+           y="145.65698">Jump</tspan></text>
+    </g>
+  </g>
+</svg>

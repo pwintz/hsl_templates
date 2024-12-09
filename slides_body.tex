@@ -1,4 +1,65 @@
 
+\begin{frame}[t]{Modeling Framework: Hybrid Dynamical Systems}
+  \vspace{-12pt}
+
+  % We consider \emph{hybrid dynamical systems}, which are written as
+  \begin{equation*}
+      \calH: \left\{\begin{aligned}
+          \mstructure{\dot x \hspace{0.5em}}&\mstructure{{}= f(x)} & \mstructure{x \in C} \\
+          \darkred{x^+} &= \darkred{g(x)} & \darkred{x \in D}
+      \end{aligned}\right. 
+      \label{eq:hybrid system}
+  \end{equation*}%\pause
+  % with 
+  \begin{multicols}{2}
+  \begin{itemize}
+    % \renewcommand{\emph}[1]{#1}
+    \item<2-> \structure{flow set $C \subset \realsn$} %\pause
+    \item<4-> \structure{flow map $f : {C} \to \realsn$} %\pause
+    \item<3->[\darkred{$\blacktriangleright$}] \darkred{jump set $D \subset \realsn$} %\pause
+    \item<5->[\darkred{$\blacktriangleright$}] \darkred{jump map $g : {D} \to \realsn$} %\pause
+  \end{itemize}
+\end{multicols} 
+\medskip
+
+%   \only<+->{On Next}
+%   \foreach \x in {1, 2, 3}{%, 4, 5, 6, 7} {%
+%   \only<+>{On \x
+%     \begin{center}
+%       \includegraphics[width=0.4\linewidth]{hybrid_solution_layer\x.png}%
+%     \end{center}
+%     }%
+%   }%
+  \begin{columns}
+    \begin{column}[T]{0.48\textwidth}
+      \begin{center}        
+        \centering
+        \vspace{-0.5cm}
+        \only<2| handout:0>{\includegraphics[width=\linewidth]{hybrid_solution_layer0.png}}%
+        \only<3| handout:0>{\includegraphics[width=\linewidth]{hybrid_solution_layer1.png}}%
+        \only<4| handout:0>{\includegraphics[width=\linewidth]{hybrid_solution_layer2.png}}%
+        \only<5| handout:0>{\includegraphics[width=\linewidth]{hybrid_solution_layer3.png}}%
+        \only<6| handout:0>{\includegraphics[width=\linewidth]{hybrid_solution_layer4.png}}%
+        \only<7| handout:0>{\includegraphics[width=\linewidth]{hybrid_solution_layer5.png}}%
+        \only<8>{\includegraphics[width=\linewidth]{hybrid_solution_layer6.png}}%
+      \end{center}
+      \pause
+    \end{column}
+    \hfill
+    \begin{column}[T]{0.48\textwidth}
+      \centering
+      % \only<4| handout:0>{\phantom{}\includegraphics[width=\linewidth]{htd_animation_2.pdf}}%
+      \only<4| handout:0>{\includegraphics[width=\linewidth]{htd_animation_2.pdf}}%
+      \only<5| handout:0>{\includegraphics[width=\linewidth]{htd_animation_3.pdf}}%
+      \only<6| handout:0>{\includegraphics[width=\linewidth]{htd_animation_4.pdf}}%
+      % \only<6>{\includegraphics[width=\linewidth]{htd_animation_5.pdf}}%
+      \only<7| handout:0>{\includegraphics[width=\linewidth]{htd_animation_6.pdf}}%
+      \onslide<8>{\includegraphics[width=\linewidth]{htd_animation_7.pdf}}%
+    \end{column}
+  \end{columns}
+\end{frame}
+
+
 \begin{frame}[t]{Slide With Top-aligned Text}
   \lipsum[1][1-3]
   \begin{itemize}
