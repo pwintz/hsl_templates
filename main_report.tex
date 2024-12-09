@@ -1,6 +1,10 @@
 % Disable LTeX for this file (https://valentjn.github.io/ltex/advanced-usage.html#magic-comments)
 % LTeX: enabled=false
-\documentclass[10pt,final]{article}
+\documentclass[
+  10pt,
+  % final,
+  draft
+]{article}
 
 % Change the search path to include "./packages/".
 \makeatletter
@@ -24,19 +28,10 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% VERSION CONTROL COMMAND
-%%% For Conference, Change to "true"
-%%% For Report, Change to "false"
-\newbool{conf}
-\setbool{conf}{false}
-\ifdraft{% If 'draft', show color-coded report and conference or only color-coded report (change commented lines to choose).
-	% \newcommand{\confonly}[1]{\darkred{#1}}
-	% \newcommand{\reportonly}[1]{\darkgreen{#1}}
-    \newcommand{\confonly}[1]{}
-    \newcommand{\reportonly}[1]{\darkgreen{#1}}
-}{% If 'final', only show report.
-	\newcommand{\confonly}[1]{}
-	\newcommand{\reportonly}[1]{#1}
-}
+%%% For Conference, Change to "isconf"
+%%% For Report, Change to "isreport" 
+\usepackage[isreport]{reportconftoggles}
+
 
 % Items for report version go in here.
 \addtolength{\oddsidemargin}{-.875in}
@@ -81,9 +76,10 @@
 \iyear{UPDATE}% TODO
 \irefnr{UPDATE}% TODO
 
+\bibliographystyle{ieeetr.bst}
 \begin{document}
 
 \input{paper_body}
 
 \end{document}
-
+ 

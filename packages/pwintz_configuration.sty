@@ -15,6 +15,8 @@
     \usepackage{amssymb}
 }%
 
+\usepackage{ifdraft} 
+
 \usepackage{amsfonts}
 \usepackage{mathrsfs} % Enables \mathscr{}
 
@@ -37,6 +39,8 @@
 \usepackage{float}
 % \usepackage[bottom]{footmisc} % Forces footnotes to be at the very bottom of the page. https://tex.stackexchange.com/a/9427/153678
 
+% Force footnotes to be at the bottom of the page.
+% \usepackage[bottom]{footmisc} % Not allowed in IFACconf
 
 % ==================
 % === Formatting ===
@@ -52,7 +56,7 @@
     \usepackage[
             % shortlabels % I don't remember what this does.
         ]{enumitem} 
-    \setlist[1]{labelindent=\parindent, leftmargin=*}% < Usually a good idea
+    % \setlist[1]{labelindent=\parindent, leftmargin=*}% < Usually a good idea
 }
 
 % Define Colors
@@ -136,11 +140,7 @@
 \usepackage{environ}
 \usepackage{xparse} % Enhanced command definitions.
 
-%% Misc/Uncategorized Packages %%
-\usepackage{cancel} % For crossing out parts of equations.
-\usepackage{empheq} % For putting boxes around equations
-
-% The mathtools provides a suite of tools for typsetting math.
+% The mathtools package provides a suite of tools for typesetting math.
 % https://ctan.org/pkg/mathtools
 \usepackage{mathtools}
 % Ensure ":" is vertically centered in ":=".
@@ -160,7 +160,7 @@
 \usepackage{etoolbox} 
 \newtoggle{solutions}
 
-\usepackage{switchcases}
+\usepackage{switch}
 
 % ============================
 % === Figures and Graphics ===
@@ -264,14 +264,14 @@
 \usepackage{hyperref}
 \hypersetup{
     final,                   % Include links even if document is in 'draft' mode.
-    hidelinks,               % Prevent boxes from being drawn around links in some editors.
-    breaklinks=true,
-    colorlinks=true, 
+    hidelinks,               % Prevent boxes from being drawn around links in some viewers.
+    breaklinks=true,         % Allow line breaks in the middle of links
+    colorlinks=true,
     linkcolor=black,         % TOC, links to labeled equations and environments
     filecolor=magenta,      
     urlcolor=black!30!blue,  % URLS including links in references  
     citecolor=black!30!blue, % In-line citations  
-}  
+}
 
 \@ifclassloaded{ifacconf}{% if using ifacconf
     % Do some hack-y thing to make hyperref work in ifacconf.
@@ -292,7 +292,7 @@
 % Display "Theorem 1", "Lemma 2", etc. in cross references.  
 % IT'S IMPORTANT TO LOAD THIS LAST AFTER ALL THE OTHER \usepackages.
 \usepackage[noabbrev, capitalise, nameinlink]{cleveref} 
-% Make ranges of references use an dash between the equation numbers. 
+% Make ranges of references use an n-dash between the numbers. 
 % See https://tex.stackexchange.com/a/18988/153678
 \newcommand{\crefrangeconjunction}{--} 
 
@@ -340,19 +340,20 @@
         \usepackage{natbib}% required for bibliography
     }{
         \@ifclassloaded{beamer}{
-            \usepackage[url = false,%
-                    doi = false,%
-                    isbn = false,%
-                    natbib,%
-                    style=authoryear%
-                    ]{biblatex}
+            \usepackage[
+                url = false,%
+                doi = false,%
+                isbn = false,%
+                natbib,%
+                style=authoryear%
+            ]{biblatex}
         }{
-            \usepackage[url = false,%
-                    doi = false,%
-                    isbn = false,%
-                    natbib,%
-                    style=ieee%
-                    ]{biblatex}
+            % \usepackage[url = false,%
+            %         doi = false,%
+            %         isbn = false,%
+            %         natbib,%
+            %         style=ieee%
+            %         ]{biblatex}
             % Import the bibliography files in frontmatter.tex using "\addbibresource{biblio.bib}"
         }
     }
@@ -381,9 +382,13 @@
 
 
 \@ifclassloaded{ieeeconf}{% if using ieeeconf
-    % Make the Bibliography match the style when BibTeX is used with the ieeeconf class.
-    \renewcommand*{\bibfont}{\normalfont\small}
-    \setlength{\biblabelsep}{0.07in}
+    % Make the Bibliography match the style when BibLaTeX is used with the ieeeconf class.
+    
+    \@ifpackageloaded{biblatex}{% If biblatex package...
+        \renewcommand*{\bibfont}{\normalfont\small}
+        \setlength{\biblabelsep}{0.07in}
+    }{% Not using biblatex
+    }
 }{% if not using ieeeconf
 }%
 
@@ -402,27 +407,14 @@
 }
 
 % Load amsthm package.
-\@ifclassloaded{ieeeconf}{% if using ieeeconf
-    % The following "\relax" commands prevent an error that says, "Command \proof already defined," when we load amsthm, Load amsthm package.
+% The following "\relax" commands prevent an error when loading amsthm if proof is already defined (as is the case for ieeeconf)
+\ifcsdef{proof}{
     \let\proof\relax 
     \let\endproof\relax
 }{}
-
-\@ifclassloaded{ifacconf}{% if using ifacconf, 
-    % then don't try loading amsthm because it is incompatible.
-    \newcommand{\qedhere}{}
-}{
-    \usepackage{amsthm}
-}
-
-% Set the text style for theorems and the like to slanted instead of italics.
-% I find this makes the text easier to read.
-%\renewcommand\th@plain{\slshape}
+\usepackage{amsthm}
 
 % Create a macro for inserting a custom shape the follows the placement rules of \qedhere. See https://tex.stackexchange.com/a/16457/153678
-%\newcommand\xqed[1]{%
-%  \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
-%  \quad\hbox{#1}}
 
 % Define a macro for changing the QED symbol at the
 % end of environments. This command allows for the
@@ -466,10 +458,10 @@
 \newtheoremstyle{sltheorem}
                 {}          % Space above
                 {}          % Space below
-                {\slshape}  % Body font
+                {\slshape}  % Theorem body font % (default is "\upshape")
                 {}          % Indent amount
-                {\bfseries} % Head font
-                {.}         % Punctuation after head
+                {\bfseries} % Theorem head font % (default is \mdseries)
+                {.}         % Punctuation after theorem head % default: no punctuation
                 { }         % Space after theorem head
                 {}          % Theorem head spec
 
@@ -489,13 +481,23 @@
 \providetheorem{proposition}{Proposition}
 \crefname{proposition}{Proposition}{Propositions}%
 
+% Provide an unnumbered version.
+\newtheorem*{proposition*}{Proposition}
+
+
 %%% Define lemma environment %%%
 \providetheorem{lemma}{Lemma}
 \crefname{lemma}{Lemma}{Lemmas}%
 
+% Provide an unnumbered version.
+\newtheorem*{lemma*}{Lemma}
+
 %%% Define corollary environment %%%
 \providetheorem{corollary}{Corollary}
 \crefname{corollary}{Corollary}{Corollaries}%
+
+% Provide an unnumbered version.
+\newtheorem*{corollary*}{Corollary}
 
 %%% Define conjecture environment %%%
 \providetheorem{conjecture}{Conjecture}
@@ -509,6 +511,9 @@
 %%% Define definition environment %%%
 \providetheorem{definition}{Definition}
 \crefname{definition}{Definition}{Definitions}%
+
+% Provide an unnumbered version.
+\newtheorem*{definition*}{Definition}
 
 %%% Define problem environment %%%
 \providetheorem{problem}{Problem}
@@ -537,9 +542,15 @@
 %%% Define remark environment %%%
 \providetheorem{remark}{Remark}
 
+%%% Define example environment %%%
+\providetheorem{example}{Example}
+
+% Add a mark at the end of each example.
+\setEnvironmentQed{example}{\ensuremath{\blacksquare}}
+
 
 \ifcsname thechapter\endcsname
-    % Update numbering to use chapters.
+    % If the document class uses chapters, then update numbering to include the chapter number+.
     \numberwithin{assumption}{chapter}
     \numberwithin{definition}{chapter}
     \numberwithin{remark}{chapter}
@@ -549,6 +560,7 @@
     \numberwithin{lemma}{chapter}
     \numberwithin{corollary}{chapter}
     \numberwithin{conjecture}{chapter}
+    \numberwithin{application}{chapter}
 \fi
 
 % =================================
@@ -644,30 +656,30 @@
 
 % Progress tracking
 \usepackage{ifdraft} 
-\ifdraft{
-    \newcommand{\done}{\ensuremath{\checkmark}} % Variant: \surd
-    \newcommand{\undone}{\ensuremath{\square}}
-    \newcommand{\doneish}{\done-ish}
-    \newcommand{\citationneeded}{${}^{\color{darkred}\textup{\textsc{[Citation needed]}}}$}
-    \newcommand{\removebeforeflight}{${}^{\color{darkred}\textup{\textsc{[Remove before flight]}}}$}
-    \newcommand{\restorebeforeflight}[1]{${}^{\color{darkred}\textup{[\textsc{Restore before flight}: {#1}]}}$}
-    
-    \ifbool{showWorkingNotesInDraft}{
-        \newcommand{\checkbeforeflight}[1]{${}^{\color{darkred}\textup{[\textsc{Check before flight}: #1]}}$}
-    }{
-        \newcommand{\checkbeforeflight}[1]{}
-    }
-}{
-    \newcommand{\done}{}
-    \newcommand{\undone}{}
-    \newcommand{\doneish}{}
-
-    \newcommand{\citationneeded}{}
-    % \newcommand{\removebeforeflight}{${}^{\color{darkred}\textup{\textsc{[Remove before flight!!!!!!!!!!]}}}$}
-    % \newcommand{\restorebeforeflight}[1]{${}^{\color{darkred}\textup{[Restore before flight!!!!!!!: \textsc{#1}]}}$}
-    % \newcommand{\removebeforeflight}{\message{LaTeX Warning: Remove Before Flight command included in 'final' document.}}
-    % \newcommand{\restorebeforeflight}[1]{\message{LaTeX Warning: Restore Before Flight command included in 'final' document.}}
-}
+% \ifdraft{
+%     \newcommand{\done}{\ensuremath{\checkmark}} % Variant: \surd
+%     \newcommand{\undone}{\ensuremath{\square}}
+%     \newcommand{\doneish}{\done-ish}
+%     \newcommand{\citationneeded}{${}^{\color{darkred}\textup{\textsc{[Citation needed]}}}$}
+%     \newcommand{\removebeforeflight}{${}^{\color{darkred}\textup{\textsc{[Remove before flight]}}}$}
+%     \newcommand{\restorebeforeflight}[1]{${}^{\color{darkred}\textup{[\textsc{Restore before flight}: {#1}]}}$}
+%     
+%     % \ifbool{showWorkingNotesInDraft}{
+%     %     \newcommand{\checkbeforeflight}[1]{${}^{\color{darkred}\textup{[\textsc{Check before flight}: #1]}}$}
+%     % }{
+%     %     \newcommand{\checkbeforeflight}[1]{}
+%     % }
+% }{
+%     \newcommand{\done}{}
+%     \newcommand{\undone}{}
+%     \newcommand{\doneish}{}
+% 
+%     \newcommand{\citationneeded}{}
+%     % \newcommand{\removebeforeflight}{${}^{\color{darkred}\textup{\textsc{[Remove before flight!!!!!!!!!!]}}}$}
+%     % \newcommand{\restorebeforeflight}[1]{${}^{\color{darkred}\textup{[Restore before flight!!!!!!!: \textsc{#1}]}}$}
+%     % \newcommand{\removebeforeflight}{\message{LaTeX Warning: Remove Before Flight command included in 'final' document.}}
+%     % \newcommand{\restorebeforeflight}[1]{\message{LaTeX Warning: Restore Before Flight command included in 'final' document.}}
+% }
 
 % Redefine "comment" environment (from "verbatim" package) 
 % to "commentsection" so that \comments{} can be defined 
@@ -692,9 +704,44 @@
                 linecolor=orange,
                 bordercolor=orange,
                 tickmarkheight=4pt},
-    draft, % <- enable line to show annotations regardless of the document being in 'final' mode.
+    % draft, % <- enable line to show annotations regardless of the document being in 'final' mode.
     % final, % <- enable line to hide annotations regardless of the document being in 'draft' mode.
 ]{changes}
+\usepackage{ifdraft}
+\newenvironment{addedblock}{% begdef
+    \ifoptionfinal{}{% If not final, then show color
+        \colorlet{addedblock@oldcolor}{.}\color{blue}%
+    }
+}{% enddef
+    \ifoptionfinal{}{% If not final, then restore previous color
+        \color{addedblock@oldcolor}%
+    }%
+}
+% \RequirePackage{kvoptions}
+% \usepackage{keyval}% http://ctan.org/pkg/keyval
+% \define@key{deletedblockkeys}{hide}{\setbool{deletedblock@hideblock}{true}}%
+\newenvironment{deletedblock}{% begdef
+    % \SetupKeyvalOptions{
+    %     family=deletedblock,
+    %     prefix=deletedblock@
+    % }
+    % \newbool{deletedblock@hideblock}
+    % \setkeys{deletedblockkeys}{hide=\ifoptionfinal{true}{false},#1}% Set default and updated keys
+    % % \DeclareBoolOption[\ifoptionfinal{true}{false}]{hide}
+    % % \ProcessKeyvalOptions{deletedblock}
+    % % 
+    \ifoptionfinal{% If final, then hide
+        \commentsection{}%
+    }{%
+        \colorlet{deletedblock@oldcolor}{.}\color{deleted}\footnotesize%
+    }
+}{% enddef
+    \ifoptionfinal{% If final, then hide
+        \endcommentsection{}%
+    }{%
+        \color{deletedblock@oldcolor}%
+    }%
+}
 
 
 % ================================

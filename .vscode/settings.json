@@ -3,7 +3,7 @@
         "\\tableofcontents[]": "ignore", 
         "\\@ifclassloaded{}{}{}": "ignore",
         "\\includeonly{}": "ignore",  
-	// Command and environment definitions
+	// Macros and environments definitions
         "\\newcommand{}{}": "ignore",  
         "\\renewcommand{}{}": "ignore", 
         "\\newenvironment{}[][]{}{}": "ignore", 
@@ -14,6 +14,7 @@
         "\\newtheoremstyle{}{}{}{}{}{}{}{}{}": "ignore",  
         "\\DeclarePairedDelimiterX{}[]{}{}": "ignore", 
         "\\DeclarePairedDelimiter{}{}{}": "ignore", 
+        "\\providetheorem{}{}": "ignore",
         // Abbreviations
         "\\nbd{}": "dummy", 
         "\\nbd": "dummy", 
@@ -28,10 +29,19 @@
         "\\Closedloop{}": "dummy", 
         "\\ClosedLoop{}": "dummy", 
         "\\Matlab": "dummy",
+        "\\texttt{}": "dummy",
         "\\MATLAB": "dummy",
         "\\newbool{}": "ignore",  
         "\\setbool{}": "ignore",
         "\\setbool{}{}": "ignore",
+        "\\crefformat{}{}": "ignore",  
+        "\\Crefformat{}{}": "ignore", 
+        "\\crefmultiformat{}{}{}{}{}": "ignore",  
+        "\\Crefmultiformat{}{}{}{}{}": "ignore",  
+        "\\crtcrefreference{}": "dummy",  
+        "\\NewDocumentCommand{}{}{}": "ignore", 
+        "\\DeclarePairedDelimiterX{}[]{}{}": "ignore", 
+        "\\DeclarePairedDelimiter{}{}{}": "ignore", 
         // Beamer
         "\\setbeamertemplate{}[]{}": "ignore", 
         "\\setbeamercolor{}{}": "ignore",  
@@ -43,6 +53,8 @@
         "\\usebeamertemplate{}[]{}": "ignore",
         "\\setbeamerfont{}": "ignore", 
         "\\addtolength{}{}": "ignore", 
+        "\\movie{}{}": "ignore",
+        "\\movie[]{}{}": "ignore",
         // Code Listing
         "\\lstinputlisting{}": "ignore",
         "\\problem{}": "ignore",
@@ -68,6 +80,8 @@
         "\\mathtoolsset{}": "ignore",
         "\\qedhere{}": "ignore", // This doesn't seem to work.
         "\\qedhere": "ignore", // This doesn't seem to work.
+        // Misc. 
+        "\\setupAssumption{}": "ignore",
         // Macros to hide LTeX false-positive
         "\\ltexignore{}": "ignore",
         "\\ltexdummy{}": "dummy",
@@ -82,7 +96,12 @@
     },
     "ltex.latex.environments": {
         "lstlisting": "ignore",
+        "equation": "ignore",
+        "align": "ignore",
         "verbatim": "ignore", 
+        "comment": "ignore", 
+        "workingnoteEnv": "ignore", 
+        "deletedblock": "ignore"
         "comment": "ignore"
     },
     "ltex.diagnosticSeverity": {
@@ -145,7 +164,7 @@
             "name": "bibtex",
             "command": "bibtex",
             "args": [
-                "%DOCFILE%"
+                "%OUTDIR%/%DOCFILE%"
             ],
             "env": {}
         }

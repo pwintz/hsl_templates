@@ -29,6 +29,7 @@
 \usepackage{tikz}
 % \usepackage{pgflibraryshapes}
 \usepackage{lipsum}
+\usepackage{qrcode}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%% MACROS %%%%%%%%%%%%%%
@@ -77,16 +78,7 @@
 
 \makeatletter
 % Populate title using value defined in frontmatter.tex
-\title{\pwintz@title}
-\subtitle{\pwintz@subtitle}
 
-\author{\csname pwintz@author1\endcsname}
-\institute{%
-    Hybrid Systems Lab\\ 
-    University of California\\ 
-    Department of Computer Engineering\\ 
-    Santa Cruz, CA
-}
 \makeatother
 
 \def\cmd#1{\texttt{\textbackslash #1}}

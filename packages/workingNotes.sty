@@ -9,21 +9,37 @@
 % \setboolean{workingnotes@showInDraft}{true}
 % \DeclareOption{inDraft}{\setboolean{workingnotes@showInDraft}{true}}
 
-\newbool{showInDraft}
+\usepackage{etoolbox}
+\newbool{showInDraft}\booltrue{showInDraft}
+\newbool{showWorkingNotes}\boolfalse{showWorkingNotes}
 
-\definecolor{workingnote}{rgb}{0.8, 0.3, 0.7}
+\definecolor{workingnote}{rgb}{0.73, 0.13, 0.73}
 
 \usepackage{ifdraft}
-
+\usepackage{environ}
 \ifdraft{
-    \ifbool{showInDraft}%
-    {\newcommand{\workingnote}[1]{{\color{workingnote} #1}}}
-    {\newcommand{\workingnote}[1]{}}
-    % \newenvironment{workingNoteEnv}{working note}{ end working note}
-
+    \ifbool{showInDraft}{
+        \booltrue{showWorkingNotes}
+    }{% 
+    %     \boolfalse{showWorkingNotes}
+    }
 }{ 
+    % \boolfalse{showWorkingNotes}
+}
+
+\ifbool{showWorkingNotes}{
+    \newcommand{\workingnote}[1]{{\color{workingnote} #1}}
+
+    % We use the default newenvironment to create workingnoteEnv instead of the environ package 
+    % so that syntex links work within the environment.
+    \newenvironment{workingnoteEnv}%
+        {\colorlet{workingnotes@oldcolor}{.}\color{workingnote}\par}% Before environment
+        {\color{workingnotes@oldcolor}\par}% After Environment
+}{
     \newcommand{\workingnote}[1]{}
-    % \newenvironment{workingNoteEnv}{working note hidden}{ end hidden working note}
+
+    % Use the environ package to create an environment that does not display its contents.
+    \NewEnviron{workingnoteEnv}
 }
 
 % % Progress tracking

@@ -3,7 +3,17 @@
 % Template for IFAC meeting papers
 % Copyright (c) 2007-2008 International Federation of Automatic Control
 %===============================================================================
-\documentclass[final]{ifacconf}
+\documentclass[
+	draft,
+	% final
+]{ifacconf}
+
+% "Uninstall" the 'theorem' package, which is deprecated but included in the ifacconf (we are legally not allowed to modify ifacconf.cls due to a copyright laws.)
+\let\theoremstyle\relax
+\let\theorembodyfont\relax
+\let\theoremheaderfont\relax
+\let\theorempreskipamount\relax
+\let\theorempostskipamount\relax
 
  % Fix a problem with the ifacconf class that causes cleveref to crash.
 \newcounter{part}
@@ -35,19 +45,11 @@
 \ifdraft{}{% If not "draft", then make the columns on the last page even.
 	\usepackage{flushend}
 }
-
-\newbool{conf}
-\setbool{conf}{true}
-\ifdraft{% If 'draft', show color-coded report and conference or only color-coded report (change commented lines to choose).
-	% \newcommand{\confonly}[1]{\darkgreen{#1}}
-	% \newcommand{\reportonly}[1]{\darkred{#1}}
-	\newcommand{\confonly}[1]{#1}
-	% \newcommand{\reportonly}[1]{\darkred{#1}} % Show report content in red.
-	\newcommand{\reportonly}[1]{} % Hide report content.
-}{% If 'final', only show conf.
-	\newcommand{\confonly}[1]{#1}
-	\newcommand{\reportonly}[1]{}
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% VERSION CONTROL COMMAND
+%%% For Conference, Change to "isconf"
+%%% For Report, Change to "isreport" 
+\usepackage[isconf]{reportconftoggles}
 
 \ifdraft{% If draft
   \renewcommand{\paragraph}[1]{\textbf{\color{black}#1:}\xspace}
@@ -59,24 +61,6 @@
 \graphicspath{% List directories to search for images.
     {images/}%
 }
-
-% \newtheorem{remark}{Remark}
-% \newtheorem{example}{Example}
-\newtheorem{proof}{Proof}
-% \newtheorem{definition}{Definition}
-
-
-% Set the text style for theorems and the like to slanted instead of italics.
-% I find this makes the text easier to read.
-\makeatletter
-% \renewcommand\th@plain{\slshape}
-\gdef\th@plain{\slshape
-\def\@begintheorem##1##2{\item[\hskip\labelsep
-	{\theorem@headerfont ##1\ ##2.}]}%
-\def\@opargbegintheorem##1##2##3{\item[\hskip\labelsep
-	{\theorem@headerfont ##1\ ##2}\ {\upshape (##3).}]}}
-\makeatother
-% \newcommand{\qedhere}{}
 
 % Make the PDF version compliant with the submission requirements for ADHS.
 \pdfminorversion=4

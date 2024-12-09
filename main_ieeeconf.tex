@@ -1,4 +1,9 @@
-\documentclass[letterpaper, 10pt, conference, final]{ieeeconf}
+\documentclass[
+  letterpaper, 
+  10pt, 
+  conference, 
+  final
+]{ieeeconf}
 
 \pdfminorversion=4
 
@@ -9,39 +14,16 @@
 
 \usepackage{pwintz_configuration}
 \usepackage{pwintz_definitions}
+
+\input{document_configuration}
+\input{document_definitions}
 \usepackage{demo_setup} % TODO: Delete this.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%% VERSION CONTROL COMMAND
-%%% For Conference, Change to "true"
-%%% For Report, Change to "false"
-\newbool{conf}
-\setbool{conf}{true}
-\ifdraft{
-  %% Show conference-only text in green.
-  % \newcommand{\confonly}[1]{\darkgreen{#1}}
-  % \newcommand{\reportonly}[1]{}
-  \newcommand{\confonly}[1]{\darkgreen{#1}}
-  \newenvironment{confonlyblock}{\color{darkgreen}}{\color{black}}
-
-  % Show report-only content (which will be hidden in the final version) in red.
-  \newcommand{\reportonly}[1]{\red{#1}}
-  \newenvironment{reportonlyblock}{\color{darkred}}{\color{black}}
-
-  % % Alternatively, use the following lines to hide the report-only content in drafts.
-  % \newcommand{\reportonly}[1]{\red{#1}}
-  % \newenvironment{reportonlyblock}{\commentsection}{\endcommentsection}
-}{
-  % Show conference-only content.
-  \newcommand{\confonly}[1]{#1}
-
-  % Hide report-only content.
-  \newenvironment{confonlyblock}{}{}
-
-  % Hide report-only content.
-  \newcommand{\reportonly}[1]{}
-  \newenvironment{reportonlyblock}{\commentsection}{\endcommentsection}
-}
+%%% For Conference, Change to "isconf"
+%%% For Report, Change to "isreport" 
+\usepackage[isreport]{reportconftoggles}
 
 \input{document_configuration}
 \input{document_definitions}
@@ -67,6 +49,8 @@
 
 \usepackage{universal_frontmatter_loader}
 
+% TODO: Check if this is the right biblio style.
+\bibliographystyle{ieeetr}% No extension!
 \begin{document}
 
 % Uncomment to compile.

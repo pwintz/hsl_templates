@@ -51,7 +51,6 @@
 % For example, \setAuthor2{John Smith} creates a macro named "\pwintz@author2".
 % Because this macro name has a number in it, it must be referenced using "\csname pwintz@author2\endcsname" (there must not be a space before \endcsname).
   \expandafter\newcommand\csname pwintz@author#1\endcsname{#2}%
-%   \expandafter\providecommand\csname pwintz@shortauthor#1\endcsname{#2}%
   \expandafter\newcommand\csname pwintz@authorInstitute#1\endcsname{#3}%
 }
 
@@ -171,7 +170,7 @@
     \newcommand{\insertAuthorAffiliation}[1]{
       % If the Nth author is defined, insert their affiliation.
       % #1: Author index.
-      \ifcsdef{pwintz@author2}{% If defined
+      \ifcsdef{pwintz@author#1}{% If author is defined
         \ifnum#1>1
           % If not the first author, then use ";" to connect the list items.
           ;
@@ -285,24 +284,25 @@
 \makeatletter
 
 \@ifclassloaded{beamer}{% If using beamer class...
+
+  % \newcommand
+  \newcommand{\pwintz@insertAuthor}[1]{%
+    % Insert Xth author, if defined.
+    \ifcsdef{pwintz@author#1}{% If defined
+        \csuse{pwintz@author#1}%
+        \ifcsdef{pwintz@institute2}{%
+          % If there are at least two institutes, then insert superscripts.
+          \textsuperscript{\csuse{pwintz@authorInstitute#1}}%
+        }{}
+        \hfill% 
+    }{}%
+  }
   \AtBeginDocument{
     
     \makeatletter
     % Populate title using value defined in frontmatter.tex
     \title{\pwintz@title}
 
-    % \newcommand
-    \newcommand{\pwintz@insertAuthor}[1]{%
-      % Insert Xth author, if defined.
-      \ifcsdef{pwintz@author#1}{% If defined
-          \csuse{pwintz@author#1}%
-          \ifcsdef{pwintz@institute2}{%
-            % If there are at least two institutes, then insert superscripts.
-            \textsuperscript{\csuse{pwintz@authorInstitute#1}}%
-          }{}
-          \hfill% 
-      }{}%
-    }
     \author{% 
       % Populate author information from definitions in frontmatter.tex
       % Insert first author, if defined.
@@ -373,10 +373,6 @@
     \begin{frame}[plain]
       % Set the title and an (optional) subtitle in frontmatter.tex.
       \maketitle
-      \includegraphics[height = 11mm,align=c]{UCSC_BaskinEng_Logo_wide.eps}
-      \hfill 
-      \includegraphics[height = 13.5mm,align=c]{HSLlogo.eps}
-      \hspace{25pt}
     \end{frame}
   }
   \makeatother

@@ -90,6 +90,17 @@ See \cref{fig:this is a figure}.
 The following is clear from \cref{eq:my equation}:
 \lipsum[10-11]
 
+\begin{theorem}
+    \label{result:my theorem}
+    This is my theorem.
+\end{theorem}
+\begin{definition}[My Definition]
+    \label{def:A Defined Term}
+    Here is a definition
+\end{definition}
+In \cref{result:my theorem}, we see a theorem and in \cref{def:A Defined Term} we see a definition. 
+
+
 \section{Conclusion}
 \label{sec:conclusion}
 \lipsum[12]
@@ -97,13 +108,7 @@ The following is clear from \cref{eq:my equation}:
 %%% BIBLIOGRAPHY
 
 % TODO: Remove the following fake citations.
-\nocite{knuth:ct:a}
-\nocite{glashow}
-\nocite{aristotle:physics}
-\nocite{moore}
-\nocite{salam}
-\nocite{ctan}
-\nocite{loh}
+\nocite{goebel_hybrid_2012}
 
 \makeatletter%
     \@ifpackageloaded{biblatex}{% If biblatex package...

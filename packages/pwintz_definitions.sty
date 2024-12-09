@@ -9,9 +9,9 @@
 \usepackage{amsmath}
 \@ifclassloaded{acmart}{% if using ACM article class, amssymb is already loaded.
 }{
-    % if using ACM article class, loading assymbbbm and bbm causes problems, so we don't use them.
+    % if using ACM article class, loading amsymb and bbm causes problems, so we don't use them.
     \usepackage{amssymb}
-    \usepackage{bbm}
+    % \usepackage{bbm}
 }
 \usepackage{xspace}
 
@@ -39,7 +39,11 @@
 \newcommand{\textotherwise}{\textup{otherwise\xspace}}%
 \newcommand{\otherwise}{\textotherwise}%
 \newcommand{\midand}{\squishyquad \textup{and}\squishyquad}%
-\newcommand{\midor}{\quad \textup{or}\quad}%
+\newcommand{\midor}{\squishyquad \textup{or}\squishyquad}%
+\newcommand{\midimplies}{\squishyquad\ensuremath{\implies}\squishyquad}%
+\newcommand{\midiff}{\squishyquad\ensuremath{\iff}\squishyquad}%
+\newcommand{\midimpliedby}{\squishyquad\ensuremath{\impliedby}\squishyquad}%
+\newcommand{\midforall}{\squishyquad\forall}%
 \newcommand{\st}{\ensuremath{^{st}}}%
 \newcommand{\nd}{\ensuremath{^{nd}}}
 \newcommand{\rd}{\ensuremath{^{rd}}}
@@ -68,7 +72,34 @@
 \newcommand{\sic}{[\textit{sic}]} % To mark errors present in the source of a quotation.
 % Spacing
 \def\squishyquad{\hskip1em minus 0.5em\relax}
-\newcommand{\noqed}{\phantom{\qedhere}}
+\def\squishyqquad{\hskip2em minus 1em\relax}
+\newcommand{\noqed}{\clap{\phantom{\qedhere}}}
+%% Text formatting combos %%
+% Upright + *
+\newcommand{\textupbf}[1]{\textup{\textbf{#1}}}
+\newcommand{\textupit}[1]{\textup{\textit{#1}}}
+\newcommand{\textupsc}[1]{\textup{\textsc{#1}}}
+\newcommand{\textuptt}[1]{\textup{\teuptt{#1}}}
+% Bold + *
+\newcommand{\textbfup}[1]{\textbf{\textup{#1}}}
+\newcommand{\textbfit}[1]{\textbf{\textit{#1}}}
+\newcommand{\textbfsc}[1]{\textbf{\textsc{#1}}}
+\newcommand{\textbftt}[1]{\textbf{\texttt{#1}}}
+% Italics + *
+\newcommand{\textitup}[1]{\textit{\textup{#1}}}
+\newcommand{\textitbf}[1]{\textit{\textbf{#1}}}
+\newcommand{\textitsc}[1]{\textit{\textsc{#1}}}
+\newcommand{\textittt}[1]{\textit{\texttt{#1}}}
+% Small caps + *
+\newcommand{\textscup}[1]{\textsc{\textup{#1}}}
+\newcommand{\textscbf}[1]{\textsc{\textbf{#1}}}
+\newcommand{\textscit}[1]{\textsc{\textit{#1}}}
+\newcommand{\textsctt}[1]{\textsc{\texttt{#1}}}
+% Teletype + *
+\newcommand{\textttup}[1]{\texttt{\textup{#1}}}
+\newcommand{\textttbf}[1]{\texttt{\textbf{#1}}}
+\newcommand{\textttit}[1]{\texttt{\textit{#1}}}
+\newcommand{\textttsc}[1]{\texttt{\textsc{#1}}}
 %
 % =============================
 % ======= GENERAL MATH ======== 
@@ -114,9 +145,15 @@
     \end{aligned}\right.}
 \renewcommand{\emptyset}{\varnothing} % Use a nicer symbol for empty sets.
 \newcommand{\neginfty}{{-\infty}}
+% Rounding
+\newcommand{\floor}[1]{\lfloor #1\rfloor}
+\newcommand{\ceil}[1]{\lceil #1\rceil}
 %
 % **** FUNCTIONS ****
-\renewcommand{\arctan}{\tan\invs}
+\newcommand{\setvaluedto}{\rightrightarrows}
+\newcommand{\toto}{\setvaluedto}
+% \renewcommand{\arctan}{\tan\invs}
+\renewcommand{\arctan}{\operatorname{atan}}
 \newcommand{\atan}{\arctan}
 \newcommand{\atantwo}{\mathtt{atan2}}
 \renewcommand{\arcsin}{\sin\invs}
@@ -125,6 +162,7 @@
 \newcommand{\acos}{\arccos}
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 \DeclarePairedDelimiter\absq{\lvert}{\rvert^2}
+\newcommand{\sign}{\operatorname{sign}}
 %
 % **** COMPLEX NUMBERS **** 
 \newcommand{\real}{\,\mathfrak{Re}}
@@ -239,13 +277,13 @@
         \left\{#1 \right\}%
     \endgroup
 } 
-\newcommand{\suchthat}{%
+\newcommand{\suchthat}[1][|]{%
     \ifnum\currentgrouptype=16
         % If the command is used between "\left" and "\right", then
         % use "\middle" to make "|" match the height of the delimiters.
-        \mathrel{}\middle|\mathrel{}
+        \mathrel{}\middle#1\mathrel{}
     \else
-        \mathrel{|}
+        \mathrel{#1}
     \fi
 }
 \newcommand*{\closure}[1]{\overline{#1}}
@@ -263,6 +301,7 @@
 % **** SETS **** 
 \newcommand{\reals}{\mathbb{R}}
 \newcommand{\realsn}{\reals^{n}}
+\newcommand{\realsm}{\reals^{m}}
 \newcommand{\positivereals}{\reals_{>0}}
 \newcommand{\preals}{\positivereals}
 \newcommand{\nonnegativereals}{\reals_{\geq0}}
@@ -274,6 +313,7 @@
 \newcommand{\rationals}{\mathbb{Q}}
 \newcommand{\integers}{\mathbb{Z}}
 \newcommand{\naturals}{\mathbb{N}}
+\newcommand{\nats}{\naturals}
 \newcommand{\pnaturals}{\mathbb{N}_{>0}}
 \newcommand{\complexes}{\mathbb{C}}
 \newcommand*{\squarematrices}[1][n]{\reals^{#1 \times #1}}
@@ -308,9 +348,9 @@
 % **** VECTORS **** 
 % If a value is not a vector don't use the "\"
 % Zero-vector
-\newcommand{\zerovec}[1]{0_{#1}}
+\newcommand{\zerovec}[1]{\vec{0}_{#1}}
 % One-vector
-\newcommand{\onevec}{\mathbb{1}}
+\newcommand{\onevec}{\vec{1}}
 \newcommand{\REF}{\ensuremath{\operatorname{REF}}\xspace}
 \newcommand{\RREF}{\ensuremath{\operatorname{RREF}}\xspace}
 \newcommand*{\proj}[1]{\operatorname{proj}_{#1}}
@@ -415,6 +455,8 @@
 \newcommand{\range}{\operatorname{range}}
 \newcommand{\rge}{\range}
 \newcommand{\rng}{\range}
+\newcommand{\graph}{\operatorname{gph}}
+\newcommand{\gph}{\graph}
 \newcommand{\trans}[1][]{^{#1 \top}\!} % Matrix transpose
 \newcommand{\transstar}{^{*\top}} % Vector or matrix transpose notation (\intercal is an alternative)
 \newcommand{\herm}[1][]{^{#1 H}} % Hermitian 
@@ -459,6 +501,7 @@
 }{%
   \end{array}\right]
 }
+
 % augmat: Command for creating augmented matrices.
 % Usage:
 %   \augmat[# of columns in A]{ entries in A and b. }
@@ -469,6 +512,7 @@
    #2
 \end{augmatrix}
 }
+
 \NewDocumentCommand{\supaugmat}{ O{1} O{1} m }{
   % #1: Number of columns before the | (Optional argument with default = 1)
   % #2: Number of columns after the | (Optional argument with default = 1)
@@ -481,7 +525,7 @@
 % Determinate of a matrix	
 \newcommand {\detmat}[1]{\begin{vmatrix}
             #1 \end{vmatrix}}
-\newcommand{\rotationmat}[1]{\mat{\cos{#1} & \sin{#1} \\ 
+\newcommand{\rotationmat}[1]{\mat{ \cos{#1} & \sin{#1} \\ 
                                   -\sin{#1} & \cos{#1} }}
 %
 % =========================
@@ -592,8 +636,8 @@
 \newcommand*{\minimize}[1]{\operatorname*{minimize}_{#1}\quad} % Usage: \minimize{\x \in \reals}
 \newcommand*{\maximize}[1]{\operatorname*{maximize}_{#1}\quad} % Usage: \maximize{\x \in \reals}
 \newcommand{\subjectto}{\textup{subject to}\quad}
-\newcommand*{\argmax}[1]{\underset{#1}{\operatorname{argmax}}\:\:}
-\newcommand*{\argmin}[1]{\underset{#1}{\operatorname{argmin}}\:\:}
+\newcommand*{\argmax}{\operatorname*{argmax}}
+\newcommand*{\argmin}{\operatorname*{argmin}}
 \newcommand{\epi}{\operatorname{epi}}
 %
 % ===============================
@@ -791,3 +835,5 @@
 \newcommand{\ltexignore}[1]{#1}
 \newcommand{\ltexdummy}[1]{#1}
 \newcommand{\ltexvoweldummy}[1]{#1}
+% Insert a piece of hidden text that is parsed by LTex but is not displayed.
+\newcommand{\ltexhidden}[1]{}

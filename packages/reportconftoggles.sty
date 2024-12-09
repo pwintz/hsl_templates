@@ -1,0 +1,139 @@
+% Disable LTeX for this file (https://valentjn.github.io/ltex/advanced-usage.html#magic-comments)
+% LTeX: enabled=false
+\ProvidesPackage{reportconftoggles}
+[2024-07-11 Report/Conference Toggles]
+
+% Modify the display of text based on whether in draft or final mode.
+\usepackage{ifdraft}
+
+% Define colors to denote whether 
+\usepackage{xcolor}
+\definecolor{reportconftoggles@darkred}{rgb}{0.76, 0.0, 0.0}% Hex: c20000ff
+\definecolor{reportconftoggles@darkgreen}{rgb}{0.0, 0.5, 0.0}
+
+% Setup kvoptions for defining key-value package options.
+\RequirePackage{kvoptions}
+\SetupKeyvalOptions{
+  family=reportconftoggles,
+  prefix=reportconftoggles@
+}
+
+\DeclareBoolOption{isconf}% Defines \ifreportconftoggles@isconf
+\DeclareComplementaryOption{isreport}{isconf}
+
+% When in draft mode, 
+\DeclareBoolOption[\ifdraft{true}{false}]{draft}
+\DeclareBoolOption[\ifoptionfinal{true}{false}]{final}
+\DeclareStringOption[reportconftoggles@darkred]{excludedcolor}
+\DeclareStringOption[reportconftoggles@darkgreen]{includedcolor}
+\DeclareBoolOption[true]{usecolorindraft}
+\DeclareBoolOption[false]{usecolorexceptinfinal}
+
+% Options to select whether excluded text is displayed in draft mode or non-final mode.
+\DeclareBoolOption[true]{showexcludedindraft}
+\DeclareBoolOption[false]{showexcludedexceptinfinal}
+
+\ProcessKeyvalOptions{reportconftoggles}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% VERSION CONTROL COMMAND
+%%% For Conference, Change to "true"
+%%% For Report, Change to "false"
+\usepackage{etoolbox}
+\newbool{isconf}
+\newbool{isreport}
+
+\ifreportconftoggles@isconf
+  \setbool{isconf}{true}
+  \setbool{isreport}{false}
+\else
+  \setbool{isconf}{false}
+  \setbool{isreport}{true}
+\fi
+
+% Configure Colors
+\newbool{reportconftoggles@usecolor}
+\ifboolexpr{(bool {reportconftoggles@draft} 
+             and bool {reportconftoggles@usecolorindraft}) 
+         or (not bool {reportconftoggles@final} 
+             and bool {reportconftoggles@usecolorexceptinfinal})}
+{% Enable color...
+  \booltrue{reportconftoggles@usecolor}
+}{% Disable color...
+  \boolfalse{reportconftoggles@usecolor} 
+}%
+
+\ifbool{reportconftoggles@usecolor}%
+{% If reportconftoggles@usecolor is true...
+  \newcommand{\enableExcludedColor}{\color{\reportconftoggles@excludedcolor}}
+  \newcommand{\enableIncludedColor}{\color{\reportconftoggles@includedcolor}}
+}{% Else
+  % Don't change the current color 
+  % https://tex.stackexchange.com/a/254872/153678
+  \newcommand{\enableExcludedColor}{\color{.}}
+  \newcommand{\enableIncludedColor}{\color{.}}
+}%
+
+\newbool{reportconftoggles@showexcluded}
+\ifboolexpr{(bool {reportconftoggles@draft} 
+             and bool {reportconftoggles@showexcludedindraft}) 
+         or (not bool {reportconftoggles@final} 
+             and bool {reportconftoggles@showexcludedexceptinfinal})}
+{% Enable color...
+  \booltrue{reportconftoggles@showexcluded}
+}{% Disable color...
+  \boolfalse{reportconftoggles@showexcluded} 
+}%
+
+% If final, then we turn of colors (FWIW) and hide excluded sections.
+\ifbool{reportconftoggles@final}{
+  \boolfalse{reportconftoggles@usecolor}
+  \boolfalse{reportconftoggles@showexcluded}
+}{}
+
+\ifbool{isconf}%
+{% If isconf is true...
+  \newcommand{\confonly}[1]{{\enableIncludedColor{}#1}}
+  \newenvironment{confonlyblock}{% Before environment
+    \colorlet{reportconftoggles@oldcolor}{.}% After Environment
+    \enableIncludedColor{}%
+  }{% After Environment
+    \color{reportconftoggles@oldcolor}% After Environment
+  }
+
+  \ifbool{reportconftoggles@showexcluded}%
+    {% If showexcluded is true...
+      \newcommand{\reportonly}[1]{{\enableExcludedColor{}#1}}
+      \newenvironment{reportonlyblock}{% Before environment
+        \colorlet{reportconftoggles@oldcolor}{.}% Save previous color
+        \enableExcludedColor{}%
+      }{% After Environment
+        \color{reportconftoggles@oldcolor}% Restore previous color
+      }
+    }{% Else
+      \newcommand{\reportonly}[1]{}
+      \newenvironment{reportonlyblock}%
+        {\commentsection}% Before environment
+        {\endcommentsection}% After Environment
+    }%
+}{% If isconf is false
+  \newcommand{\reportonly}[1]{{\enableIncludedColor{}#1}}
+  \newenvironment{reportonlyblock}%
+    {\colorlet{reportconftoggles@oldcolor}{.}\enableIncludedColor{}}% Before environment
+    {\color{reportconftoggles@oldcolor}}% After Environment
+  \ifbool{reportconftoggles@showexcluded}%
+    {% If showexcluded is true...
+      \newcommand{\confonly}[1]{{\enableExcludedColor{}#1}}
+      \newenvironment{confonlyblock}{% Before environment
+          \colorlet{reportconftoggles@oldcolor}{.}% Save previous color
+          \enableExcludedColor{}%
+        }{% After Environment
+          \color{reportconftoggles@oldcolor}% Restore previous color
+        }
+    }{% Else
+      \newcommand{\confonly}[1]{}
+      \newenvironment{confonlyblock}%
+        {\commentsection}% Before environment
+        {\endcommentsection}% After Environment
+    }%
+}%

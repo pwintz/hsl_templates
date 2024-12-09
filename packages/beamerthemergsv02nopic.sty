@@ -117,30 +117,32 @@
 
 \setbeamertemplate{title page}
 {
-% ???
-%\vspace*{-\Gm@tmargin}
-% The main title is typeset on a thin rule, forming a box that that is 2 unit-bars high.
-\vbox to 2\barheight{%
-\vfill
-{\usebeamerfont{title}\usebeamercolor[fg]{title}\underline{\inserttitle}}}
-% The optional subtitle
-\ifx\insertsubtitle\@empty\else%
-{\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
-\fi
-% an ueberfill to balance the one below
-% (see there for reason to use ueberfill instead of normal fill)
-\vskip0pt plus 1filll
-% Author
-{\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor}
-% Institution
-\vskip4pt
-{\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute}
-% Insert a ueber-fill to suppress the above-title-box \fill that comes from beamer internals.
-\vskip0pt plus 1filll
-% WUR picture bar. Defined above.
-%\inserttitlegraphic
-% Cancel the 4pt skip that beamer inserts above the footline.
-\vspace*{-4pt} 
+  %\vspace*{-\Gm@tmargin}
+  % The main title is typeset on a thin rule, forming a box that that is 2 unit-bars high.
+  \vbox to 2\barheight{%
+    \vfill
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\underline{\inserttitle}}
+  }
+  % The optional subtitle
+  \ifx\insertsubtitle\@empty\else%
+    {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}
+  \fi
+  % an ueberfill to balance the one below
+  % (see there for reason to use ueberfill instead of normal fill)
+  \vskip0pt plus 1filll
+  % Author
+  {\usebeamerfont{author}\usebeamercolor[fg]{author}\insertauthor}
+  % Institution
+  \vskip4pt
+  {\usebeamerfont{institute}\usebeamercolor[fg]{institute}\insertinstitute}
+  % Insert a ueber-fill to suppress the above-title-box \fill that comes from beamer internals.
+  \vskip0pt plus 1filll
+  % Cancel the 4pt skip that beamer inserts above the footline.
+  % \vspace*{-4pt} 
+  \includegraphics[height = 11mm,align=c]{UCSC_BaskinEng_Logo_wide.eps}
+  \hfill  
+  \includegraphics[height = 13.5mm,align=c]{HSLlogo.eps}
+  \vspace{10pt} 
 }
 
 
